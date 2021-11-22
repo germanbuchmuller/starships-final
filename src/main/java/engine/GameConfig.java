@@ -12,7 +12,7 @@ public class GameConfig {
     public static int ASTEROID_SPEED = 250;
     public static int SHIP_HEALTH = 100;
     public static int SHIP_SPEED = 200;
-    public static int SHIP_REWARD_POINTS = 10;
+    public static int SHIP_REWARD_POINTS = 200;
     public static double SHIP_WIDTH = 60;
     public static double SHIP_HEIGHT = 60;
 

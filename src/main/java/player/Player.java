@@ -59,4 +59,8 @@ public class Player {
     public Ship getShip() {
         return ship;
     }
+
+    public int getLives() {
+        return lives;
+    }
 }

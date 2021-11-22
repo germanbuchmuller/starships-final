@@ -42,7 +42,7 @@ public class Weapon {
     private Projectile getProjectile(double x, double y, double angle){
         int damage = GameConfig.BULLET_DAMAGES.get(bulletType);
         int speed = GameConfig.BULLET_SPEED.get(bulletType);
-        int points = GameConfig.BULLET_DAMAGES.get(bulletType);
+        int points = GameConfig.BULLET_POINTS.get(bulletType);
         double width = GameConfig.BULLET_WIDTH.get(bulletType);
         double height = GameConfig.BULLET_HEIGHT.get(bulletType);
         String texture = GameConfig.BULLET_TEXTURE.get(bulletType);

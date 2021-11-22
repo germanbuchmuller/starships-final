@@ -33,4 +33,8 @@ public class PlayersController {
     public void addPointsToPlayer(int playerID, int points){
         if (playersIDMap.containsKey(playerID)) playersIDMap.get(playerID).addPoints(points);
     }
+
+    public List<Player> getPlayers() {
+        return playersList;
+    }
 }

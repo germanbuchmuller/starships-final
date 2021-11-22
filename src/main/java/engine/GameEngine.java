@@ -3,7 +3,6 @@ package engine;
 import controller.Movement;
 import controller.PlayersController;
 import controller.visitor.CollisionsVisitor;
-import controller.visitor.EntityVisitor;
 import controller.visitor.MovementVisitor;
 import controller.visitor.RenderVisitor;
 import edu.austral.dissis.starships.file.ImageLoader;
@@ -22,7 +21,6 @@ import player.Player;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class GameEngine {
@@ -33,11 +31,12 @@ public class GameEngine {
     private RenderVisitor renderVisitor;
     private GameEntityAutoSpawner gameEntityAutoSpawner;
     private final PlayersController playersController;
+    private PlayersStatsRenderEngine playersStatsRenderEngine;
     private final ImageLoader imageLoader;
     private final Map<KeyCode, Player> keyBindings;
     private MainTimer mainTimer;
     private KeyTracker keyTracker;
-    private Pane pane;
+    private Pane  mainPane,gamePane, uiPane;
     private boolean gamePaused;
     private long lastActionTime;
 
@@ -47,16 +46,29 @@ public class GameEngine {
         this.gameContext=gameContext;
         imageLoader=new ImageLoader();
         playersController=new PlayersController();
+
         keyBindings=new HashMap<>();
         gamePaused=false;
     }
 
     public Parent launchGame() throws IOException {
-
-        Image backImage=imageLoader.loadFromResources("background.png", pane.getMaxWidth(), pane.getMaxHeight());
+        mainPane=new Pane();
+        gamePane= new Pane();
+        Image backImage=imageLoader.loadFromResources("background.png", gamePane.getMaxWidth(), gamePane.getMaxHeight());
         BackgroundImage background=new BackgroundImage(backImage,null, null, null, null);
         Background background1=new Background(background);
-        pane.setBackground(background1);
+        gamePane.setBackground(background1);
+
+        movementVisitor=new MovementVisitor(gamePane);
+        renderVisitor=new RenderVisitor(gamePane);
+        collisionsVisitor=new CollisionsVisitor(playersController);
+        gameEntityAutoSpawner=new GameEntityAutoSpawner(gamePane);
+        gameEntityAutoSpawner.addVisitor(movementVisitor);
+        gameEntityAutoSpawner.addVisitor(collisionsVisitor);
+        gameEntityAutoSpawner.addVisitor(renderVisitor);
+        GameConfig.loadConfig();
+
+
 
         Map<KeyCode,Movement> playerBindings=new HashMap<>();
         playerBindings.put(KeyCode.W,Movement.FORWARD);
@@ -66,7 +78,7 @@ public class GameEngine {
         playerBindings.put(KeyCode.Q,Movement.ROTATE_LEFT);
         playerBindings.put(KeyCode.E,Movement.ROTATE_RIGHT);
         playerBindings.put(KeyCode.SPACE,Movement.SHOOT);
-        addPlayer("German",3,100,"starship.png",playerBindings);
+        addPlayer("German",3,0,"starship.png",playerBindings);
         Map<KeyCode,Movement> playerBindings2=new HashMap<>();
         playerBindings2.put(KeyCode.NUMPAD5,Movement.FORWARD);
         playerBindings2.put(KeyCode.NUMPAD2,Movement.BACKWARDS);
@@ -75,25 +87,18 @@ public class GameEngine {
         playerBindings2.put(KeyCode.NUMPAD4,Movement.ROTATE_LEFT);
         playerBindings2.put(KeyCode.NUMPAD6,Movement.ROTATE_RIGHT);
         playerBindings2.put(KeyCode.NUMPAD0,Movement.SHOOT);
-        addPlayer("Juan",3,100,"starship.png",playerBindings2);
+        addPlayer("Juan",3,20,"starship.png",playerBindings2);
         keyTracker=gameContext.getKeyTracker();
+        playersStatsRenderEngine=new PlayersStatsRenderEngine(playersController, gamePane);
         if (mainTimer==null){
             mainTimer= new MainTimer(this);
             mainTimer.start();
         }
-        return pane;
+        return gamePane;
     }
 
     public Parent start() throws IOException {
-        pane= new Pane();
-        movementVisitor=new MovementVisitor(pane);
-        renderVisitor=new RenderVisitor(pane);
-        collisionsVisitor=new CollisionsVisitor(playersController);
-        gameEntityAutoSpawner=new GameEntityAutoSpawner(pane);
-        gameEntityAutoSpawner.addVisitor(movementVisitor);
-        gameEntityAutoSpawner.addVisitor(collisionsVisitor);
-        gameEntityAutoSpawner.addVisitor(renderVisitor);
-        GameConfig.loadConfig();
+
         return launchGame();
     }
 
@@ -128,6 +133,7 @@ public class GameEngine {
             collisionsVisitor.checkColisions();
             renderVisitor.update();
             gameEntityAutoSpawner.update();
+            playersStatsRenderEngine.update();
         }
 
     }

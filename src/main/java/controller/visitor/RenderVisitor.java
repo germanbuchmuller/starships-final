@@ -52,7 +52,7 @@ public class RenderVisitor implements EntityVisitor{
         }
         entitiesToRender.clear();
         for (int i = 0; i < n; i++) {
-            pane.getChildren().add(entitiesView.get(i).getView());
+            pane.getChildren().add(0,entitiesView.get(i).getView());
         }
         for (EntityView entityView : entitiesView) {
             if (!entityView.getEntity().isDestroyed()){

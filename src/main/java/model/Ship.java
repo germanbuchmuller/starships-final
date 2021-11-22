@@ -16,7 +16,7 @@ public class Ship extends AbstractEntity{
     }
 
     public void shoot(){
-        weapon.shoot(getX(),getY(),getAngle());
+        if (!isDestroyed()) weapon.shoot(getX(),getY(),getAngle());
     }
 
     public void setBulletType(@NotNull BulletType bulletType){
