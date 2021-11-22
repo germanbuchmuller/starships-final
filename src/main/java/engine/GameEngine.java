@@ -3,6 +3,7 @@ package engine;
 import controller.Movement;
 import controller.PlayersController;
 import controller.visitor.CollisionsVisitor;
+import controller.visitor.EntityVisitor;
 import controller.visitor.MovementVisitor;
 import controller.visitor.RenderVisitor;
 import edu.austral.dissis.starships.file.ImageLoader;
@@ -21,6 +22,7 @@ import player.Player;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class GameEngine {
@@ -29,12 +31,15 @@ public class GameEngine {
     private CollisionsVisitor collisionsVisitor;
     private MovementVisitor movementVisitor;
     private RenderVisitor renderVisitor;
+    private GameEntityAutoSpawner gameEntityAutoSpawner;
     private final PlayersController playersController;
     private final ImageLoader imageLoader;
     private final Map<KeyCode, Player> keyBindings;
     private MainTimer mainTimer;
     private KeyTracker keyTracker;
     private Pane pane;
+    private boolean gamePaused;
+    private long lastActionTime;
 
 
     public GameEngine(@NotNull GameContext gameContext, @NotNull RootSetter rootSetter) {
@@ -43,6 +48,7 @@ public class GameEngine {
         imageLoader=new ImageLoader();
         playersController=new PlayersController();
         keyBindings=new HashMap<>();
+        gamePaused=false;
     }
 
     public Parent launchGame() throws IOException {
@@ -75,7 +81,6 @@ public class GameEngine {
             mainTimer= new MainTimer(this);
             mainTimer.start();
         }
-
         return pane;
     }
 
@@ -84,6 +89,10 @@ public class GameEngine {
         movementVisitor=new MovementVisitor(pane);
         renderVisitor=new RenderVisitor(pane);
         collisionsVisitor=new CollisionsVisitor(playersController);
+        gameEntityAutoSpawner=new GameEntityAutoSpawner(pane);
+        gameEntityAutoSpawner.addVisitor(movementVisitor);
+        gameEntityAutoSpawner.addVisitor(collisionsVisitor);
+        gameEntityAutoSpawner.addVisitor(renderVisitor);
         GameConfig.loadConfig();
         return launchGame();
     }
@@ -101,16 +110,26 @@ public class GameEngine {
     }
 
     public void update(double secondsSinceLastFrame) throws IOException {
-        movementVisitor.updateSelfMovableEntities(secondsSinceLastFrame);
         for (KeyCode keyCode : keyTracker.getKeySet()) {
-            if (keyBindings.containsKey(keyCode)){
-                Player player = keyBindings.get(keyCode);
-                Map<KeyCode,Movement> playerBindings = player.getKeyBindings();
-                movementVisitor.updateUserMovableEntity(player.getShip(),playerBindings.get(keyCode),secondsSinceLastFrame);
+            if (keyCode==KeyCode.P && System.currentTimeMillis()-lastActionTime>700){
+                gamePaused=!gamePaused;
+                lastActionTime=System.currentTimeMillis();
+            }
+            if (!gamePaused){
+                if (keyBindings.containsKey(keyCode)){
+                    Player player = keyBindings.get(keyCode);
+                    Map<KeyCode,Movement> playerBindings = player.getKeyBindings();
+                    movementVisitor.updateUserMovableEntity(player.getShip(),playerBindings.get(keyCode),secondsSinceLastFrame);
+                }
             }
         }
-        collisionsVisitor.checkColisions();
-        renderVisitor.update();
+        if (!gamePaused){
+            movementVisitor.updateSelfMovableEntities(secondsSinceLastFrame);
+            collisionsVisitor.checkColisions();
+            renderVisitor.update();
+            gameEntityAutoSpawner.update();
+        }
+
     }
 
     private static class MainTimer extends GameTimer{

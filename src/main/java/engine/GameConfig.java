@@ -7,6 +7,9 @@ import java.util.Map;
 
 public class GameConfig {
     public static int PLAYER_LIVES = 3;
+    public static int MIN_ASTEROIDS_IN_GAME = 3;
+    public static int MAX_ASTEROIDS_IN_GAME = 6;
+    public static int ASTEROID_SPEED = 250;
     public static int SHIP_HEALTH = 100;
     public static int SHIP_SPEED = 200;
     public static int SHIP_REWARD_POINTS = 10;

@@ -82,7 +82,7 @@ public abstract class AbstractEntity implements Entity{
     @Override
     public void destroy() {
         isDestroyed=true;
-        System.out.println(this + "destroyed");
+        System.out.println(this + " destroyed");
     }
 
     @Override
