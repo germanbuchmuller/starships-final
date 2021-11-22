@@ -5,7 +5,9 @@ import misc.BulletType;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class GameConfig {
@@ -27,6 +29,9 @@ public class GameConfig {
     public static Map<BulletType, Integer> BULLET_HEIGHT = new HashMap<>();
     public static Map<BulletType, String> BULLET_TEXTURE = new HashMap<>();
     public static Map<BulletType, Integer> BULLET_MIN_TIME = new HashMap<>();
+
+
+    public static List<String> SHIP_TEXTURE = new ArrayList<>();
 
     public static void loadConfig(@NotNull String configFileName) throws IOException {
         FileLoader fileLoader = new FileLoader();
@@ -63,6 +68,9 @@ public class GameConfig {
                         break;
                     case "SHIP_HEIGHT":
                         SHIP_HEIGHT=Double.parseDouble(atributeValue);
+                        break;
+                    case "SHIP_TEXTURE":
+                        SHIP_TEXTURE.add(atributeValue);
                         break;
                     case "BULLET_DAMAGES":
                         BULLET_DAMAGES.put(BulletType.valueOf(atributeValue.substring(0,atributeValue.indexOf(","))),Integer.parseInt(atributeValue.substring(atributeValue.indexOf(",")+1)));

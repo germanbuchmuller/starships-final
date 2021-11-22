@@ -24,6 +24,8 @@ import misc.utils.Random;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class GameEngine {
     private final RootSetter rootSetter;
@@ -32,32 +34,30 @@ public class GameEngine {
     private MovementVisitor movementVisitor;
     private RenderVisitor renderVisitor;
     private GameEntityAutoSpawner gameEntityAutoSpawner;
-    private final PlayersController playersController;
+    private PlayersController playersController;
     private PlayersStatsRenderEngine playersStatsRenderEngine;
     private final ImageLoader imageLoader;
-    private final Map<KeyCode, Player> keyBindings;
+    private Map<KeyCode, Player> keyBindings;
     private MainTimer mainTimer;
     private KeyTracker keyTracker;
-    private Pane  mainPane,gamePane, uiPane;
+    private Pane  gamePane;
     private boolean gamePaused;
     private long lastActionTime;
     private long gameStartedTime;
+    private ImageView pausedGameImageView;
 
 
 
-    public GameEngine(@NotNull GameContext gameContext, @NotNull RootSetter rootSetter) {
+    public GameEngine(@NotNull GameContext gameContext, @NotNull RootSetter rootSetter) throws IOException {
         this.rootSetter=rootSetter;
         this.gameContext=gameContext;
         imageLoader=new ImageLoader();
-        playersController=new PlayersController();
-
-        keyBindings=new HashMap<>();
-        gamePaused=false;
+        GameConfig.loadConfig("gameconfig.txt");
     }
 
-    public Parent loadMenu() throws IOException {
-        mainPane = new Pane();
-        ImageLoader imageLoader = new ImageLoader();
+    public Parent loadMainMenu() throws IOException {
+        Pane pane = new Pane();
+
         Image img = imageLoader.loadFromResources("menu-background.png", 1920, 1080);
         ImageView imageView = new ImageView(img);
 
@@ -71,6 +71,13 @@ public class GameEngine {
         newGameBtn.setOnMouseExited(event -> newGameBtn.setImage(newGameImage1));
         newGameBtn.setOnMousePressed(event -> newGameBtn.setImage(newGameImage3));
         newGameBtn.setOnMouseReleased(event -> newGameBtn.setImage(newGameImage2));
+        newGameBtn.setOnMouseClicked(event -> {
+            try {
+                rootSetter.setRoot(loadNewGameMenu());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
 
 
         Image loadGameImage1 = imageLoader.loadFromResources("loadGameBtn1.png", 620, 157);
@@ -96,11 +103,55 @@ public class GameEngine {
         quitGameBtn.setOnMouseReleased(event -> quitGameBtn.setImage(quitGameImage2));
         quitGameBtn.setOnMouseClicked(event -> System.exit(0));
 
-        mainPane.getChildren().add(imageView);
-        mainPane.getChildren().add(newGameBtn);
-        mainPane.getChildren().add(loadGameBtn);
-        mainPane.getChildren().add(quitGameBtn);
-        return mainPane;
+        pane.getChildren().add(imageView);
+        pane.getChildren().add(newGameBtn);
+        pane.getChildren().add(loadGameBtn);
+        pane.getChildren().add(quitGameBtn);
+        return pane;
+    }
+
+    public Parent loadNewGameMenu() throws IOException {
+        Pane pane = new Pane();
+
+        Image img = imageLoader.loadFromResources("newgamemenu.png", 1920, 1080);
+        ImageView background = new ImageView(img);
+
+        AtomicReference<String> player1ShipTexture = new AtomicReference<>(GameConfig.SHIP_TEXTURE.get(0));
+        AtomicInteger player1ShipTextureIndex= new AtomicInteger();
+        Image player1ShipImg = imageLoader.loadFromResources(player1ShipTexture.get(), 229, 229);
+        ImageView player1ShipImageView = new ImageView(player1ShipImg);
+        player1ShipImageView.setLayoutX(640);
+        player1ShipImageView.setLayoutY(334);
+
+
+
+        Image changeShipBtnImg = imageLoader.loadFromResources("changeshipbtn.png", 362, 66);
+        ImageView changePlayer1ShipBtn = new ImageView(changeShipBtnImg);
+        changePlayer1ShipBtn.setLayoutX(123);
+        changePlayer1ShipBtn.setLayoutY(952);
+        changePlayer1ShipBtn.setOnMouseClicked(event -> {
+            if (GameConfig.SHIP_TEXTURE.size()-1>player1ShipTextureIndex.get()){
+                player1ShipTextureIndex.addAndGet(1);
+
+            }else{
+                player1ShipTextureIndex.set(0);
+            }
+            player1ShipTexture.set(GameConfig.SHIP_TEXTURE.get(player1ShipTextureIndex.get()));
+            Image player1NewShipImg = null;
+            try {
+                player1NewShipImg = imageLoader.loadFromResources(player1ShipTexture.get(), 229, 229);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            player1ShipImageView.setImage(player1NewShipImg);
+        });
+
+
+
+        pane.getChildren().add(background);
+        pane.getChildren().add(player1ShipImageView);
+        pane.getChildren().add(changePlayer1ShipBtn);
+        return pane;
     }
 
     public Parent launchGame() throws IOException {
@@ -110,6 +161,12 @@ public class GameEngine {
         Background background1=new Background(background);
         gamePane.setBackground(background1);
 
+        Image img = imageLoader.loadFromResources("paused-image.png", 1920, 1080);
+        pausedGameImageView = new ImageView(img);
+        playersController=new PlayersController();
+        keyBindings=new HashMap<>();
+        gamePaused=false;
+
         movementVisitor=new MovementVisitor(gamePane);
         renderVisitor=new RenderVisitor(gamePane);
         collisionsVisitor=new CollisionsVisitor(playersController);
@@ -117,7 +174,7 @@ public class GameEngine {
         gameEntityAutoSpawner.addVisitor(movementVisitor);
         gameEntityAutoSpawner.addVisitor(collisionsVisitor);
         gameEntityAutoSpawner.addVisitor(renderVisitor);
-        GameConfig.loadConfig("gameconfig.txt");
+
 
 
         Map<KeyCode,Movement> playerBindings=new HashMap<>();
@@ -150,7 +207,7 @@ public class GameEngine {
 
     public Parent start() throws IOException {
 
-        return loadMenu();
+        return loadMainMenu();
     }
 
 
@@ -167,9 +224,15 @@ public class GameEngine {
 
     public void update(double secondsSinceLastFrame) throws IOException {
         for (KeyCode keyCode : keyTracker.getKeySet()) {
-            if (keyCode==KeyCode.P && System.currentTimeMillis()-lastActionTime>700){
+            if (keyCode==KeyCode.P && System.currentTimeMillis()-lastActionTime>300){
                 gamePaused=!gamePaused;
                 lastActionTime=System.currentTimeMillis();
+                if (gamePaused){
+                    gamePane.getChildren().add(pausedGameImageView);
+                }else{
+                    gamePane.getChildren().remove(pausedGameImageView);
+                }
+
             }
             if (!gamePaused){
                 if (keyBindings.containsKey(keyCode)){
@@ -222,7 +285,3 @@ public class GameEngine {
         }
     }
 }
-
-
-
-

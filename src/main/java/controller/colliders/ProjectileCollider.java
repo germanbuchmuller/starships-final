@@ -35,7 +35,7 @@ public class ProjectileCollider implements EntityCollider{
             harm(entityCollider.getEntity());
             projectile.destroy();
             playersController.addPointsToPlayer(projectile.getPlayerID(),projectile.getRewardPoints());
-        }else if (entityCollider.getEntity().getType()==EntityType.PROJECTILE){
+        }else if (entityCollider.getEntity().getType()==EntityType.PROJECTILE && entityCollider.getEntity().getPlayerID()!=projectile.getPlayerID() ){
             projectile.destroy();
         }
     }

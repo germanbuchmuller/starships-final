@@ -10,16 +10,12 @@ public class PlayerStatsView {
     private final Text playerNameText;
     private final Text playerPointsText;
     private final Text playerLivesText;
-    private double x, y;
-    private int fontSize;
 
     public PlayerStatsView(Player player, double x, double y, int fontSize) {
         this.player = player;
         playerNameText=new Text(player.getName());
         playerPointsText=new Text("Points: "+player.getPoints());
         playerLivesText=new Text("Lives: "+player.getLives());
-        this.x=x;
-        this.y=y;
         playerNameText.setLayoutX(x);
         playerNameText.setLayoutY(y);
         playerNameText.setFont(Font.font(fontSize));
@@ -32,7 +28,6 @@ public class PlayerStatsView {
         playerLivesText.setLayoutY(y+2*fontSize);
         playerLivesText.setFont(Font.font(fontSize));
         playerLivesText.setFill(Color.RED);
-        this.fontSize=fontSize;
     }
 
     public void update(){
@@ -51,9 +46,5 @@ public class PlayerStatsView {
 
     public Text getPlayerLivesText() {
         return playerLivesText;
-    }
-
-    public int getFontSize() {
-        return fontSize;
     }
 }
