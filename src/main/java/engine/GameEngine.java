@@ -69,8 +69,7 @@ public class GameEngine {
         gameEntityAutoSpawner.addVisitor(movementVisitor);
         gameEntityAutoSpawner.addVisitor(collisionsVisitor);
         gameEntityAutoSpawner.addVisitor(renderVisitor);
-        GameConfig.loadConfig();
-
+        GameConfig.loadConfig("gameconfig.txt");
 
 
         Map<KeyCode,Movement> playerBindings=new HashMap<>();
