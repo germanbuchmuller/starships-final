@@ -1,5 +1,6 @@
 package controller.colliders;
 
+import javafx.scene.shape.Circle;
 import model.Asteroid;
 import model.Entity;
 import model.EntityType;
@@ -21,7 +22,7 @@ public class AsteroidCollider implements EntityCollider{
 
     @Override
     public @NotNull Shape getShape() {
-        Shape shipShape = new Rectangle(asteroid.getX(),asteroid.getY(),asteroid.getWidth(),asteroid.getHeight());
+        Shape shipShape = new Circle(asteroid.getX()+asteroid.getWidth()/2,asteroid.getY()+asteroid.getWidth()/2,asteroid.getWidth()/2);
         shipShape.setRotate(asteroid.getAngle());
         return shipShape;
     }
@@ -35,6 +36,9 @@ public class AsteroidCollider implements EntityCollider{
 
     private void harm(Entity entity) {
         entity.setHealth(Math.max((entity.getHealth() - asteroid.getDamage()), 0));
+        if (entity.getHealth()==0){
+            entity.destroy();
+        }
     }
 
 }

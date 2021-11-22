@@ -15,6 +15,8 @@ public interface Entity {
     void setHealth(int health);
     int getRewardPoints();
     int getPlayerID();
+    void destroy();
+    boolean isDestroyed();
     String getImageFileName();
     void setPosition(double x,double y,double angle);
     void accept(@NotNull EntityVisitor visitor);

@@ -2,6 +2,7 @@ package controller.visitor;
 
 import controller.EntityController;
 import controller.Movement;
+import javafx.scene.layout.Pane;
 import model.Asteroid;
 import model.Entity;
 import model.Projectile;
@@ -12,11 +13,16 @@ import java.util.List;
 
 public class MovementVisitor implements EntityVisitor {
     private final List<Entity> selfMovableEntities;
+    private final List<Entity> entitiesToRemove;
     EntityController entityController;
+    private Pane pane;
 
-    public MovementVisitor() {
+    public MovementVisitor(Pane pane) {
         selfMovableEntities =new ArrayList<>();
-        entityController=new EntityController();
+        entitiesToRemove =new ArrayList<>();
+        this.pane=pane;
+
+        entityController=new EntityController(pane);
     }
 
     @Override
@@ -33,12 +39,21 @@ public class MovementVisitor implements EntityVisitor {
     }
 
     public void updateSelfMovableEntities(double secondsSinceLastFrame){
+        entityController.setCanMoveOutOfBounds(true);
         for (Entity selfMovableEntity : selfMovableEntities) {
             entityController.moveForward(selfMovableEntity, secondsSinceLastFrame);
+            if (checkIfEntityOutOfBorders(selfMovableEntity)){
+                selfMovableEntity.destroy();
+                entitiesToRemove.add(selfMovableEntity);
+            }
         }
+        selfMovableEntities.removeAll(entitiesToRemove);
+        entitiesToRemove.clear();
     }
 
     public void updateUserMovableEntity(Entity entity, Movement movement, double secondsSinceLastFrame){
+        entityController.setCanMoveOutOfBounds(false);
+        checkIfEntityOutOfBorders(entity);
         switch (movement){
             case FORWARD:
                 entityController.moveForward(entity,secondsSinceLastFrame);
@@ -58,7 +73,22 @@ public class MovementVisitor implements EntityVisitor {
             case ROTATE_RIGHT:
                 entityController.rotateRight(entity,secondsSinceLastFrame);
                 break;
+            case SHOOT:
+                entityController.shoot(entity);
+                break;
         }
+    }
+
+    private boolean checkIfEntityOutOfBorders(Entity entity){
+        if (pane.getLayoutBounds().getMaxY()<(entity.getY()-entity.getHeight()-entity.getWidth()) || pane.getLayoutBounds().getMaxX()<(entity.getX()-entity.getWidth()-entity.getHeight())){
+            return true;
+        }else return entity.getY() + entity.getHeight() + entity.getWidth() < 0 || entity.getX() + entity.getHeight() + entity.getWidth() < 0;
+    }
+
+    private boolean checkIfEntityCollidingWithBorders(Entity entity){
+        if (pane.getLayoutBounds().getMaxY()<=(entity.getY()+entity.getHeight()) || pane.getLayoutBounds().getMaxX()<=(entity.getX()+entity.getWidth())){
+            return true;
+        }else return entity.getY()  <= 0 || entity.getX()  <= 0;
     }
 
 }

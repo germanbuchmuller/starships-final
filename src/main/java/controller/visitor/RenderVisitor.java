@@ -1,6 +1,7 @@
 package controller.visitor;
 
 import edu.austral.dissis.starships.file.ImageLoader;
+import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import model.Asteroid;
 import model.Entity;
@@ -15,12 +16,16 @@ import java.util.List;
 public class RenderVisitor implements EntityVisitor{
     private final List<EntityView> entitiesView;
     private final List<Entity> entitiesToRender;
+    private final List<EntityView> entitiesViewToRemove;
+    private final List<Node> viewsToRemove;
     private final ImageLoader imageLoader;
     private final Pane pane;
 
     public RenderVisitor(Pane pane) {
         entitiesView =new ArrayList<>();
         entitiesToRender=new ArrayList<>();
+        viewsToRemove=new ArrayList<>();
+        entitiesViewToRemove=new ArrayList<>();
         imageLoader=new ImageLoader();
         this.pane=pane;
     }
@@ -50,8 +55,17 @@ public class RenderVisitor implements EntityVisitor{
             pane.getChildren().add(entitiesView.get(i).getView());
         }
         for (EntityView entityView : entitiesView) {
-            entityView.update();
+            if (!entityView.getEntity().isDestroyed()){
+                entityView.update();
+            }else{
+                entitiesViewToRemove.add(entityView);
+                viewsToRemove.add(entityView.getView());
+                pane.getChildren().remove(entityView.getView());
+            }
         }
-
+        entitiesView.removeAll(entitiesViewToRemove);
+        pane.getChildren().removeAll(viewsToRemove);
+        entitiesViewToRemove.clear();
+        viewsToRemove.clear();
     }
 }

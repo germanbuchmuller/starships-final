@@ -28,4 +28,8 @@ public class EntityView {
     public ImageView getView(){
         return imageView;
     }
+
+    public Entity getEntity() {
+        return entity;
+    }
 }

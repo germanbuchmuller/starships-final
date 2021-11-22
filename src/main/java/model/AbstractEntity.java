@@ -6,6 +6,7 @@ public abstract class AbstractEntity implements Entity{
     private double x, y, angle;
     private final double width, height;
     private final String imageFileName;
+    private boolean isDestroyed;
 
 
     public AbstractEntity(int health, int maxSpeed, int rewardPoints, double x, double y, double angle, double width, double height, String imageFileName) {
@@ -18,6 +19,7 @@ public abstract class AbstractEntity implements Entity{
         this.height=height;
         this.rewardPoints=rewardPoints;
         this.imageFileName=imageFileName;
+        isDestroyed=false;
     }
 
     @Override
@@ -75,5 +77,16 @@ public abstract class AbstractEntity implements Entity{
     @Override
     public String getImageFileName() {
         return imageFileName;
+    }
+
+    @Override
+    public void destroy() {
+        isDestroyed=true;
+        System.out.println(this + "destroyed");
+    }
+
+    @Override
+    public boolean isDestroyed() {
+        return isDestroyed;
     }
 }

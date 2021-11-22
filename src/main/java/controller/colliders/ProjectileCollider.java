@@ -31,17 +31,19 @@ public class ProjectileCollider implements EntityCollider{
 
     @Override
     public void handleCollisionWith(@NotNull EntityCollider entityCollider) {
-        if (entityCollider.getEntity().getType()== EntityType.SHIP){
-            harm(entityCollider.getEntity());
-        }
         if (entityCollider.getEntity().getPlayerID()!=projectile.getPlayerID()){
-            projectile.setHealth(0);
+            harm(entityCollider.getEntity());
+            projectile.destroy();
+            playersController.addPointsToPlayer(projectile.getPlayerID(),projectile.getRewardPoints());
         }
     }
 
     private void harm(Entity entity) {
         entity.setHealth(Math.max((entity.getHealth() - projectile.getDamage()), 0));
-        if (entity.getHealth()==0) playersController.addPointsToPlayer(projectile.getPlayerID(), entity.getRewardPoints());
+        if (entity.getHealth()==0) {
+            playersController.addPointsToPlayer(projectile.getPlayerID(), entity.getRewardPoints());
+            entity.destroy();
+        }
     }
 
 }

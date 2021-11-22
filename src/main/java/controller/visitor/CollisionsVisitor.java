@@ -14,11 +14,13 @@ import java.util.List;
 
 public final class CollisionsVisitor implements EntityVisitor {
     private final List<EntityCollider> colliders;
+    private final List<EntityCollider> collidersToRemove;
     private final CollisionEngine collisionEngine;
     private final PlayersController playersController;
 
     public CollisionsVisitor(@NotNull PlayersController playersController) {
         colliders=new ArrayList<>();
+        collidersToRemove=new ArrayList<>();
         collisionEngine=new CollisionEngine();
         this.playersController=playersController;
     }
@@ -40,11 +42,13 @@ public final class CollisionsVisitor implements EntityVisitor {
 
     public void checkColisions(){
         collisionEngine.checkCollisions(colliders);
+        for (EntityCollider collider : colliders) {
+            if (collider.getEntity().isDestroyed()){
+                collidersToRemove.add(collider);
+            }
+        }
+        colliders.removeAll(collidersToRemove);
+        collidersToRemove.clear();
     }
-
-
-
-
-
 
 }
