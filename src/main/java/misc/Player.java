@@ -1,13 +1,12 @@
-package player;
+package misc;
 
 import controller.Movement;
 import controller.visitor.EntityVisitor;
 import engine.GameConfig;
 import javafx.scene.input.KeyCode;
 import model.Ship;
-import utils.Random;
+import misc.utils.Random;
 
-import java.util.List;
 import java.util.Map;
 
 public class Player {

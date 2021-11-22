@@ -31,10 +31,12 @@ public class ProjectileCollider implements EntityCollider{
 
     @Override
     public void handleCollisionWith(@NotNull EntityCollider entityCollider) {
-        if (entityCollider.getEntity().getPlayerID()!=projectile.getPlayerID()){
+        if (entityCollider.getEntity().getPlayerID()!=projectile.getPlayerID() && entityCollider.getEntity().getType()!=EntityType.PROJECTILE){
             harm(entityCollider.getEntity());
             projectile.destroy();
             playersController.addPointsToPlayer(projectile.getPlayerID(),projectile.getRewardPoints());
+        }else if (entityCollider.getEntity().getType()==EntityType.PROJECTILE){
+            projectile.destroy();
         }
     }
 

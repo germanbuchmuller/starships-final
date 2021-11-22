@@ -12,13 +12,14 @@ import edu.austral.dissis.starships.game.KeyTracker;
 import edu.austral.dissis.starships.game.RootSetter;
 import javafx.scene.Parent;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.Pane;
 import org.jetbrains.annotations.NotNull;
-import player.Player;
-import utils.Random;
+import misc.Player;
+import misc.utils.Random;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -54,8 +55,55 @@ public class GameEngine {
         gamePaused=false;
     }
 
+    public Parent loadMenu() throws IOException {
+        mainPane = new Pane();
+        ImageLoader imageLoader = new ImageLoader();
+        Image img = imageLoader.loadFromResources("menu-background.png", 1920, 1080);
+        ImageView imageView = new ImageView(img);
+
+        Image newGameImage1 = imageLoader.loadFromResources("newGameBtn1.png", 620, 157);
+        Image newGameImage2 = imageLoader.loadFromResources("newGameBtn2.png", 620, 157);
+        Image newGameImage3 = imageLoader.loadFromResources("newGameBtn3.png", 620, 157);
+        ImageView newGameBtn = new ImageView(newGameImage1);
+        newGameBtn.setLayoutX(660);
+        newGameBtn.setLayoutY(530);
+        newGameBtn.setOnMouseEntered(event -> newGameBtn.setImage(newGameImage2));
+        newGameBtn.setOnMouseExited(event -> newGameBtn.setImage(newGameImage1));
+        newGameBtn.setOnMousePressed(event -> newGameBtn.setImage(newGameImage3));
+        newGameBtn.setOnMouseReleased(event -> newGameBtn.setImage(newGameImage2));
+
+
+        Image loadGameImage1 = imageLoader.loadFromResources("loadGameBtn1.png", 620, 157);
+        Image loadGameImage2 = imageLoader.loadFromResources("loadGameBtn2.png", 620, 157);
+        Image loadGameImage3 = imageLoader.loadFromResources("loadGameBtn3.png", 620, 157);
+        ImageView loadGameBtn = new ImageView(loadGameImage1);
+        loadGameBtn.setLayoutX(660);
+        loadGameBtn.setLayoutY(700);
+        loadGameBtn.setOnMouseEntered(event -> loadGameBtn.setImage(loadGameImage2));
+        loadGameBtn.setOnMouseExited(event -> loadGameBtn.setImage(loadGameImage1));
+        loadGameBtn.setOnMousePressed(event -> loadGameBtn.setImage(loadGameImage3));
+        loadGameBtn.setOnMouseReleased(event -> loadGameBtn.setImage(loadGameImage2));
+
+        Image quitGameImage1 = imageLoader.loadFromResources("quitGameBtn1.png", 620, 157);
+        Image quitGameImage2 = imageLoader.loadFromResources("quitGameBtn2.png", 620, 157);
+        Image quitGameImage3 = imageLoader.loadFromResources("quitGameBtn3.png", 620, 157);
+        ImageView quitGameBtn = new ImageView(quitGameImage1);
+        quitGameBtn.setLayoutX(660);
+        quitGameBtn.setLayoutY(870);
+        quitGameBtn.setOnMouseEntered(event -> quitGameBtn.setImage(quitGameImage2));
+        quitGameBtn.setOnMouseExited(event -> quitGameBtn.setImage(quitGameImage1));
+        quitGameBtn.setOnMousePressed(event -> quitGameBtn.setImage(quitGameImage3));
+        quitGameBtn.setOnMouseReleased(event -> quitGameBtn.setImage(quitGameImage2));
+        quitGameBtn.setOnMouseClicked(event -> System.exit(0));
+
+        mainPane.getChildren().add(imageView);
+        mainPane.getChildren().add(newGameBtn);
+        mainPane.getChildren().add(loadGameBtn);
+        mainPane.getChildren().add(quitGameBtn);
+        return mainPane;
+    }
+
     public Parent launchGame() throws IOException {
-        mainPane=new Pane();
         gamePane= new Pane();
         Image backImage=imageLoader.loadFromResources("background.png", gamePane.getMaxWidth(), gamePane.getMaxHeight());
         BackgroundImage background=new BackgroundImage(backImage,null, null, null, null);
@@ -80,7 +128,7 @@ public class GameEngine {
         playerBindings.put(KeyCode.Q,Movement.ROTATE_LEFT);
         playerBindings.put(KeyCode.E,Movement.ROTATE_RIGHT);
         playerBindings.put(KeyCode.SPACE,Movement.SHOOT);
-        addPlayer("German",3,0,"starship.png",playerBindings);
+        addPlayer("German",GameConfig.PLAYER_LIVES,0,"starship.png",playerBindings);
         Map<KeyCode,Movement> playerBindings2=new HashMap<>();
         playerBindings2.put(KeyCode.NUMPAD5,Movement.FORWARD);
         playerBindings2.put(KeyCode.NUMPAD2,Movement.BACKWARDS);
@@ -89,7 +137,7 @@ public class GameEngine {
         playerBindings2.put(KeyCode.NUMPAD4,Movement.ROTATE_LEFT);
         playerBindings2.put(KeyCode.NUMPAD6,Movement.ROTATE_RIGHT);
         playerBindings2.put(KeyCode.NUMPAD0,Movement.SHOOT);
-        addPlayer("Juan",3,20,"starship.png",playerBindings2);
+        addPlayer("Juan",GameConfig.PLAYER_LIVES,0,"starship.png",playerBindings2);
         keyTracker=gameContext.getKeyTracker();
         playersStatsRenderEngine=new PlayersStatsRenderEngine(playersController, gamePane);
         if (mainTimer==null){
@@ -102,7 +150,7 @@ public class GameEngine {
 
     public Parent start() throws IOException {
 
-        return launchGame();
+        return loadMenu();
     }
 
 

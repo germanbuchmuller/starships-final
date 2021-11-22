@@ -1,6 +1,6 @@
 package controller;
 
-import player.Player;
+import misc.Player;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package utils;
+package misc.utils;
 
 public class Random {
 

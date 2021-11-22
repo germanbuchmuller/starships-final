@@ -4,7 +4,7 @@ import controller.visitor.EntityVisitor;
 import javafx.scene.layout.Pane;
 import model.Asteroid;
 import org.jetbrains.annotations.NotNull;
-import utils.Random;
+import misc.utils.Random;
 
 import java.util.ArrayList;
 import java.util.List;

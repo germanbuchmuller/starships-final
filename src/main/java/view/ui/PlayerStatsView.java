@@ -1,14 +1,9 @@
-package view;
+package view.ui;
 
-import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import player.Player;
-
-import javax.swing.text.html.ImageView;
-import java.util.ArrayList;
-import java.util.List;
+import misc.Player;
 
 public class PlayerStatsView {
     private final Player player;

@@ -3,7 +3,7 @@ package engine;
 import controller.PlayersController;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
-import view.PlayerStatsView;
+import view.ui.PlayerStatsView;
 
 import java.util.ArrayList;
 import java.util.List;
