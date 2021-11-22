@@ -18,6 +18,7 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.Pane;
 import org.jetbrains.annotations.NotNull;
 import player.Player;
+import utils.Random;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -39,6 +40,8 @@ public class GameEngine {
     private Pane  mainPane,gamePane, uiPane;
     private boolean gamePaused;
     private long lastActionTime;
+    private long gameStartedTime;
+
 
 
     public GameEngine(@NotNull GameContext gameContext, @NotNull RootSetter rootSetter) {
@@ -94,6 +97,7 @@ public class GameEngine {
             mainTimer= new MainTimer(this);
             mainTimer.start();
         }
+        gameStartedTime=System.currentTimeMillis();
         return gamePane;
     }
 
@@ -132,10 +136,27 @@ public class GameEngine {
             movementVisitor.updateSelfMovableEntities(secondsSinceLastFrame);
             collisionsVisitor.checkColisions();
             renderVisitor.update();
-            gameEntityAutoSpawner.update();
+            if (System.currentTimeMillis()-gameStartedTime>2000){
+                gameEntityAutoSpawner.update();
+            }
             playersStatsRenderEngine.update();
+            checkDeadPlayers();
+
         }
 
+    }
+
+    private void checkDeadPlayers(){
+        for (Player player : playersController.getPlayers()) {
+            if (player.getShip().isDestroyed()){
+                if (player.revive()){
+                    player.getShip().revive(Random.get(20,(int)gamePane.getLayoutBounds().getMaxX()-50),Random.get(20,(int)gamePane.getLayoutBounds().getMaxY()-50));
+                    player.addVisitor(movementVisitor);
+                    player.addVisitor(collisionsVisitor);
+                    player.addVisitor(renderVisitor);
+                }
+            }
+        }
     }
 
     private static class MainTimer extends GameTimer{

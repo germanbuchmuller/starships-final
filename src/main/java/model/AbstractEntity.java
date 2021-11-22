@@ -2,6 +2,7 @@ package model;
 
 public abstract class AbstractEntity implements Entity{
     private int health;
+    protected int maxHealth;
     private final int maxSpeed, rewardPoints;
     private double x, y, angle;
     private final double width, height;
@@ -9,8 +10,9 @@ public abstract class AbstractEntity implements Entity{
     private boolean isDestroyed;
 
 
-    public AbstractEntity(int health, int maxSpeed, int rewardPoints, double x, double y, double angle, double width, double height, String imageFileName) {
-        this.health = health;
+    public AbstractEntity(int maxHealth, int maxSpeed, int rewardPoints, double x, double y, double angle, double width, double height, String imageFileName) {
+        this.health = maxHealth;
+        this.maxHealth = maxHealth;
         this.maxSpeed = maxSpeed;
         this.x = x;
         this.y = y;
@@ -88,5 +90,9 @@ public abstract class AbstractEntity implements Entity{
     @Override
     public boolean isDestroyed() {
         return isDestroyed;
+    }
+
+    protected void setDestroyed(boolean destroyed){
+        this.isDestroyed=destroyed;
     }
 }

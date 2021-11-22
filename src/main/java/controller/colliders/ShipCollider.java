@@ -29,7 +29,14 @@ public class ShipCollider implements EntityCollider{
 
     @Override
     public void handleCollisionWith(@NotNull EntityCollider entityCollider) {
-        if (entityCollider.getEntity().getPlayerID()!=ship.getPlayerID() && entityCollider.getEntity().getType() != EntityType.PROJECTILE){
+
+        if (entityCollider.getEntity().getType()==EntityType.SHIP){
+            /*
+            Vector2 vector = Vector2.vectorFromModule(ship.getHeight(),Math.toRadians(ship.getAngle())+Math.toRadians(90));
+            ship.setPosition(ship.getX()+vector.getX(), ship.getY()+vector.getY(), 30);
+
+             */
+        }else if (entityCollider.getEntity().getPlayerID()!=ship.getPlayerID() && entityCollider.getEntity().getType() != EntityType.PROJECTILE){
             Vector2 vector = Vector2.vectorFromModule(ship.getHeight(),Math.toRadians(ship.getAngle())+Math.toRadians(90));
             ship.setPosition(ship.getX()+vector.getX(), ship.getY()+vector.getY(), ship.getAngle());
         }

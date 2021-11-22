@@ -7,6 +7,7 @@ import javafx.scene.input.KeyCode;
 import model.Ship;
 import utils.Random;
 
+import java.util.List;
 import java.util.Map;
 
 public class Player {
@@ -62,5 +63,15 @@ public class Player {
 
     public int getLives() {
         return lives;
+    }
+
+    public boolean revive(){
+        if (lives>1){
+            lives--;
+            return true;
+        }else{
+            lives=0;
+            return false;
+        }
     }
 }
