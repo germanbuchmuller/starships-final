@@ -8,7 +8,7 @@ import serialize.SerializableEntity;
 import serialize.SerializedEntity;
 import serialize.SerializedShip;
 
-public class Ship extends AbstractEntity implements SerializableEntity {
+public class Ship extends AbstractEntity{
     private final int playerID;
     private Weapon weapon;
     private long lastRevive;
