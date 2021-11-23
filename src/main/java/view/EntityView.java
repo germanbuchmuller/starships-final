@@ -2,7 +2,6 @@ package view;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
 import model.Entity;
 
 public class EntityView {
@@ -19,10 +18,6 @@ public class EntityView {
         imageView.setLayoutX(entity.getX());
         imageView.setLayoutY(entity.getY());
         imageView.setRotate(entity.getAngle());
-    }
-
-    public void updateTexture(Image image){
-        imageView.setImage(image);
     }
 
     public ImageView getView(){

@@ -4,8 +4,11 @@ import misc.BulletType;
 import misc.Weapon;
 import org.jetbrains.annotations.NotNull;
 import controller.visitor.EntityVisitor;
+import serialize.SerializableEntity;
+import serialize.SerializedEntity;
+import serialize.SerializedShip;
 
-public class Ship extends AbstractEntity{
+public class Ship extends AbstractEntity implements SerializableEntity {
     private final int playerID;
     private Weapon weapon;
     private long lastRevive;
@@ -25,9 +28,8 @@ public class Ship extends AbstractEntity{
     }
 
     public void revive(double x, double y){
+        super.revive();
         lastRevive=System.currentTimeMillis();
-        setDestroyed(false);
-        setHealth(maxHealth);
         setPosition(x,y,0);
     }
 
@@ -52,5 +54,18 @@ public class Ship extends AbstractEntity{
     public void accept(@NotNull EntityVisitor visitor){
         visitor.visit(this);
         weapon.accept(visitor);
+    }
+
+    public SerializedShip toSerializableShip() {
+        return new SerializedShip(getHealth(),getMaxSpeed(),getRewardPoints(),getPlayerID(),getX(),getY(),getAngle(),getWidth(),getHeight(),getImageFileName());
+    }
+
+    public BulletType getBulletType(){
+        return weapon.getBulletType();
+    }
+
+    @Override
+    public SerializedShip toSerializedEntity() {
+        return new SerializedShip(getHealth(),getMaxSpeed(),getRewardPoints(),getPlayerID(),getX(),getY(),getAngle(),getWidth(),getHeight(),getImageFileName());
     }
 }

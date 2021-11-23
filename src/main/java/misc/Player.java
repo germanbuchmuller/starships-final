@@ -6,12 +6,13 @@ import engine.GameConfig;
 import javafx.scene.input.KeyCode;
 import model.Ship;
 import misc.utils.Random;
+import serialize.SerializedPlayer;
 
 import java.util.Map;
 
 public class Player {
-    private String name;
-    private int id;
+    private final String name;
+    private final int id;
     private int points;
     private int lives;
     private Ship ship;
@@ -32,6 +33,14 @@ public class Player {
         this.keyBindings = keyBindings;
         this.ship=ship;
         this.lives=lives;
+    }
+
+    public void setShip(Ship ship) {
+        this.ship = ship;
+    }
+
+    public void setKeyBindings(Map<KeyCode, Movement> keyBindings) {
+        this.keyBindings = keyBindings;
     }
 
     public void addPoints(int points){
@@ -74,5 +83,9 @@ public class Player {
             lives=0;
             return false;
         }
+    }
+
+    public SerializedPlayer toSerializablePlayer(){
+        return new SerializedPlayer(name,id,points,lives, ship.toSerializedEntity(),ship.getBulletType(),keyBindings);
     }
 }

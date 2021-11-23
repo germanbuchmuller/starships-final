@@ -148,7 +148,7 @@ public class NewGameMenu {
         player2Bindings.put(Movement.RIGHT,KeyCode.L);
         player2Bindings.put(Movement.ROTATE_LEFT,KeyCode.U);
         player2Bindings.put(Movement.ROTATE_RIGHT,KeyCode.O);
-        player2Bindings.put(Movement.SHOOT,KeyCode.M);
+        player2Bindings.put(Movement.SHOOT,KeyCode.Y);
 
         TextField player2ForwardText = new TextField(player2Bindings.get(Movement.FORWARD).getName());
         player2ForwardText.setFont(new Font(30));

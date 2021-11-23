@@ -9,7 +9,6 @@ public abstract class AbstractEntity implements Entity{
     private final String imageFileName;
     private boolean isDestroyed;
 
-
     public AbstractEntity(int maxHealth, int maxSpeed, int rewardPoints, double x, double y, double angle, double width, double height, String imageFileName) {
         this.health = maxHealth;
         this.maxHealth = maxHealth;
@@ -57,9 +56,7 @@ public abstract class AbstractEntity implements Entity{
     }
 
     @Override
-    public int getMaxSpeed() {
-        return maxSpeed;
-    }
+    public int getMaxSpeed() { return maxSpeed; }
 
     @Override
     public void setHealth(int health) {
@@ -92,7 +89,9 @@ public abstract class AbstractEntity implements Entity{
         return isDestroyed;
     }
 
-    protected void setDestroyed(boolean destroyed){
-        this.isDestroyed=destroyed;
+    protected void revive(){
+        this.isDestroyed=false;
+        health=maxHealth;
     }
+
 }

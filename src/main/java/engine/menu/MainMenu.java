@@ -53,6 +53,15 @@ public class MainMenu {
         loadGameBtn.setOnMouseExited(event -> loadGameBtn.setImage(loadGameImage1));
         loadGameBtn.setOnMousePressed(event -> loadGameBtn.setImage(loadGameImage3));
         loadGameBtn.setOnMouseReleased(event -> loadGameBtn.setImage(loadGameImage2));
+        loadGameBtn.setOnMouseClicked(event -> {
+
+            try {
+                gameEngine.loadSavedGame();
+                gameEngine.getRootSetter().setRoot(gameEngine.launchGame());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
 
         Image quitGameImage1 = imageLoader.loadFromResources("quitGameBtn1.png", 620, 157);
         Image quitGameImage2 = imageLoader.loadFromResources("quitGameBtn2.png", 620, 157);

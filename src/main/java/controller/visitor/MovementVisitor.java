@@ -25,6 +25,10 @@ public class MovementVisitor implements EntityVisitor {
         entityController=new EntityController(pane);
     }
 
+    public List<Entity> getSelfMovableEntities() {
+        return selfMovableEntities;
+    }
+
     @Override
     public void visit(Ship ship){ }
 

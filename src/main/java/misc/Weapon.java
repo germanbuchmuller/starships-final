@@ -48,4 +48,8 @@ public class Weapon {
         String texture = GameConfig.BULLET_TEXTURE.get(bulletType);
         return new Projectile(damage,1,speed,points,x,y,angle,width,height,playerID,texture);
     }
+
+    public BulletType getBulletType() {
+        return bulletType;
+    }
 }

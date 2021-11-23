@@ -1,4 +1,4 @@
-package controller;
+package engine;
 
 import misc.Player;
 
@@ -7,12 +7,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PlayersController {
-    private List<Player> playersList;
-    private Map<Integer, Player> playersIDMap;
+public class PlayersManager {
+    private final List<Player> playersList;
+    private final Map<Integer, Player> playersIDMap;
     private int lastPlayerID;
 
-    public PlayersController() {
+    public PlayersManager() {
         playersIDMap=new HashMap<>();
         playersList=new ArrayList<>();
         lastPlayerID=0;

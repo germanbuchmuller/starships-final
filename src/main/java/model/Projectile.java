@@ -2,6 +2,8 @@ package model;
 
 import org.jetbrains.annotations.NotNull;
 import controller.visitor.EntityVisitor;
+import serialize.SerializedEntity;
+import serialize.SerializedProjectile;
 
 public class Projectile extends AbstractEntity{
     private final int damage;
@@ -29,5 +31,10 @@ public class Projectile extends AbstractEntity{
     @Override
     public void accept(@NotNull EntityVisitor visitor){
         visitor.visit(this);
+    }
+
+    @Override
+    public SerializedEntity toSerializedEntity() {
+        return new SerializedProjectile(damage,getHealth(),getMaxSpeed(),getRewardPoints(),getPlayerID(),getX(),getY(),getAngle(),getWidth(),getHeight(),getImageFileName());
     }
 }

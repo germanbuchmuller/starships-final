@@ -3,6 +3,8 @@ package engine;
 import controller.visitor.EntityVisitor;
 import javafx.scene.layout.Pane;
 import model.Asteroid;
+import model.Entity;
+import model.EntityType;
 import org.jetbrains.annotations.NotNull;
 import misc.utils.Random;
 
@@ -20,6 +22,12 @@ public class GameEntityAutoSpawner {
         this.asteroidsToRemove = new ArrayList<>();
         asteroids=new ArrayList<>();
         this.pane=pane;
+    }
+
+    public void addEntity(Entity entity){
+        if (entity.getType()== EntityType.ASTEROID){
+            asteroids.add((Asteroid)entity);
+        }
     }
 
     public void addVisitor(@NotNull EntityVisitor visitor){

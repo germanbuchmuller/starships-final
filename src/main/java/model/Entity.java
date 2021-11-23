@@ -2,8 +2,9 @@ package model;
 
 import org.jetbrains.annotations.NotNull;
 import controller.visitor.EntityVisitor;
+import serialize.SerializableEntity;
 
-public interface Entity {
+public interface Entity extends SerializableEntity {
     EntityType getType();
     double getX();
     double getY();

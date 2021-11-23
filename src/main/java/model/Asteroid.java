@@ -2,6 +2,7 @@ package model;
 
 import org.jetbrains.annotations.NotNull;
 import controller.visitor.EntityVisitor;
+import serialize.SerializedAsteroid;
 
 public class Asteroid extends AbstractEntity {
     private final int damage;
@@ -28,4 +29,9 @@ public class Asteroid extends AbstractEntity {
     public void accept(@NotNull EntityVisitor visitor){
         visitor.visit(this);
     }
+
+    @Override
+    public SerializedAsteroid toSerializedEntity() {
+            return new SerializedAsteroid(getHealth(), getMaxSpeed(), getRewardPoints(), getDamage(), getX(), getY(), getAngle(), getWidth(), getHeight(), getImageFileName());
+        }
 }
