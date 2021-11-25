@@ -1,24 +1,28 @@
 package model;
 
+import edu.austral.dissis.starships.vector.Vector2;
 import org.jetbrains.annotations.NotNull;
 import controller.visitor.EntityVisitor;
 import serialize.SerializableEntity;
 
-public interface Entity extends SerializableEntity {
+public interface Entity{
     EntityType getType();
     double getX();
     double getY();
     double getAngle();
     double getWidth();
     double getHeight();
-    int getMaxSpeed();
+    Vector2 getMovementDirection();
+    void setMovementDirection(Vector2 speed);
     int getHealth();
-    void setHealth(int health);
-    int getRewardPoints();
-    int getPlayerID();
+    void harm(int amount);
+    void heal(int amount);
     void destroy();
     boolean isDestroyed();
+    void revive();
     String getImageFileName();
+    void setAccelerating(boolean accelerating);
+    boolean isAccelerating();
     void setPosition(double x,double y,double angle);
     void accept(@NotNull EntityVisitor visitor);
 }

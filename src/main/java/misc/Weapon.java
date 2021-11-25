@@ -9,12 +9,12 @@ import java.util.List;
 
 public class Weapon {
     private final List<EntityVisitor> visitors;
-    private final int playerID;
+    private final int playerId;
     private BulletType bulletType;
     private long lastShotTime;
 
-    public Weapon(int playerID) {
-        this.playerID = playerID;
+    public Weapon(int playerId) {
+        this.playerId = playerId;
         visitors=new ArrayList<>();
         bulletType=BulletType.SMALL;
         lastShotTime=System.currentTimeMillis();
@@ -42,11 +42,10 @@ public class Weapon {
     private Projectile getProjectile(double x, double y, double angle){
         int damage = GameConfig.BULLET_DAMAGES.get(bulletType);
         int speed = GameConfig.BULLET_SPEED.get(bulletType);
-        int points = GameConfig.BULLET_POINTS.get(bulletType);
         double width = GameConfig.BULLET_WIDTH.get(bulletType);
         double height = GameConfig.BULLET_HEIGHT.get(bulletType);
         String texture = GameConfig.BULLET_TEXTURE.get(bulletType);
-        return new Projectile(damage,1,speed,points,x,y,angle,width,height,playerID,texture);
+        return new Projectile(damage,1, x, y, angle, width, height, texture, playerId);
     }
 
     public BulletType getBulletType() {

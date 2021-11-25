@@ -19,42 +19,51 @@ public class EntityController {
     }
 
     public void moveForward(Entity entity, double secondsSinceLastFrame) {
-        //sacar factor comun de todos los vectors entre los move
-        Vector2 vector = Vector2.vectorFromModule(-entity.getMaxSpeed()*secondsSinceLastFrame,Math.toRadians(entity.getAngle())+Math.toRadians(90));
-        move(entity, vector);
+        move(entity,2.5*secondsSinceLastFrame,0);
     }
 
     public void moveBackwards(Entity entity, double secondsSinceLastFrame) {
-        Vector2 vector = Vector2.vectorFromModule(entity.getMaxSpeed()*secondsSinceLastFrame,Math.toRadians(entity.getAngle())+Math.toRadians(90));
-        move(entity, vector);
+        move(entity,2.5*secondsSinceLastFrame,180);
+    }
+    public void slowDown(Entity entity, double secondsSinsceLastFrame){
+        if (!entity.isAccelerating()){
+            Vector2 oppositeVector = Vector2.vectorFromModule(0.5*secondsSinsceLastFrame,entity.getMovementDirection().getAngle()+Math.toRadians(180));
+            entity.setMovementDirection(entity.getMovementDirection().add(oppositeVector));
+            updatePosition(entity);
+        }
+        entity.setAccelerating(false);
     }
 
     public void moveLeft(Entity entity, double secondsSinceLastFrame) {
-        Vector2 vector = Vector2.vectorFromModule(-entity.getMaxSpeed()*secondsSinceLastFrame,Math.toRadians(entity.getAngle())+Math.toRadians(0));
-        move(entity, vector);
+        move(entity,2.5*secondsSinceLastFrame,270);
     }
 
     public void moveRight(Entity entity, double secondsSinceLastFrame) {
-        Vector2 vector = Vector2.vectorFromModule(-entity.getMaxSpeed()*secondsSinceLastFrame,Math.toRadians(entity.getAngle())+Math.toRadians(180));
-        move(entity, vector);
+        move(entity,2.5*secondsSinceLastFrame,90);
     }
 
-    private void move(Entity entity, Vector2 v){
-        double x =entity.getX()+v.getX();
-        double y =entity.getY()+v.getY();
-        if (pane.getLayoutBounds().getMinX()<x && pane.getLayoutBounds().getMinY()<y && pane.getLayoutBounds().getMaxX()>(x+entity.getWidth()) && pane.getLayoutBounds().getMaxY() >(y+entity.getHeight())&&!canMoveOutOfBounds){
-            entity.setPosition(x, y, entity.getAngle());
-        }else if (canMoveOutOfBounds){
-            entity.setPosition(x, y, entity.getAngle());
+    private void move(Entity entity, double amount, double direction){
+        Vector2 newVector = entity.getMovementDirection().add(Vector2.vectorFromModule(amount,Math.toRadians(entity.getAngle())+Math.toRadians(direction+270)));
+        if (newVector.getModule()>4){
+            newVector=newVector.asUnitary().multiply(4);
         }
+        entity.setMovementDirection(newVector);
+        updatePosition(entity);
+        entity.setAccelerating(true);
+    }
+
+    public void updatePosition(Entity entity){
+        double x =entity.getX()+entity.getMovementDirection().getX();
+        double y =entity.getY()+entity.getMovementDirection().getY();
+        entity.setPosition(x, y, entity.getAngle());
     }
 
     public void rotateLeft(Entity entity, double secondsSinceLastFrame){
-        entity.setPosition(entity.getX(), entity.getY(), entity.getAngle()-entity.getMaxSpeed()*secondsSinceLastFrame);
+        entity.setPosition(entity.getX(), entity.getY(), entity.getAngle()-250*secondsSinceLastFrame);
     }
 
     public void rotateRight(Entity entity, double secondsSinceLastFrame){
-        entity.setPosition(entity.getX(), entity.getY(), entity.getAngle()+entity.getMaxSpeed()*secondsSinceLastFrame);
+        entity.setPosition(entity.getX(), entity.getY(), entity.getAngle()+250*secondsSinceLastFrame);
     }
 
     public void shoot(Entity entity){

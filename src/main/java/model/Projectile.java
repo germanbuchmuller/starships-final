@@ -2,25 +2,19 @@ package model;
 
 import org.jetbrains.annotations.NotNull;
 import controller.visitor.EntityVisitor;
-import serialize.SerializedEntity;
-import serialize.SerializedProjectile;
 
-public class Projectile extends AbstractEntity{
+public class Projectile extends AbstractEntity implements PlayerRelated, SelfMovable {
     private final int damage;
-    private final int playerID;
+    private int playerId;
 
-    public Projectile(int damage, int health, int maxSpeed, int rewardPoints, double x, double y, double angle, double width, double height, int playerID,String imageFileName) {
-        super(health,maxSpeed,rewardPoints,x,y,angle,width,height,imageFileName);
+    public Projectile(int damage, int health, double x, double y, double angle, double width, double height, String imageFileName, int playerId) {
+        super(health,x,y,angle,width,height,imageFileName);
         this.damage=damage;
-        this.playerID=playerID;
+        this.playerId=playerId;
     }
 
     public int getDamage() {
         return damage;
-    }
-
-    public int getPlayerID() {
-        return playerID;
     }
 
     @Override
@@ -34,7 +28,12 @@ public class Projectile extends AbstractEntity{
     }
 
     @Override
-    public SerializedEntity toSerializedEntity() {
-        return new SerializedProjectile(damage,getHealth(),getMaxSpeed(),getRewardPoints(),getPlayerID(),getX(),getY(),getAngle(),getWidth(),getHeight(),getImageFileName());
+    public void setPlayerId(int playerId) {
+        this.playerId=playerId;
+    }
+
+    @Override
+    public int getPlayerId() {
+        return playerId;
     }
 }

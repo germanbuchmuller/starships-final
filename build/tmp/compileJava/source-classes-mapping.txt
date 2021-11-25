@@ -1,21 +1,27 @@
+App.java
+ App
+engine/menu/NewGameMenu.java
+ engine.menu.NewGameMenu
+Game.java
+ Game
+model/EntityType.java
+ model.EntityType
 engine/GameConfig.java
  engine.GameConfig
 misc/BulletType.java
  misc.BulletType
 controller/Movement.java
  controller.Movement
-model/EntityType.java
- model.EntityType
 misc/utils/Random.java
  misc.utils.Random
-engine/menu/NewGameMenu.java
- engine.menu.NewGameMenu
-Game.java
- Game
 engine/menu/MainMenu.java
  engine.menu.MainMenu
-App.java
- App
+engine/GameState.java
+ engine.GameState
+model/SelfMovable.java
+ model.SelfMovable
+model/PlayerRelated.java
+ model.PlayerRelated
 controller/colliders/AsteroidCollider.java
  controller.colliders.AsteroidCollider
 controller/colliders/ShipCollider.java
@@ -34,11 +40,12 @@ model/Ship.java
  model.Ship
 controller/visitor/CollisionsVisitor.java
  controller.visitor.CollisionsVisitor
+controller/visitor/EntityVisitor.java
+ controller.visitor.EntityVisitor
 serialize/SerializedPlayer.java
  serialize.SerializedPlayer
-controller/visitor/MovementVisitor.java
- controller.visitor.MovementVisitor
- controller.visitor.MovementVisitor$1
+engine/PlayersRepository.java
+ engine.PlayersRepository
 serialize/SerializableEntity.java
  serialize.SerializableEntity
 misc/Weapon.java
@@ -47,13 +54,10 @@ view/ui/PlayerStatsView.java
  view.ui.PlayerStatsView
 view/EntityView.java
  view.EntityView
-engine/GameEngine.java
- engine.GameEngine
- engine.GameEngine$MainTimer
+controller/colliders/ProjectileCollider.java
+ controller.colliders.ProjectileCollider
 misc/Player.java
  misc.Player
-engine/PlayersManager.java
- engine.PlayersManager
 model/AbstractEntity.java
  model.AbstractEntity
 engine/PlayersStatsRenderEngine.java
@@ -64,13 +68,15 @@ engine/GameEntityAutoSpawner.java
  engine.GameEntityAutoSpawner
 serialize/SerializedAsteroid.java
  serialize.SerializedAsteroid
-controller/EntityController.java
- controller.EntityController
-controller/colliders/EntityCollider.java
- controller.colliders.EntityCollider
-controller/colliders/ProjectileCollider.java
- controller.colliders.ProjectileCollider
 model/Asteroid.java
  model.Asteroid
-controller/visitor/EntityVisitor.java
- controller.visitor.EntityVisitor
+controller/colliders/EntityCollider.java
+ controller.colliders.EntityCollider
+engine/GameEngine.java
+ engine.GameEngine
+ engine.GameEngine$MainTimer
+controller/visitor/MovementVisitor.java
+ controller.visitor.MovementVisitor
+ controller.visitor.MovementVisitor$1
+controller/EntityController.java
+ controller.EntityController

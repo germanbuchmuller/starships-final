@@ -1,14 +1,12 @@
 package controller.colliders;
 
 import engine.PlayersRepository;
-import model.Entity;
-import model.EntityType;
-import model.Projectile;
+import model.*;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import org.jetbrains.annotations.NotNull;
 
-public class ProjectileCollider implements EntityCollider{
+public class ProjectileCollider implements EntityCollider {
     private final Projectile projectile;
     private final PlayersRepository playersRepository;
 
@@ -18,8 +16,23 @@ public class ProjectileCollider implements EntityCollider{
     }
 
     @Override
-    public Entity getEntity() {
+    public Projectile getEntity() {
         return projectile;
+    }
+
+    @Override
+    public void handleCollisionWith(@NotNull Projectile projectile) {
+
+    }
+
+    @Override
+    public void handleCollisionWith(@NotNull Asteroid asteroid) {
+
+    }
+
+    @Override
+    public void handleCollisionWith(@NotNull Ship ship) {
+
     }
 
     @Override
@@ -31,21 +44,8 @@ public class ProjectileCollider implements EntityCollider{
 
     @Override
     public void handleCollisionWith(@NotNull EntityCollider entityCollider) {
-        if (entityCollider.getEntity().getPlayerID()!=projectile.getPlayerID() && entityCollider.getEntity().getType()!=EntityType.PROJECTILE){
-            harm(entityCollider.getEntity());
-            projectile.destroy();
-            playersRepository.addPointsToPlayer(projectile.getPlayerID(),projectile.getRewardPoints());
-        }else if (entityCollider.getEntity().getType()==EntityType.PROJECTILE && entityCollider.getEntity().getPlayerID()!=projectile.getPlayerID() ){
-            projectile.destroy();
-        }
+        entityCollider.handleCollisionWith(projectile);
     }
 
-    private void harm(Entity entity) {
-        entity.setHealth(Math.max((entity.getHealth() - projectile.getDamage()), 0));
-        if (entity.getHealth()==0) {
-            playersRepository.addPointsToPlayer(projectile.getPlayerID(), entity.getRewardPoints());
-            entity.destroy();
-        }
-    }
 
 }

@@ -36,9 +36,12 @@ public class GameEntityAutoSpawner {
 
     public void update(){
         if (asteroids.size()<GameConfig.MIN_ASTEROIDS_IN_GAME){
-            spawnAsteroid();
+            //spawnAsteroid();
         }else if (asteroids.size()<GameConfig.MAX_ASTEROIDS_IN_GAME){
-            if (Random.get(0,500)<15) spawnAsteroid();
+            if (Random.get(0,500)<15){
+                //spawnAsteroid();
+            }
+
         }
         for (Asteroid asteroid : asteroids) {
             if (asteroid.isDestroyed()){
@@ -48,7 +51,7 @@ public class GameEntityAutoSpawner {
         asteroids.removeAll(asteroidsToRemove);
         asteroidsToRemove.clear();
     }
-
+/*
     private void spawnAsteroid(){
         int bound = Random.get(0,4);
         int scale = Random.get(1,6);
@@ -76,5 +79,5 @@ public class GameEntityAutoSpawner {
         }
         asteroids.add(spawnedAsteroid);
     }
-
+*/
 }

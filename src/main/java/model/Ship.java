@@ -4,19 +4,16 @@ import misc.BulletType;
 import misc.Weapon;
 import org.jetbrains.annotations.NotNull;
 import controller.visitor.EntityVisitor;
-import serialize.SerializableEntity;
-import serialize.SerializedEntity;
-import serialize.SerializedShip;
 
-public class Ship extends AbstractEntity{
-    private final int playerID;
-    private Weapon weapon;
+public class Ship extends AbstractEntity implements PlayerRelated {
+    private int playerId;
+    private final Weapon weapon;
     private long lastRevive;
 
-    public Ship(int health, int maxSpeed, int rewardPoints, double x, double y, double angle, double width, double height,String imageFileName, int playerID) {
-       super(health,maxSpeed,rewardPoints,x,y,angle,width,height, imageFileName);
-       this.playerID=playerID;
-       weapon=new Weapon(playerID);
+    public Ship(int health, double x, double y, double angle, double width, double height,String imageFileName, int playerId) {
+       super(health,x,y,angle,width,height, imageFileName);
+       this.playerId=playerId;
+       weapon=new Weapon(playerId);
     }
 
     public void shoot(){
@@ -46,18 +43,9 @@ public class Ship extends AbstractEntity{
     }
 
     @Override
-    public int getPlayerID() {
-        return playerID;
-    }
-
-    @Override
     public void accept(@NotNull EntityVisitor visitor){
         visitor.visit(this);
         weapon.accept(visitor);
-    }
-
-    public SerializedShip toSerializableShip() {
-        return new SerializedShip(getHealth(),getMaxSpeed(),getRewardPoints(),getPlayerID(),getX(),getY(),getAngle(),getWidth(),getHeight(),getImageFileName());
     }
 
     public BulletType getBulletType(){
@@ -65,7 +53,12 @@ public class Ship extends AbstractEntity{
     }
 
     @Override
-    public SerializedShip toSerializedEntity() {
-        return new SerializedShip(getHealth(),getMaxSpeed(),getRewardPoints(),getPlayerID(),getX(),getY(),getAngle(),getWidth(),getHeight(),getImageFileName());
+    public void setPlayerId(int playerId) {
+        this.playerId=playerId;
+    }
+
+    @Override
+    public int getPlayerId() {
+        return playerId;
     }
 }

@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MovementVisitor implements EntityVisitor {
+    private final List<Ship> ships;
     private final List<Entity> selfMovableEntities;
     private final List<Entity> entitiesToRemove;
     EntityController entityController;
@@ -20,6 +21,7 @@ public class MovementVisitor implements EntityVisitor {
     public MovementVisitor(Pane pane) {
         selfMovableEntities =new ArrayList<>();
         entitiesToRemove =new ArrayList<>();
+        ships =new ArrayList<>();
         this.pane=pane;
 
         entityController=new EntityController(pane);
@@ -30,7 +32,9 @@ public class MovementVisitor implements EntityVisitor {
     }
 
     @Override
-    public void visit(Ship ship){ }
+    public void visit(Ship ship){
+        ships.add(ship);
+    }
 
     @Override
     public void visit(Asteroid asteroid) {
@@ -53,6 +57,14 @@ public class MovementVisitor implements EntityVisitor {
         }
         selfMovableEntities.removeAll(entitiesToRemove);
         entitiesToRemove.clear();
+        updateShips(secondsSinceLastFrame);
+    }
+
+    public void updateShips(double secondsSinceLastFrame){
+        entityController.setCanMoveOutOfBounds(false);
+        for (Ship ship : ships) {
+            entityController.slowDown(ship,secondsSinceLastFrame);
+        }
     }
 
     public void updateUserMovableEntity(Entity entity, Movement movement, double secondsSinceLastFrame){

@@ -22,6 +22,6 @@ public class SerializedShip implements SerializedEntity{
 
     @Override
     public Ship toEntity() {
-        return new Ship(health,maxSpeed,rewardPoints,x,y,angle,width,height,imageFileName,playerID);
+        return new Ship(health,x,y,angle,width,height,imageFileName,playerID);
     }
 }

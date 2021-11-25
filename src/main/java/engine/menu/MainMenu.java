@@ -59,7 +59,7 @@ public class MainMenu {
         loadGameBtn.setOnMouseClicked(event -> {
 
             try {
-                gameEngine.loadSavedGame();
+                //gameEngine.loadSavedGame();
                 gameEngine.getRootSetter().setRoot(gameEngine.launchGame());
             } catch (IOException e) {
                 e.printStackTrace();

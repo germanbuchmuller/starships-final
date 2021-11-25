@@ -1,26 +1,29 @@
 package model;
 
+import edu.austral.dissis.starships.vector.Vector2;
+
 public abstract class AbstractEntity implements Entity{
     private int health;
-    protected int maxHealth;
-    private final int maxSpeed, rewardPoints;
+    private final int maxHealth;
+    private Vector2 movementDirection;
     private double x, y, angle;
     private final double width, height;
     private final String imageFileName;
     private boolean isDestroyed;
+    private boolean accelerating;
 
-    public AbstractEntity(int maxHealth, int maxSpeed, int rewardPoints, double x, double y, double angle, double width, double height, String imageFileName) {
+    public AbstractEntity(int maxHealth, double x, double y, double angle, double width, double height, String imageFileName) {
         this.health = maxHealth;
         this.maxHealth = maxHealth;
-        this.maxSpeed = maxSpeed;
+        this.movementDirection = Vector2.vectorFromModule(0,0);
         this.x = x;
         this.y = y;
         this.angle = angle;
         this.width=width;
         this.height=height;
-        this.rewardPoints=rewardPoints;
         this.imageFileName=imageFileName;
         isDestroyed=false;
+        accelerating=false;
     }
 
     @Override
@@ -39,12 +42,12 @@ public abstract class AbstractEntity implements Entity{
     }
 
     @Override
-    public double getWidth() {
+    public final double getWidth() {
         return width;
     }
 
     @Override
-    public double getHeight() {
+    public final double getHeight() {
         return height;
     }
 
@@ -56,21 +59,18 @@ public abstract class AbstractEntity implements Entity{
     }
 
     @Override
-    public int getMaxSpeed() { return maxSpeed; }
+    public Vector2 getMovementDirection() {
+        return movementDirection;
+    }
 
     @Override
-    public void setHealth(int health) {
-        this.health = health;
+    public void setMovementDirection(Vector2 movementDirection) {
+        this.movementDirection = movementDirection;
     }
 
     @Override
     public int getHealth() {
         return health;
-    }
-
-    @Override
-    public int getRewardPoints() {
-        return rewardPoints;
     }
 
     @Override
@@ -89,9 +89,34 @@ public abstract class AbstractEntity implements Entity{
         return isDestroyed;
     }
 
-    protected void revive(){
+    @Override
+    public void revive(){
         this.isDestroyed=false;
         health=maxHealth;
     }
 
+    @Override
+    public void harm(int amount) {
+        health-=amount;
+        if (health<0){
+            health=0;
+            destroy();
+        }
+    }
+
+    @Override
+    public void heal(int amount) {
+        health+=amount;
+        if (health>maxHealth) health=maxHealth;
+    }
+
+    @Override
+    public final boolean isAccelerating() {
+        return accelerating;
+    }
+
+    @Override
+    public final void setAccelerating(boolean accelerating) {
+        this.accelerating = accelerating;
+    }
 }

@@ -1,23 +1,17 @@
 package controller.colliders;
 
+import edu.austral.dissis.starships.collision.Collider;
 import javafx.scene.shape.Circle;
-import model.Asteroid;
-import model.Entity;
-import model.EntityType;
+import model.*;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import org.jetbrains.annotations.NotNull;
 
-public class AsteroidCollider implements EntityCollider{
-    private Asteroid asteroid;
+public class AsteroidCollider implements EntityCollider {
+    private final Asteroid asteroid;
 
     public AsteroidCollider(@NotNull Asteroid asteroid) {
         this.asteroid=asteroid;
-    }
-
-    @Override
-    public Entity getEntity() {
-        return asteroid;
     }
 
     @Override
@@ -29,16 +23,26 @@ public class AsteroidCollider implements EntityCollider{
 
     @Override
     public void handleCollisionWith(@NotNull EntityCollider entityCollider) {
-        if (entityCollider.getEntity().getType()==EntityType.SHIP){
-            harm(entityCollider.getEntity());
-        }
+        entityCollider.handleCollisionWith(asteroid);
     }
 
-    private void harm(Entity entity) {
-        entity.setHealth(Math.max((entity.getHealth() - asteroid.getDamage()), 0));
-        if (entity.getHealth()==0){
-            entity.destroy();
-        }
+    @Override
+    public void handleCollisionWith(@NotNull Projectile projectile) {
+
     }
 
+    @Override
+    public void handleCollisionWith(@NotNull Asteroid asteroid) {
+
+    }
+
+    @Override
+    public void handleCollisionWith(@NotNull Ship ship) {
+
+    }
+
+    @Override
+    public Entity getEntity() {
+        return asteroid;
+    }
 }

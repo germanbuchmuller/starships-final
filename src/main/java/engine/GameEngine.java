@@ -137,8 +137,9 @@ public class GameEngine {
         entity.accept(renderVisitor);
         gameEntityAutoSpawner.addEntity(entity);
     }
-
+/*
     public void saveGame() {
+
         try {
             FileOutputStream playersFOS = new FileOutputStream("players.savegame");
             ObjectOutputStream playersOOS = new ObjectOutputStream(playersFOS);
@@ -189,7 +190,7 @@ public class GameEngine {
             entitiesOIS.close();
         }catch (Exception ignore){}
     }
-
+*/
     public void nextFrame(double secondsSinceLastFrame) throws IOException {
         for (KeyCode keyCode : keyTracker.getKeySet()) {
             if (!gameOver){
@@ -204,7 +205,7 @@ public class GameEngine {
                     }
                 }else if(gamePaused && keyCode==KeyCode.S && System.currentTimeMillis()-lastActionTime>300 && !gameSaved){
                     lastActionTime=System.currentTimeMillis();
-                    saveGame();
+                    //saveGame();
                     gameSaved=true;
                 }
                 if (!gamePaused){

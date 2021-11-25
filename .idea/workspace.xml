@@ -4,17 +4,69 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c1b68a49-1028-472c-9f57-e8e759dd70e8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dbnavigator.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries-with-intellij-classes.xml" beforeDir="false" />
+    <list default="true" id="c1b68a49-1028-472c-9f57-e8e759dd70e8" name="Changes" comment="Minor changes">
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/engine/GameState.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/PlayerRelated.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/SelfMovable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.8/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.8/executionHistory/executionHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.8/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.8/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.8/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.8/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.8/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.8/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.8/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.8/javaCompile/classAnalysis.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.8/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.8/javaCompile/javaCompile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/starships-final.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Game.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/controller/EntityController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/controller/EntityController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/controller/colliders/AsteroidCollider.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/controller/colliders/AsteroidCollider.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/controller/colliders/EntityCollider.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/controller/colliders/EntityCollider.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/controller/colliders/ProjectileCollider.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/controller/colliders/ProjectileCollider.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/controller/colliders/ShipCollider.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/controller/colliders/ShipCollider.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/controller/visitor/CollisionsVisitor.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/controller/visitor/CollisionsVisitor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/controller/visitor/MovementVisitor$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/controller/visitor/MovementVisitor$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/controller/visitor/MovementVisitor.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/controller/visitor/MovementVisitor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/engine/GameConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/engine/GameConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/engine/GameEngine$MainTimer.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/engine/GameEngine$MainTimer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/engine/GameEngine.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/engine/GameEngine.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/engine/GameEntityAutoSpawner.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/engine/GameEntityAutoSpawner.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/engine/PlayersManager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/engine/PlayersStatsRenderEngine.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/engine/PlayersStatsRenderEngine.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/engine/menu/MainMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/engine/menu/MainMenu.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/engine/menu/NewGameMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/engine/menu/NewGameMenu.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/misc/Player.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/misc/Player.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/misc/Weapon.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/misc/Weapon.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/model/AbstractEntity.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/model/AbstractEntity.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/model/Asteroid.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/model/Asteroid.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/model/Entity.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/model/Entity.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/model/Projectile.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/model/Projectile.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/model/Ship.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/model/Ship.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/serialize/SerializedAsteroid.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/serialize/SerializedAsteroid.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/serialize/SerializedProjectile.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/serialize/SerializedProjectile.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/serialize/SerializedShip.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/serialize/SerializedShip.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/gameconfig.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/gameconfig.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/source-classes-mapping.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/source-classes-mapping.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/EntityController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/EntityController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/colliders/AsteroidCollider.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/colliders/AsteroidCollider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/colliders/EntityCollider.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/colliders/EntityCollider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/colliders/ProjectileCollider.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/colliders/ProjectileCollider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/colliders/ShipCollider.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/colliders/ShipCollider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/visitor/MovementVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/visitor/MovementVisitor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/GameEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/GameEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/GameEntityAutoSpawner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/GameEntityAutoSpawner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/menu/MainMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/menu/MainMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/misc/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/misc/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/misc/Weapon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/misc/Weapon.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/AbstractEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/AbstractEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Asteroid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Asteroid.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Entity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Projectile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Projectile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Ship.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Ship.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/serialize/SerializedAsteroid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/serialize/SerializedAsteroid.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/serialize/SerializedProjectile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/serialize/SerializedProjectile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/serialize/SerializedShip.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/serialize/SerializedShip.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/gameconfig.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/gameconfig.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,6 +77,14 @@
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
     </projectState>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+        <option value="Interface" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -37,6 +97,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
   </component>
   <component name="RunManager">
@@ -62,11 +123,41 @@
       <option name="presentableId" value="Default" />
       <updated>1637686940259</updated>
       <workItem from="1637686942935" duration="392000" />
-      <workItem from="1637843290941" duration="632000" />
+      <workItem from="1637843290941" duration="16213000" />
     </task>
+    <task id="LOCAL-00001" summary="Minor changes">
+      <created>1637844218877</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1637844218877</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Minor changes">
+      <created>1637844241980</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1637844241980</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Minor changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Minor changes" />
   </component>
 </project>
