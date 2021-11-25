@@ -15,7 +15,7 @@ public class MovementVisitor implements EntityVisitor {
     private final List<Entity> selfMovableEntities;
     private final List<Entity> entitiesToRemove;
     EntityController entityController;
-    private Pane pane;
+    private final Pane pane;
 
     public MovementVisitor(Pane pane) {
         selfMovableEntities =new ArrayList<>();

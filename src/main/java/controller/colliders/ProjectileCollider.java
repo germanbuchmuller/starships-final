@@ -1,6 +1,6 @@
 package controller.colliders;
 
-import engine.PlayersManager;
+import engine.PlayersRepository;
 import model.Entity;
 import model.EntityType;
 import model.Projectile;
@@ -10,11 +10,11 @@ import org.jetbrains.annotations.NotNull;
 
 public class ProjectileCollider implements EntityCollider{
     private final Projectile projectile;
-    private final PlayersManager playersManager;
+    private final PlayersRepository playersRepository;
 
-    public ProjectileCollider(@NotNull Projectile projectile, @NotNull PlayersManager playersManager) {
+    public ProjectileCollider(@NotNull Projectile projectile, @NotNull PlayersRepository playersRepository) {
         this.projectile=projectile;
-        this.playersManager = playersManager;
+        this.playersRepository = playersRepository;
     }
 
     @Override
@@ -34,7 +34,7 @@ public class ProjectileCollider implements EntityCollider{
         if (entityCollider.getEntity().getPlayerID()!=projectile.getPlayerID() && entityCollider.getEntity().getType()!=EntityType.PROJECTILE){
             harm(entityCollider.getEntity());
             projectile.destroy();
-            playersManager.addPointsToPlayer(projectile.getPlayerID(),projectile.getRewardPoints());
+            playersRepository.addPointsToPlayer(projectile.getPlayerID(),projectile.getRewardPoints());
         }else if (entityCollider.getEntity().getType()==EntityType.PROJECTILE && entityCollider.getEntity().getPlayerID()!=projectile.getPlayerID() ){
             projectile.destroy();
         }
@@ -43,7 +43,7 @@ public class ProjectileCollider implements EntityCollider{
     private void harm(Entity entity) {
         entity.setHealth(Math.max((entity.getHealth() - projectile.getDamage()), 0));
         if (entity.getHealth()==0) {
-            playersManager.addPointsToPlayer(projectile.getPlayerID(), entity.getRewardPoints());
+            playersRepository.addPointsToPlayer(projectile.getPlayerID(), entity.getRewardPoints());
             entity.destroy();
         }
     }

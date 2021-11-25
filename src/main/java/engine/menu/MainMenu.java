@@ -12,6 +12,7 @@ import java.io.IOException;
 public class MainMenu {
     private final ImageLoader imageLoader;
     private final GameEngine gameEngine;
+    private final double sf=0.75;
 
     public MainMenu(GameEngine gameEngine) {
         imageLoader=new ImageLoader();
@@ -21,34 +22,36 @@ public class MainMenu {
     public Parent load() throws IOException {
         Pane pane = new Pane();
 
-        Image img = imageLoader.loadFromResources("menu-background.png", 1920, 1080);
+        Image img = imageLoader.loadFromResources("menu-background.png", 1920*sf, 1080*sf);
         ImageView imageView = new ImageView(img);
 
-        Image newGameImage1 = imageLoader.loadFromResources("newGameBtn1.png", 620, 157);
-        Image newGameImage2 = imageLoader.loadFromResources("newGameBtn2.png", 620, 157);
-        Image newGameImage3 = imageLoader.loadFromResources("newGameBtn3.png", 620, 157);
+        Image newGameImage1 = imageLoader.loadFromResources("newGameBtn1.png", 620*sf, 157*sf);
+        Image newGameImage2 = imageLoader.loadFromResources("newGameBtn2.png", 620*sf, 157*sf);
+        Image newGameImage3 = imageLoader.loadFromResources("newGameBtn3.png", 620*sf, 157*sf);
         ImageView newGameBtn = new ImageView(newGameImage1);
-        newGameBtn.setLayoutX(660);
-        newGameBtn.setLayoutY(530);
+        newGameBtn.setLayoutX(660*sf);
+        newGameBtn.setLayoutY(530*sf);
         newGameBtn.setOnMouseEntered(event -> newGameBtn.setImage(newGameImage2));
         newGameBtn.setOnMouseExited(event -> newGameBtn.setImage(newGameImage1));
         newGameBtn.setOnMousePressed(event -> newGameBtn.setImage(newGameImage3));
         newGameBtn.setOnMouseReleased(event -> newGameBtn.setImage(newGameImage2));
         newGameBtn.setOnMouseClicked(event -> {
             try {
-                gameEngine.getRootSetter().setRoot(gameEngine.loadNewGameMenu());
+                gameEngine.startNewGameFromConfigFile();
+                gameEngine.getRootSetter().setRoot(gameEngine.launchGame());
+                //gameEngine.getRootSetter().setRoot(gameEngine.loadNewGameMenu());
             } catch (IOException e) {
                 e.printStackTrace();
             }
         });
 
 
-        Image loadGameImage1 = imageLoader.loadFromResources("loadGameBtn1.png", 620, 157);
-        Image loadGameImage2 = imageLoader.loadFromResources("loadGameBtn2.png", 620, 157);
-        Image loadGameImage3 = imageLoader.loadFromResources("loadGameBtn3.png", 620, 157);
+        Image loadGameImage1 = imageLoader.loadFromResources("loadGameBtn1.png", 620*sf, 157*sf);
+        Image loadGameImage2 = imageLoader.loadFromResources("loadGameBtn2.png", 620*sf, 157*sf);
+        Image loadGameImage3 = imageLoader.loadFromResources("loadGameBtn3.png", 620*sf, 157*sf);
         ImageView loadGameBtn = new ImageView(loadGameImage1);
-        loadGameBtn.setLayoutX(660);
-        loadGameBtn.setLayoutY(700);
+        loadGameBtn.setLayoutX(660*sf);
+        loadGameBtn.setLayoutY(700*sf);
         loadGameBtn.setOnMouseEntered(event -> loadGameBtn.setImage(loadGameImage2));
         loadGameBtn.setOnMouseExited(event -> loadGameBtn.setImage(loadGameImage1));
         loadGameBtn.setOnMousePressed(event -> loadGameBtn.setImage(loadGameImage3));
@@ -63,12 +66,12 @@ public class MainMenu {
             }
         });
 
-        Image quitGameImage1 = imageLoader.loadFromResources("quitGameBtn1.png", 620, 157);
-        Image quitGameImage2 = imageLoader.loadFromResources("quitGameBtn2.png", 620, 157);
-        Image quitGameImage3 = imageLoader.loadFromResources("quitGameBtn3.png", 620, 157);
+        Image quitGameImage1 = imageLoader.loadFromResources("quitGameBtn1.png", 620*sf, 157*sf);
+        Image quitGameImage2 = imageLoader.loadFromResources("quitGameBtn2.png", 620*sf, 157*sf);
+        Image quitGameImage3 = imageLoader.loadFromResources("quitGameBtn3.png", 620*sf, 157*sf);
         ImageView quitGameBtn = new ImageView(quitGameImage1);
-        quitGameBtn.setLayoutX(660);
-        quitGameBtn.setLayoutY(870);
+        quitGameBtn.setLayoutX(660*sf);
+        quitGameBtn.setLayoutY(870*sf);
         quitGameBtn.setOnMouseEntered(event -> quitGameBtn.setImage(quitGameImage2));
         quitGameBtn.setOnMouseExited(event -> quitGameBtn.setImage(quitGameImage1));
         quitGameBtn.setOnMousePressed(event -> quitGameBtn.setImage(quitGameImage3));

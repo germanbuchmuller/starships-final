@@ -19,6 +19,7 @@ public class EntityController {
     }
 
     public void moveForward(Entity entity, double secondsSinceLastFrame) {
+        //sacar factor comun de todos los vectors entre los move
         Vector2 vector = Vector2.vectorFromModule(-entity.getMaxSpeed()*secondsSinceLastFrame,Math.toRadians(entity.getAngle())+Math.toRadians(90));
         move(entity, vector);
     }

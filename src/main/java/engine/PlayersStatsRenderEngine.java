@@ -8,16 +8,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlayersStatsRenderEngine {
-    private final PlayersManager playersManager;
+    private final PlayersRepository playersRepository;
     private final Pane pane;
     private final List<PlayerStatsView> playerViews;
     private final List<Node> viewsToRemove;
     private boolean initialized;
     private final int fontSize = 40;
 
-    public PlayersStatsRenderEngine(PlayersManager playersManager, Pane pane) {
+    public PlayersStatsRenderEngine(PlayersRepository playersRepository, Pane pane) {
         this.pane=pane;
-        this.playersManager = playersManager;
+        this.playersRepository = playersRepository;
         viewsToRemove=new ArrayList<>();
         playerViews=new ArrayList<>();
     }
@@ -31,8 +31,8 @@ public class PlayersStatsRenderEngine {
         playerViews.clear();
         pane.getChildren().removeAll(viewsToRemove);
         viewsToRemove.clear();
-        for (int i = 0; i < playersManager.getPlayers().size(); i++) {
-            PlayerStatsView playerView = new PlayerStatsView(playersManager.getPlayers().get(i),50,100+(i*3* fontSize*1.15), fontSize);
+        for (int i = 0; i < playersRepository.getPlayers().size(); i++) {
+            PlayerStatsView playerView = new PlayerStatsView(playersRepository.getPlayers().get(i),50,100+(i*3* fontSize*1.15), fontSize);
             playerViews.add(playerView);
             pane.getChildren().add(playerView.getPlayerNameText());
             pane.getChildren().add(playerView.getPlayerPointsText());
