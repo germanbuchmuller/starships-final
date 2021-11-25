@@ -23,7 +23,7 @@ public class Player {
         this.id = id;
         this.points = points;
         this.lives=lives;
-        this.ship=new Ship(GameConfig.SHIP_HEALTH, GameConfig.SHIP_SPEED,GameConfig.SHIP_REWARD_POINTS, Random.get(200,1200),Random.get(200,800),0,GameConfig.SHIP_WIDTH,GameConfig.SHIP_HEIGHT,shipTexture,id);
+        this.ship=new Ship(GameConfig.SHIP_HEALTH, GameConfig.SHIP_SPEED,GameConfig.SHIP_REWARD_POINTS, Random.get(200,1200),Random.get(200,650),0,GameConfig.SHIP_WIDTH,GameConfig.SHIP_HEIGHT,shipTexture,id);
         this.keyBindings = keyBindings;
     }
     public Player(String name, int lives, int points,Ship ship, Map<KeyCode, Movement> keyBindings) {

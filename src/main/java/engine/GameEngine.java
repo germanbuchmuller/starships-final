@@ -30,13 +30,14 @@ import java.io.*;
 import java.util.*;
 
 public class GameEngine {
+    private final double sf=0.75;
     private final RootSetter rootSetter;
     private final GameContext gameContext;
     private CollisionsVisitor collisionsVisitor;
     private MovementVisitor movementVisitor;
     private RenderVisitor renderVisitor;
     private GameEntityAutoSpawner gameEntityAutoSpawner;
-    private PlayersManager playersManager;
+    private PlayersRepository playersRepository;
     private PlayersStatsRenderEngine playersStatsRenderEngine;
     private final ImageLoader imageLoader;
     private Map<KeyCode, Player> keyBindings;
@@ -69,19 +70,26 @@ public class GameEngine {
         return new NewGameMenu(this).load();
     }
 
+    public void startNewGameFromConfigFile(){
+        initializeNewGame();
+        for (int i = 0; i < GameConfig.playerBindingsList.size(); i++) {
+            addNewPlayer("Player"+(i+1),GameConfig.playersSkin.get(i),GameConfig.playersBulletType.get(i),GameConfig.playerBindingsList.get(i));
+        }
+    }
+
     public void initializeNewGame(){
         gamePane= new Pane();
         movementVisitor=new MovementVisitor(gamePane);
         renderVisitor=new RenderVisitor(gamePane);
-        playersManager =new PlayersManager();
-        collisionsVisitor=new CollisionsVisitor(playersManager);
+        playersRepository =new PlayersRepository();
+        collisionsVisitor=new CollisionsVisitor(playersRepository);
         keyBindings=new HashMap<>();
         gamePaused=false;
         gameEntityAutoSpawner=new GameEntityAutoSpawner(gamePane);
         gameEntityAutoSpawner.addVisitor(movementVisitor);
         gameEntityAutoSpawner.addVisitor(collisionsVisitor);
         gameEntityAutoSpawner.addVisitor(renderVisitor);
-        playersStatsRenderEngine=new PlayersStatsRenderEngine(playersManager, gamePane);
+        playersStatsRenderEngine=new PlayersStatsRenderEngine(playersRepository, gamePane);
         keyTracker=gameContext.getKeyTracker();
         gamePaused=false;
         gameOver=false;
@@ -93,8 +101,8 @@ public class GameEngine {
         Background background1=new Background(background);
         gamePane.setBackground(background1);
 
-        Image pausedImg = imageLoader.loadFromResources("paused-image.png", 1920, 1080);
-        Image gameOverImg = imageLoader.loadFromResources("gameOver.png", 1920, 1080);
+        Image pausedImg = imageLoader.loadFromResources("paused-image.png", 1920*sf, 1080*sf);
+        Image gameOverImg = imageLoader.loadFromResources("gameOver.png", 1920*sf, 1080*sf);
         pausedGameImageView = new ImageView(pausedImg);
         gameOverImageView = new ImageView(gameOverImg);
 
@@ -107,7 +115,7 @@ public class GameEngine {
     }
 
     public void addNewPlayer(String name, String shipSkin, BulletType bulletType, Map<KeyCode, Movement> keyBindings ){
-        Player player=new Player(name, playersManager.getNewPlayerId(),GameConfig.PLAYER_LIVES,0,shipSkin,keyBindings);
+        Player player=new Player(name, playersRepository.getNewPlayerId(),GameConfig.PLAYER_LIVES,0,shipSkin,keyBindings);
         player.getShip().setBulletType(bulletType);
         loadPlayerToGame(player);
     }
@@ -120,7 +128,7 @@ public class GameEngine {
         player.addVisitor(movementVisitor);
         player.addVisitor(collisionsVisitor);
         player.addVisitor(renderVisitor);
-        playersManager.addPlayer(player);
+        playersRepository.addPlayer(player);
     }
 
     private void loadEntityToGame(Entity entity){
@@ -134,7 +142,7 @@ public class GameEngine {
         try {
             FileOutputStream playersFOS = new FileOutputStream("players.savegame");
             ObjectOutputStream playersOOS = new ObjectOutputStream(playersFOS);
-            for (Player player : playersManager.getPlayers()) {
+            for (Player player : playersRepository.getPlayers()) {
                 playersOOS.writeObject(player.toSerializablePlayer());
             }
             playersOOS.close();
@@ -224,7 +232,7 @@ public class GameEngine {
 
     private void checkDeadPlayers(){
         int gameOverPlayers = 0;
-        for (Player player : playersManager.getPlayers()) {
+        for (Player player : playersRepository.getPlayers()) {
             if (player.getShip().isDestroyed()){
                 if (player.revive()){
                     player.getShip().revive(Random.get(20,(int)gamePane.getLayoutBounds().getMaxX()-50),Random.get(20,(int)gamePane.getLayoutBounds().getMaxY()-50));
@@ -236,11 +244,11 @@ public class GameEngine {
                 }
             }
         }
-        if (gameOverPlayers== playersManager.getPlayers().size()){
+        if (gameOverPlayers== playersRepository.getPlayers().size()){
             gameOver=true;
             lastActionTime=System.currentTimeMillis();
             playersStatsRenderEngine.update();
-            gamePane.getChildren().add(gamePane.getChildren().size()-(playersManager.getPlayers().size()*3),gameOverImageView);
+            gamePane.getChildren().add(gamePane.getChildren().size()-(playersRepository.getPlayers().size()*3),gameOverImageView);
         }
     }
 

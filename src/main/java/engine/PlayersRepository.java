@@ -7,12 +7,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PlayersManager {
+public class PlayersRepository {
     private final List<Player> playersList;
     private final Map<Integer, Player> playersIDMap;
     private int lastPlayerID;
 
-    public PlayersManager() {
+    public PlayersRepository() {
         playersIDMap=new HashMap<>();
         playersList=new ArrayList<>();
         lastPlayerID=0;

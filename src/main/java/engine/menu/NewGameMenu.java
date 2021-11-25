@@ -25,6 +25,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public class NewGameMenu {
     private final ImageLoader imageLoader;
     private final GameEngine gameEngine;
+    private final double sf=0.75;
 
     public NewGameMenu(GameEngine gameEngine) {
         imageLoader=new ImageLoader();
@@ -34,15 +35,15 @@ public class NewGameMenu {
     public Parent load() throws IOException {
         Pane pane = new Pane();
 
-        Image img = imageLoader.loadFromResources("newgamemenu.png", 1920, 1080);
+        Image img = imageLoader.loadFromResources("newgamemenu.png", 1920*sf, 1080*sf);
         ImageView background = new ImageView(img);
 
         AtomicReference<String> player1ShipTexture = new AtomicReference<>(GameConfig.SHIP_TEXTURE.get(0));
         AtomicInteger player1ShipTextureIndex= new AtomicInteger();
-        Image player1ShipImg = imageLoader.loadFromResources(player1ShipTexture.get(), 229, 229);
+        Image player1ShipImg = imageLoader.loadFromResources(player1ShipTexture.get(), 229*sf, 229*sf);
         ImageView player1ShipImageView = new ImageView(player1ShipImg);
-        player1ShipImageView.setLayoutX(640);
-        player1ShipImageView.setLayoutY(334);
+        player1ShipImageView.setLayoutX(640*sf);
+        player1ShipImageView.setLayoutY(334*sf);
 
         Map<Movement, KeyCode> player1Bindings=new HashMap<>();
         player1Bindings.put(Movement.FORWARD,KeyCode.W);
@@ -51,57 +52,57 @@ public class NewGameMenu {
         player1Bindings.put(Movement.RIGHT,KeyCode.D);
         player1Bindings.put(Movement.ROTATE_LEFT,KeyCode.Q);
         player1Bindings.put(Movement.ROTATE_RIGHT,KeyCode.E);
-        player1Bindings.put(Movement.SHOOT,KeyCode.R);
+        player1Bindings.put(Movement.SHOOT,KeyCode.SPACE);
 
         TextField player1ForwardText = new TextField(player1Bindings.get(Movement.FORWARD).getName());
-        player1ForwardText.setFont(new Font(30));
-        player1ForwardText.setLayoutX(400);
-        player1ForwardText.setLayoutY(385);
-        player1ForwardText.setPrefWidth(70);
+        player1ForwardText.setFont(new Font(30*sf));
+        player1ForwardText.setLayoutX(400*sf);
+        player1ForwardText.setLayoutY(385*sf);
+        player1ForwardText.setPrefWidth(70*sf);
 
         TextField player1BackwardsText = new TextField(player1Bindings.get(Movement.BACKWARDS).getName());
-        player1BackwardsText.setFont(new Font(30));
-        player1BackwardsText.setLayoutX(471);
-        player1BackwardsText.setLayoutY(456);
-        player1BackwardsText.setPrefWidth(70);
+        player1BackwardsText.setFont(new Font(30*sf));
+        player1BackwardsText.setLayoutX(471*sf);
+        player1BackwardsText.setLayoutY(456*sf);
+        player1BackwardsText.setPrefWidth(70*sf);
 
         TextField player1LeftText = new TextField(player1Bindings.get(Movement.LEFT).getName());
-        player1LeftText.setFont(new Font(30));
-        player1LeftText.setLayoutX(320);
-        player1LeftText.setLayoutY(523);
-        player1LeftText.setPrefWidth(70);
+        player1LeftText.setFont(new Font(30*sf));
+        player1LeftText.setLayoutX(320*sf);
+        player1LeftText.setLayoutY(523*sf);
+        player1LeftText.setPrefWidth(70*sf);
 
         TextField player1RightText = new TextField(player1Bindings.get(Movement.RIGHT).getName());
-        player1RightText.setFont(new Font(30));
-        player1RightText.setLayoutX(320);
-        player1RightText.setLayoutY(595);
-        player1RightText.setPrefWidth(70);
+        player1RightText.setFont(new Font(30*sf));
+        player1RightText.setLayoutX(320*sf);
+        player1RightText.setLayoutY(595*sf);
+        player1RightText.setPrefWidth(70*sf);
 
         TextField player1RLeftText = new TextField(player1Bindings.get(Movement.ROTATE_LEFT).getName());
-        player1RLeftText.setFont(new Font(30));
-        player1RLeftText.setLayoutX(517);
-        player1RLeftText.setLayoutY(660);
-        player1RLeftText.setPrefWidth(70);
+        player1RLeftText.setFont(new Font(30*sf));
+        player1RLeftText.setLayoutX(517*sf);
+        player1RLeftText.setLayoutY(660*sf);
+        player1RLeftText.setPrefWidth(70*sf);
 
         TextField player1RRightText = new TextField(player1Bindings.get(Movement.ROTATE_RIGHT).getName());
-        player1RRightText.setFont(new Font(30));
-        player1RRightText.setLayoutX(530);
-        player1RRightText.setLayoutY(735);
-        player1RRightText.setPrefWidth(70);
+        player1RRightText.setFont(new Font(30*sf));
+        player1RRightText.setLayoutX(530*sf);
+        player1RRightText.setLayoutY(735*sf);
+        player1RRightText.setPrefWidth(70*sf);
 
         TextField player1ShootText = new TextField(player1Bindings.get(Movement.SHOOT).getName());
-        player1ShootText.setFont(new Font(30));
-        player1ShootText.setLayoutX(339);
-        player1ShootText.setLayoutY(807);
-        player1ShootText.setPrefWidth(70);
+        player1ShootText.setFont(new Font(30*sf));
+        player1ShootText.setLayoutX(339*sf);
+        player1ShootText.setLayoutY(807*sf);
+        player1ShootText.setPrefWidth(70*sf);
 
         List<BulletType> bulletTypes = new ArrayList<>(Arrays.asList(BulletType.values()));
         AtomicInteger player1BulletTypesIndex= new AtomicInteger();
         Text player1BulletTypeText = new Text(bulletTypes.get(0).name());
-        player1BulletTypeText.setFont(new Font(50));
+        player1BulletTypeText.setFont(new Font(50*sf));
         player1BulletTypeText.setFill(Color.WHITE);
-        player1BulletTypeText.setLayoutX(497);
-        player1BulletTypeText.setLayoutY(920);
+        player1BulletTypeText.setLayoutX(497*sf);
+        player1BulletTypeText.setLayoutY(920*sf);
         player1BulletTypeText.setOnMouseClicked(event -> {
             if (bulletTypes.size()-1> player1BulletTypesIndex.get()){
                 player1BulletTypesIndex.addAndGet(1);
@@ -111,10 +112,10 @@ public class NewGameMenu {
             player1BulletTypeText.setText(String.valueOf(bulletTypes.get(player1BulletTypesIndex.get())));
         });
 
-        Image changePlayer1ShipBtnImg = imageLoader.loadFromResources("changeshipbtn.png", 362, 66);
+        Image changePlayer1ShipBtnImg = imageLoader.loadFromResources("changeshipbtn.png", 362*sf, 66*sf);
         ImageView changePlayer1ShipBtn = new ImageView(changePlayer1ShipBtnImg);
-        changePlayer1ShipBtn.setLayoutX(123);
-        changePlayer1ShipBtn.setLayoutY(952);
+        changePlayer1ShipBtn.setLayoutX(123*sf);
+        changePlayer1ShipBtn.setLayoutY(952*sf);
         changePlayer1ShipBtn.setOnMouseClicked(event -> {
             if (GameConfig.SHIP_TEXTURE.size()-1>player1ShipTextureIndex.get()){
                 player1ShipTextureIndex.addAndGet(1);
@@ -125,21 +126,21 @@ public class NewGameMenu {
             player1ShipTexture.set(GameConfig.SHIP_TEXTURE.get(player1ShipTextureIndex.get()));
             Image player1NewShipImg = null;
             try {
-                player1NewShipImg = imageLoader.loadFromResources(player1ShipTexture.get(), 229, 229);
+                player1NewShipImg = imageLoader.loadFromResources(player1ShipTexture.get(), 229*sf, 229*sf);
             } catch (IOException e) {
                 e.printStackTrace();
             }
             player1ShipImageView.setImage(player1NewShipImg);
         });
 
-        int p2o=938;
+        double p2o=938*sf;
 
         AtomicReference<String> player2ShipTexture = new AtomicReference<>(GameConfig.SHIP_TEXTURE.get(0));
         AtomicInteger player2ShipTextureIndex= new AtomicInteger();
-        Image player2ShipImg = imageLoader.loadFromResources(player2ShipTexture.get(), 229, 229);
+        Image player2ShipImg = imageLoader.loadFromResources(player2ShipTexture.get(), 229*sf, 229*sf);
         ImageView player2ShipImageView = new ImageView(player2ShipImg);
-        player2ShipImageView.setLayoutX(640+p2o);
-        player2ShipImageView.setLayoutY(334);
+        player2ShipImageView.setLayoutX(640*sf+p2o);
+        player2ShipImageView.setLayoutY(334*sf);
 
         Map<Movement,KeyCode> player2Bindings=new HashMap<>();
         player2Bindings.put(Movement.FORWARD,KeyCode.I);
@@ -148,56 +149,56 @@ public class NewGameMenu {
         player2Bindings.put(Movement.RIGHT,KeyCode.L);
         player2Bindings.put(Movement.ROTATE_LEFT,KeyCode.U);
         player2Bindings.put(Movement.ROTATE_RIGHT,KeyCode.O);
-        player2Bindings.put(Movement.SHOOT,KeyCode.Y);
+        player2Bindings.put(Movement.SHOOT,KeyCode.ALT);
 
         TextField player2ForwardText = new TextField(player2Bindings.get(Movement.FORWARD).getName());
-        player2ForwardText.setFont(new Font(30));
-        player2ForwardText.setLayoutX(400+p2o);
-        player2ForwardText.setLayoutY(385);
-        player2ForwardText.setPrefWidth(70);
+        player2ForwardText.setFont(new Font(30*sf));
+        player2ForwardText.setLayoutX(400*sf+p2o);
+        player2ForwardText.setLayoutY(385*sf);
+        player2ForwardText.setPrefWidth(70*sf);
 
         TextField player2BackwardsText = new TextField(player2Bindings.get(Movement.BACKWARDS).getName());
-        player2BackwardsText.setFont(new Font(30));
-        player2BackwardsText.setLayoutX(471+p2o);
-        player2BackwardsText.setLayoutY(456);
-        player2BackwardsText.setPrefWidth(70);
+        player2BackwardsText.setFont(new Font(30*sf));
+        player2BackwardsText.setLayoutX(471*sf+p2o);
+        player2BackwardsText.setLayoutY(456*sf);
+        player2BackwardsText.setPrefWidth(70*sf);
 
         TextField player2LeftText = new TextField(player2Bindings.get(Movement.LEFT).getName());
-        player2LeftText.setFont(new Font(30));
-        player2LeftText.setLayoutX(320+p2o);
-        player2LeftText.setLayoutY(523);
-        player2LeftText.setPrefWidth(70);
+        player2LeftText.setFont(new Font(30*sf));
+        player2LeftText.setLayoutX(320*sf+p2o);
+        player2LeftText.setLayoutY(523*sf);
+        player2LeftText.setPrefWidth(70*sf);
 
         TextField player2RightText = new TextField(player2Bindings.get(Movement.RIGHT).getName());
-        player2RightText.setFont(new Font(30));
-        player2RightText.setLayoutX(320+p2o);
-        player2RightText.setLayoutY(595);
-        player2RightText.setPrefWidth(70);
+        player2RightText.setFont(new Font(30*sf));
+        player2RightText.setLayoutX(320*sf+p2o);
+        player2RightText.setLayoutY(595*sf);
+        player2RightText.setPrefWidth(70*sf);
 
         TextField player2RLeftText = new TextField(player2Bindings.get(Movement.ROTATE_LEFT).getName());
-        player2RLeftText.setFont(new Font(30));
-        player2RLeftText.setLayoutX(517+p2o);
-        player2RLeftText.setLayoutY(660);
-        player2RLeftText.setPrefWidth(70);
+        player2RLeftText.setFont(new Font(30*sf));
+        player2RLeftText.setLayoutX(517*sf+p2o);
+        player2RLeftText.setLayoutY(660*sf);
+        player2RLeftText.setPrefWidth(70*sf);
 
         TextField player2RRightText = new TextField(player2Bindings.get(Movement.ROTATE_RIGHT).getName());
-        player2RRightText.setFont(new Font(30));
-        player2RRightText.setLayoutX(530+p2o);
-        player2RRightText.setLayoutY(735);
-        player2RRightText.setPrefWidth(70);
+        player2RRightText.setFont(new Font(30*sf));
+        player2RRightText.setLayoutX(530*sf+p2o);
+        player2RRightText.setLayoutY(735*sf);
+        player2RRightText.setPrefWidth(70*sf);
 
         TextField player2ShootText = new TextField(player2Bindings.get(Movement.SHOOT).getName());
-        player2ShootText.setFont(new Font(30));
-        player2ShootText.setLayoutX(339+p2o);
-        player2ShootText.setLayoutY(807);
-        player2ShootText.setPrefWidth(70);
+        player2ShootText.setFont(new Font(30*sf));
+        player2ShootText.setLayoutX(339*sf+p2o);
+        player2ShootText.setLayoutY(807*sf);
+        player2ShootText.setPrefWidth(70*sf);
 
         AtomicInteger player2BulletTypesIndex= new AtomicInteger();
         Text player2BulletTypeText = new Text(bulletTypes.get(0).name());
-        player2BulletTypeText.setFont(new Font(50));
+        player2BulletTypeText.setFont(new Font(50*sf));
         player2BulletTypeText.setFill(Color.WHITE);
-        player2BulletTypeText.setLayoutX(497+p2o);
-        player2BulletTypeText.setLayoutY(920);
+        player2BulletTypeText.setLayoutX(497*sf+p2o);
+        player2BulletTypeText.setLayoutY(920*sf);
         player2BulletTypeText.setOnMouseClicked(event -> {
             if (bulletTypes.size()-1> player2BulletTypesIndex.get()){
                 player2BulletTypesIndex.addAndGet(1);
@@ -207,10 +208,10 @@ public class NewGameMenu {
             player2BulletTypeText.setText(String.valueOf(bulletTypes.get(player2BulletTypesIndex.get())));
         });
 
-        Image changePlayer2ShipBtnImg = imageLoader.loadFromResources("changeshipbtn.png", 362, 66);
+        Image changePlayer2ShipBtnImg = imageLoader.loadFromResources("changeshipbtn.png", 362*sf, 66*sf);
         ImageView changePlayer2ShipBtn = new ImageView(changePlayer2ShipBtnImg);
-        changePlayer2ShipBtn.setLayoutX(123+p2o);
-        changePlayer2ShipBtn.setLayoutY(952);
+        changePlayer2ShipBtn.setLayoutX(123*sf+p2o);
+        changePlayer2ShipBtn.setLayoutY(952*sf);
         changePlayer2ShipBtn.setOnMouseClicked(event -> {
             if (GameConfig.SHIP_TEXTURE.size()-1>player2ShipTextureIndex.get()){
                 player2ShipTextureIndex.addAndGet(1);
@@ -221,7 +222,7 @@ public class NewGameMenu {
             player2ShipTexture.set(GameConfig.SHIP_TEXTURE.get(player2ShipTextureIndex.get()));
             Image player2NewShipImg = null;
             try {
-                player2NewShipImg = imageLoader.loadFromResources(player2ShipTexture.get(), 229, 229);
+                player2NewShipImg = imageLoader.loadFromResources(player2ShipTexture.get(), 229*sf, 229*sf);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -229,12 +230,12 @@ public class NewGameMenu {
         });
 
 
-        Image startGameImage1 = imageLoader.loadFromResources("startgamebtn1.png", 620*0.8, 157*0.8);
-        Image startGameImage2 = imageLoader.loadFromResources("startgamebtn2.png", 620*0.8, 157*0.8);
-        Image startGameImage3 = imageLoader.loadFromResources("startgamebtn3.png", 620*0.8, 157*0.8);
+        Image startGameImage1 = imageLoader.loadFromResources("startgamebtn1.png", 620*sf*0.8, 157*sf*0.8);
+        Image startGameImage2 = imageLoader.loadFromResources("startgamebtn2.png", 620*sf*0.8, 157*sf*0.8);
+        Image startGameImage3 = imageLoader.loadFromResources("startgamebtn3.png", 620*sf*0.8, 157*sf*0.8);
         ImageView startGameBtn = new ImageView(startGameImage1);
-        startGameBtn.setLayoutX(1388);
-        startGameBtn.setLayoutY(68);
+        startGameBtn.setLayoutX(1388*sf);
+        startGameBtn.setLayoutY(68*sf);
         startGameBtn.setOnMouseEntered(event -> startGameBtn.setImage(startGameImage2));
         startGameBtn.setOnMouseExited(event -> startGameBtn.setImage(startGameImage1));
         startGameBtn.setOnMousePressed(event -> startGameBtn.setImage(startGameImage3));

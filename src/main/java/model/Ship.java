@@ -35,7 +35,7 @@ public class Ship extends AbstractEntity{
 
     @Override
     public void destroy() {
-        if (System.currentTimeMillis()-lastRevive>2000){
+        if (System.currentTimeMillis()-lastRevive>3000){
             super.destroy();
         }
     }

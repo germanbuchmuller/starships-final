@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 public class Game extends GameApplication {
     @Override
     public @NotNull WindowSettings setupWindow() {
-        return WindowSettings.fromTitle("Starships!").withSize(1920, 1080).withFullscreen(true);
+        return WindowSettings.fromTitle("Starships!").withSize((int)(1920*0.75), (int)(1080*0.75));
     }
 
     @Override

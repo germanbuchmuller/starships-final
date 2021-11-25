@@ -4,7 +4,7 @@ import controller.colliders.AsteroidCollider;
 import controller.colliders.EntityCollider;
 import controller.colliders.ProjectileCollider;
 import controller.colliders.ShipCollider;
-import engine.PlayersManager;
+import engine.PlayersRepository;
 import edu.austral.dissis.starships.collision.CollisionEngine;
 import model.*;
 import org.jetbrains.annotations.NotNull;
@@ -17,13 +17,13 @@ public final class CollisionsVisitor implements EntityVisitor, Serializable {
     private final List<EntityCollider> colliders;
     private final List<EntityCollider> collidersToRemove;
     private final CollisionEngine collisionEngine;
-    private final PlayersManager playersManager;
+    private final PlayersRepository playersRepository;
 
-    public CollisionsVisitor(@NotNull PlayersManager playersManager) {
+    public CollisionsVisitor(@NotNull PlayersRepository playersRepository) {
         colliders=new ArrayList<>();
         collidersToRemove=new ArrayList<>();
         collisionEngine=new CollisionEngine();
-        this.playersManager = playersManager;
+        this.playersRepository = playersRepository;
     }
 
     @Override
@@ -38,7 +38,7 @@ public final class CollisionsVisitor implements EntityVisitor, Serializable {
 
     @Override
     public void visit(Projectile projectile) {
-        colliders.add(new ProjectileCollider(projectile, playersManager));
+        colliders.add(new ProjectileCollider(projectile, playersRepository));
     }
 
     public void checkColisions(){

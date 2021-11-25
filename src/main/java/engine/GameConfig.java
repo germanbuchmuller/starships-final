@@ -1,6 +1,8 @@
 package engine;
 
+import controller.Movement;
 import edu.austral.dissis.starships.file.FileLoader;
+import javafx.scene.input.KeyCode;
 import misc.BulletType;
 import org.jetbrains.annotations.NotNull;
 
@@ -22,6 +24,10 @@ public class GameConfig {
     public static double SHIP_WIDTH;
     public static double SHIP_HEIGHT ;
 
+    public static List<Map<KeyCode, Movement>> playerBindingsList = new ArrayList<>();
+    public static List<String> playersSkin = new ArrayList<>();
+    public static List<BulletType> playersBulletType = new ArrayList<>();
+
     public static Map<BulletType, Integer> BULLET_DAMAGES = new HashMap<>();
     public static Map<BulletType, Integer> BULLET_SPEED = new HashMap<>();
     public static Map<BulletType, Integer> BULLET_POINTS = new HashMap<>();
@@ -34,6 +40,7 @@ public class GameConfig {
     public static List<String> SHIP_TEXTURE = new ArrayList<>();
 
     public static void loadConfig(@NotNull String configFileName) throws IOException {
+
         FileLoader fileLoader = new FileLoader();
         BufferedReader br = new BufferedReader(new InputStreamReader(fileLoader.loadFromResources(configFileName)));
         String line;
@@ -93,9 +100,40 @@ public class GameConfig {
                     case "BULLET_MIN_TIME":
                         BULLET_MIN_TIME.put(BulletType.valueOf(atributeValue.substring(0,atributeValue.indexOf(","))),Integer.parseInt(atributeValue.substring(atributeValue.indexOf(",")+1)));
                         break;
+                    default:
+                        if (atributeName.contains("PLAYER")){
+                            int playerID = Integer.parseInt(atributeName.substring(6,atributeName.indexOf("_")));
+                            if (atributeName.contains("SHIP_TEXTURE")) {
+                                System.out.println(playerID+" "+atributeValue);
+                                playersSkin.add(playerID,atributeValue);
+                            }else if (atributeName.contains("BULLET_TYPE")){
+                                System.out.println(playerID+" "+atributeValue);
+                                playersBulletType.add(playerID,BulletType.valueOf(atributeValue));
+                            }else{
+                                if (playerBindingsList.size()>playerID){
+                                    Map<KeyCode, Movement> bindings = playerBindingsList.get(playerID);
+                                    Movement movement = Movement.valueOf(atributeName.substring(atributeName.indexOf("_")+1));
+                                    KeyCode keyCode = KeyCode.getKeyCode(atributeValue);
+                                    System.out.println(keyCode+" "+movement);
+                                    bindings.put(keyCode,movement);
+                                    playerBindingsList.set(playerID,bindings);
+                                }else{
+                                    Map<KeyCode, Movement> bindings = new HashMap<>();
+                                    Movement movement = Movement.valueOf(atributeName.substring(atributeName.indexOf("_")+1));
+                                    KeyCode keyCode = KeyCode.getKeyCode(atributeValue);
+                                    System.out.println(keyCode+" "+movement);
+                                    bindings.put(keyCode,movement);
+                                    playerBindingsList.add(bindings);
+                                }
+                            }
+                        }
                 }
             }
         }
+
+        System.out.println(playerBindingsList.size());
+        System.out.println(playerBindingsList.get(0).get(KeyCode.W));
+        System.out.println(playerBindingsList.get(1).get(KeyCode.W));
         /*
         System.out.println(SHIP_HEALTH);
         System.out.println(BULLET_DAMAGES.get(BulletType.SMALL));
