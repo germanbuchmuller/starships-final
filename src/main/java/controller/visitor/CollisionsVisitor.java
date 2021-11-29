@@ -1,10 +1,14 @@
 package controller.visitor;
 
-import controller.colliders.*;
-import misc.MyPlayersRepository;
+import controller.collision.*;
+import controller.collision.concrete.AsteroidCollider;
+import controller.collision.concrete.ProjectileCollider;
+import controller.collision.concrete.ShipCollider;
 import misc.PlayersRepository;
 import misc.PointsRepository;
-import model.*;
+import model.concrete.Asteroid;
+import model.concrete.Projectile;
+import model.concrete.Ship;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
@@ -28,17 +32,17 @@ public final class CollisionsVisitor implements EntityVisitor, Serializable {
 
     @Override
     public void visit(Ship ship){
-        colliders.add(new ShipCollider(ship));
+        //colliders.add(new ShipCollider(ship));
     }
 
     @Override
     public void visit(Asteroid asteroid) {
-        colliders.add(new AsteroidCollider(asteroid));
+        //colliders.add(new AsteroidCollider(asteroid));
     }
 
     @Override
     public void visit(Projectile projectile) {
-        colliders.add(new ProjectileCollider(projectile, playersRepository,pointsRepository));
+        //colliders.add(new ProjectileCollider(projectile, playersRepository,pointsRepository));
     }
 
     public void checkColisions(){

@@ -1,16 +1,20 @@
-package controller.colliders;
+package controller.collision.concrete;
 
+import controller.collision.EntityCollider;
+import controller.visitor.GameState;
 import edu.austral.dissis.starships.vector.Vector2;
-import model.*;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import model.concrete.Ship;
 import org.jetbrains.annotations.NotNull;
 
-public class ShipCollider implements EntityCollider<Ship>{
+public class ShipCollider implements EntityCollider<Ship> {
     private final Ship ship;
+    private final GameState gameState;
 
-    public ShipCollider(@NotNull Ship ship) {
+    public ShipCollider(@NotNull Ship ship,@NotNull GameState gameState) {
         this.ship=ship;
+        this.gameState=gameState;
     }
 
     @Override

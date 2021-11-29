@@ -1,6 +1,6 @@
 package serialize;
 
-import model.Projectile;
+import model.concrete.Projectile;
 
 public class SerializedProjectile implements SerializedEntity {
     private final int damage, health, maxSpeed, rewardPoints, playerID;
@@ -23,6 +23,6 @@ public class SerializedProjectile implements SerializedEntity {
 
     @Override
     public Projectile toEntity() {
-        return new Projectile(damage,health,x,y,angle,width,height,imageFileName,playerID);
+        return new Projectile(damage,health,5,x,y,angle,width,height,imageFileName,playerID);
     }
 }

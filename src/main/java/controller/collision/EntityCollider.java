@@ -1,10 +1,10 @@
-package controller.colliders;
+package controller.collision;
 
+import controller.collision.concrete.AsteroidCollider;
+import controller.collision.concrete.ProjectileCollider;
+import controller.collision.concrete.ShipCollider;
 import edu.austral.dissis.starships.collision.Collider;
-import model.Asteroid;
 import model.Entity;
-import model.Projectile;
-import model.Ship;
 import org.jetbrains.annotations.NotNull;
 
 public interface EntityCollider<T extends Entity> extends Collider<EntityCollider<T>> {

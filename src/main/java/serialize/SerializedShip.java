@@ -1,6 +1,6 @@
 package serialize;
 
-import model.Ship;
+import model.concrete.Ship;
 
 public class SerializedShip implements SerializedEntity{
     private final int health,maxSpeed,rewardPoints,playerID;
@@ -22,6 +22,6 @@ public class SerializedShip implements SerializedEntity{
 
     @Override
     public Ship toEntity() {
-        return new Ship(health,x,y,angle,width,height,imageFileName,playerID);
+        return new Ship(health,2.5,x,y,angle,width,height,imageFileName,playerID);
     }
 }

@@ -1,8 +1,6 @@
-package controller.colliders;
+package controller.collision;
 
-import edu.austral.dissis.starships.collision.Collider;
 import javafx.scene.shape.Shape;
-import model.Entity;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -44,10 +42,7 @@ public class EntityCollisionEngine {
         if (!colliders.isEmpty()) {
             colliders.forEach((collider) -> {
                 if (this.testIntersection(current.getShape(), collider.getShape())) {
-                   // current.getEntity().setAccelerating(true);
-                    //collider.getEntity().setAccelerating(false);
                     current.handleCollisionWith(collider);
-                    //collider.handleCollisionWith(current);
                 }
 
             });

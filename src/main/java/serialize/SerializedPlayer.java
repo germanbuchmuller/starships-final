@@ -4,7 +4,7 @@ import controller.Movement;
 import javafx.scene.input.KeyCode;
 import misc.BulletType;
 import misc.Player;
-import model.Ship;
+import model.concrete.Ship;
 
 import java.io.Serializable;
 import java.util.Map;

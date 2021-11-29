@@ -2,7 +2,7 @@ package misc;
 
 import controller.visitor.EntityVisitor;
 import engine.GameConfig;
-import model.Projectile;
+import model.concrete.Projectile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +45,7 @@ public class Weapon {
         double width = GameConfig.BULLET_WIDTH.get(bulletType);
         double height = GameConfig.BULLET_HEIGHT.get(bulletType);
         String texture = GameConfig.BULLET_TEXTURE.get(bulletType);
-        return new Projectile(damage,1, x, y, angle, width, height, texture, playerId);
+        return new Projectile(damage,1, 5, x, y, angle, width, height, texture, playerId);
     }
 
     public BulletType getBulletType() {

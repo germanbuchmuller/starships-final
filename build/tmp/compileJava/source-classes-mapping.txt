@@ -1,90 +1,126 @@
-engine/GameConfig.java
- engine.GameConfig
-engine/GameState.java
- engine.GameState
-model/EntityType.java
- model.EntityType
-controller/colliders/EntityCollisionEngine.java
- controller.colliders.EntityCollisionEngine
-model/PlayerRelated.java
- model.PlayerRelated
-model/SelfMovable.java
- model.SelfMovable
-App.java
- App
-controller/Movement.java
- controller.Movement
-misc/utils/Random.java
- misc.utils.Random
-misc/BulletType.java
- misc.BulletType
-controller/colliders/AsteroidCollider.java
- controller.colliders.AsteroidCollider
-controller/colliders/ShipCollider.java
- controller.colliders.ShipCollider
-model/Projectile.java
- model.Projectile
-controller/visitor/RenderVisitor.java
- controller.visitor.RenderVisitor
 model/Entity.java
  model.Entity
-misc/PlayersRepository.java
- misc.PlayersRepository
+model/SelfMovable.java
+ model.SelfMovable
+engine/menu/NewGameMenu.java
+ engine.menu.NewGameMenu
 serialize/SerializedProjectile.java
  serialize.SerializedProjectile
-misc/MyPointsRepository.java
- misc.MyPointsRepository
-serialize/SerializedShip.java
- serialize.SerializedShip
-model/Ship.java
- model.Ship
-misc/PointsRepository.java
- misc.PointsRepository
-controller/visitor/CollisionsVisitor.java
- controller.visitor.CollisionsVisitor
-controller/visitor/MovementVisitor.java
- controller.visitor.MovementVisitor
- controller.visitor.MovementVisitor$1
-serialize/SerializedPlayer.java
- serialize.SerializedPlayer
+controller/MovementEngine.java
+ controller.MovementEngine
+view/EntityImageRepository.java
+ view.EntityImageRepository
+misc/concrete/MyPointsRepository.java
+ misc.concrete.MyPointsRepository
+controller/collision/CollisionsEngine.java
+ controller.collision.CollisionsEngine
 serialize/SerializableEntity.java
  serialize.SerializableEntity
 Game.java
  Game
+model/concrete/Ship.java
+ model.concrete.Ship
+misc/BulletType.java
+ misc.BulletType
+engine/GameConfig.java
+ engine.GameConfig
 misc/Weapon.java
  misc.Weapon
-view/ui/PlayerStatsView.java
- view.ui.PlayerStatsView
-view/EntityView.java
- view.EntityView
 engine/GameEngine.java
  engine.GameEngine
- engine.GameEngine$MainTimer
-misc/Player.java
- misc.Player
-misc/MyPlayersRepository.java
- misc.MyPlayersRepository
-model/AbstractEntity.java
- model.AbstractEntity
-engine/PlayersStatsRenderEngine.java
- engine.PlayersStatsRenderEngine
-serialize/SerializedEntity.java
- serialize.SerializedEntity
-engine/GameEntityAutoSpawner.java
- engine.GameEntityAutoSpawner
-engine/menu/MainMenu.java
- engine.menu.MainMenu
-serialize/SerializedAsteroid.java
- serialize.SerializedAsteroid
-controller/EntityController.java
- controller.EntityController
-controller/colliders/EntityCollider.java
- controller.colliders.EntityCollider
-controller/colliders/ProjectileCollider.java
- controller.colliders.ProjectileCollider
-engine/menu/NewGameMenu.java
- engine.menu.NewGameMenu
-model/Asteroid.java
- model.Asteroid
+controller/ProjectileController.java
+ controller.ProjectileController
+misc/utils/Random.java
+ misc.utils.Random
+model/EntityType.java
+ model.EntityType
 controller/visitor/EntityVisitor.java
  controller.visitor.EntityVisitor
+controller/visitor/GameState.java
+ controller.visitor.GameState
+controller/ShipController.java
+ controller.ShipController
+engine/menu/MainMenu.java
+ engine.menu.MainMenu
+model/concrete/Projectile.java
+ model.concrete.Projectile
+view/concrete/MyEntityImageRepository.java
+ view.concrete.MyEntityImageRepository
+engine/GameEntityAutoSpawner.java
+ engine.GameEntityAutoSpawner
+controller/concrete/MyAbstractEntityController.java
+ controller.concrete.MyAbstractEntityController
+model/AbstractEntity.java
+ model.AbstractEntity
+model/PlayerRelated.java
+ model.PlayerRelated
+view/RenderEngine.java
+ view.RenderEngine
+serialize/SerializedEntity.java
+ serialize.SerializedEntity
+model/concrete/Asteroid.java
+ model.concrete.Asteroid
+controller/EntityController.java
+ controller.EntityController
+view/EntityView.java
+ view.EntityView
+controller/visitor/RenderVisitor.java
+ controller.visitor.RenderVisitor
+controller/visitor/GameEngineVisitor.java
+ controller.visitor.GameEngineVisitor
+controller/Movement.java
+ controller.Movement
+controller/concrete/MyProjectileController.java
+ controller.concrete.MyProjectileController
+serialize/SerializedAsteroid.java
+ serialize.SerializedAsteroid
+controller/collision/EntityCollisionEngine.java
+ controller.collision.EntityCollisionEngine
+serialize/SerializedShip.java
+ serialize.SerializedShip
+misc/PointsRepository.java
+ misc.PointsRepository
+controller/visitor/MyGameState.java
+ controller.visitor.MyGameState
+App.java
+ App
+controller/visitor/MovementVisitor.java
+ controller.visitor.MovementVisitor
+controller/concrete/MyMovementEngine.java
+ controller.concrete.MyMovementEngine
+ controller.concrete.MyMovementEngine$1
+controller/concrete/MyShipController.java
+ controller.concrete.MyShipController
+misc/Player.java
+ misc.Player
+controller/collision/concrete/MyCollisionsEngine.java
+ controller.collision.concrete.MyCollisionsEngine
+view/concrete/MyGameWindow.java
+ view.concrete.MyGameWindow
+misc/concrete/MyPlayersRepository.java
+ misc.concrete.MyPlayersRepository
+view/concrete/MyRenderEngine.java
+ view.concrete.MyRenderEngine
+engine/PlayersStatsRenderEngine.java
+ engine.PlayersStatsRenderEngine
+misc/PlayersRepository.java
+ misc.PlayersRepository
+controller/collision/concrete/ShipCollider.java
+ controller.collision.concrete.ShipCollider
+controller/visitor/CollisionsVisitor.java
+ controller.visitor.CollisionsVisitor
+controller/collision/concrete/AsteroidCollider.java
+ controller.collision.concrete.AsteroidCollider
+serialize/SerializedPlayer.java
+ serialize.SerializedPlayer
+controller/collision/EntityCollider.java
+ controller.collision.EntityCollider
+view/GameWindow.java
+ view.GameWindow
+controller/collision/concrete/ProjectileCollider.java
+ controller.collision.concrete.ProjectileCollider
+engine/GameCore.java
+ engine.GameCore
+ engine.GameCore$MainTimer
+view/ui/PlayerStatsView.java
+ view.ui.PlayerStatsView

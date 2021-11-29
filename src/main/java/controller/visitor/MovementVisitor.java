@@ -1,12 +1,11 @@
 package controller.visitor;
 
-import controller.EntityController;
-import controller.Movement;
+import controller.concrete.MyShipController;
 import javafx.scene.layout.Pane;
-import model.Asteroid;
+import model.concrete.Asteroid;
 import model.Entity;
-import model.Projectile;
-import model.Ship;
+import model.concrete.Projectile;
+import model.concrete.Ship;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +14,7 @@ public class MovementVisitor implements EntityVisitor {
     private final List<Ship> ships;
     private final List<Entity> selfMovableEntities;
     private final List<Entity> entitiesToRemove;
-    EntityController entityController;
+    MyShipController myShipController;
     private final Pane pane;
 
     public MovementVisitor(Pane pane) {
@@ -24,7 +23,7 @@ public class MovementVisitor implements EntityVisitor {
         ships =new ArrayList<>();
         this.pane=pane;
 
-        entityController=new EntityController(pane);
+        //myShipController =new MyShipController(pane);
     }
 
     public List<Entity> getSelfMovableEntities() {
@@ -47,9 +46,10 @@ public class MovementVisitor implements EntityVisitor {
     }
 
     public void updateSelfMovableEntities(double secondsSinceLastFrame){
-        entityController.setCanMoveOutOfBounds(true);
+        /*
+        myShipController.setCanMoveOutOfBounds(true);
         for (Entity selfMovableEntity : selfMovableEntities) {
-            entityController.moveForward(selfMovableEntity, secondsSinceLastFrame);
+            myShipController.moveForward(selfMovableEntity, secondsSinceLastFrame);
             if (checkIfEntityOutOfBorders(selfMovableEntity)){
                 selfMovableEntity.destroy();
                 entitiesToRemove.add(selfMovableEntity);
@@ -58,42 +58,48 @@ public class MovementVisitor implements EntityVisitor {
         selfMovableEntities.removeAll(entitiesToRemove);
         entitiesToRemove.clear();
         updateShips(secondsSinceLastFrame);
+        */
     }
 
     public void updateShips(double secondsSinceLastFrame){
-        entityController.setCanMoveOutOfBounds(false);
+        /*
+        myShipController.setCanMoveOutOfBounds(false);
         for (Ship ship : ships) {
-            entityController.slowDown(ship,secondsSinceLastFrame);
+            myShipController.slowDown(ship,secondsSinceLastFrame);
         }
-    }
 
+         */
+    }
+/*
     public void updateUserMovableEntity(Entity entity, Movement movement, double secondsSinceLastFrame){
-        entityController.setCanMoveOutOfBounds(false);
+        myShipController.setCanMoveOutOfBounds(false);
         checkIfEntityOutOfBorders(entity);
         switch (movement){
             case FORWARD:
-                entityController.moveForward(entity,secondsSinceLastFrame);
+                myShipController.moveForward(entity,secondsSinceLastFrame);
                 break;
             case BACKWARDS:
-                entityController.moveBackwards(entity,secondsSinceLastFrame);
+                myShipController.moveBackwards(entity,secondsSinceLastFrame);
                 break;
             case LEFT:
-                entityController.moveLeft(entity,secondsSinceLastFrame);
+                myShipController.moveLeft(entity,secondsSinceLastFrame);
                 break;
             case RIGHT:
-                entityController.moveRight(entity,secondsSinceLastFrame);
+                myShipController.moveRight(entity,secondsSinceLastFrame);
                 break;
             case ROTATE_LEFT:
-                entityController.rotateLeft(entity,secondsSinceLastFrame);
+                myShipController.rotateLeft(entity,secondsSinceLastFrame);
                 break;
             case ROTATE_RIGHT:
-                entityController.rotateRight(entity,secondsSinceLastFrame);
+                myShipController.rotateRight(entity,secondsSinceLastFrame);
                 break;
             case SHOOT:
-                entityController.shoot(entity);
+                myShipController.shoot(entity);
                 break;
         }
     }
+
+ */
 
     private boolean checkIfEntityOutOfBorders(Entity entity){
         if (pane.getLayoutBounds().getMaxY()<(entity.getY()-entity.getHeight()-entity.getWidth()) || pane.getLayoutBounds().getMaxX()<(entity.getX()-entity.getWidth()-entity.getHeight())){

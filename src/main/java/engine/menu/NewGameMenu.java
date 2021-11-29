@@ -2,9 +2,8 @@ package engine.menu;
 
 import controller.Movement;
 import edu.austral.dissis.starships.file.ImageLoader;
-import edu.austral.dissis.starships.game.RootSetter;
 import engine.GameConfig;
-import engine.GameEngine;
+import engine.GameCore;
 import javafx.scene.Parent;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -15,7 +14,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import misc.BulletType;
-import misc.Player;
 
 import java.io.IOException;
 import java.util.*;
@@ -24,12 +22,12 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class NewGameMenu {
     private final ImageLoader imageLoader;
-    private final GameEngine gameEngine;
+    private final GameCore gameCore;
     private final double sf=0.75;
 
-    public NewGameMenu(GameEngine gameEngine) {
+    public NewGameMenu(GameCore gameCore) {
         imageLoader=new ImageLoader();
-        this.gameEngine=gameEngine;
+        this.gameCore = gameCore;
     }
 
     public Parent load() throws IOException {
@@ -257,10 +255,10 @@ public class NewGameMenu {
             player2Bindings.put(Movement.ROTATE_RIGHT,KeyCode.getKeyCode(player2RRightText.getText()));
             player2Bindings.put(Movement.SHOOT,KeyCode.getKeyCode(player2ShootText.getText()));
             try {
-                gameEngine.initializeNewGame();
-                gameEngine.addNewPlayer("Player 1",player1ShipTexture.get(),BulletType.valueOf(player1BulletTypeText.getText()),invertMap(player1Bindings));
-                gameEngine.addNewPlayer("Player 2",player2ShipTexture.get(),BulletType.valueOf(player2BulletTypeText.getText()),invertMap(player2Bindings));
-                gameEngine.getRootSetter().setRoot(gameEngine.launchGame());
+                gameCore.initializeNewGame();
+                gameCore.addNewPlayer("Player 1",player1ShipTexture.get(),BulletType.valueOf(player1BulletTypeText.getText()),invertMap(player1Bindings));
+                gameCore.addNewPlayer("Player 2",player2ShipTexture.get(),BulletType.valueOf(player2BulletTypeText.getText()),invertMap(player2Bindings));
+                gameCore.getRootSetter().setRoot(gameCore.launchGame());
             } catch (IOException e) {
                 e.printStackTrace();
             }

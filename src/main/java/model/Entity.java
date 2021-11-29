@@ -6,7 +6,6 @@ import controller.visitor.EntityVisitor;
 import serialize.SerializableEntity;
 
 public interface Entity{
-    EntityType getType();
     double getX();
     double getY();
     double getAngle();
@@ -14,6 +13,7 @@ public interface Entity{
     double getHeight();
     Vector2 getMovementDirection();
     void setMovementDirection(Vector2 direction);
+    double getMaxSpeed();
     int getHealth();
     void harm(int amount);
     void heal(int amount);

@@ -1,7 +1,10 @@
-package model;
+package model.concrete;
 
 import misc.BulletType;
 import misc.Weapon;
+import model.AbstractEntity;
+import model.EntityType;
+import model.PlayerRelated;
 import org.jetbrains.annotations.NotNull;
 import controller.visitor.EntityVisitor;
 
@@ -10,8 +13,8 @@ public class Ship extends AbstractEntity implements PlayerRelated {
     private final Weapon weapon;
     private long lastRevive;
 
-    public Ship(int health, double x, double y, double angle, double width, double height,String imageFileName, int playerId) {
-       super(health,x,y,angle,width,height, imageFileName);
+    public Ship(int health, double maxSpeed, double x, double y, double angle, double width, double height,String imageFileName, int playerId) {
+       super(health, maxSpeed,x,y,angle,width,height, imageFileName);
        this.playerId=playerId;
        weapon=new Weapon(playerId);
     }
@@ -35,11 +38,6 @@ public class Ship extends AbstractEntity implements PlayerRelated {
         if (System.currentTimeMillis()-lastRevive>3000){
             super.destroy();
         }
-    }
-
-    @Override
-    public EntityType getType() {
-        return EntityType.SHIP;
     }
 
     @Override

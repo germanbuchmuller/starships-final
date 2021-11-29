@@ -1,10 +1,11 @@
-package misc;
+package misc.concrete;
 
-import model.Asteroid;
-import model.Projectile;
-import model.Ship;
+import misc.PointsRepository;
+import model.concrete.Asteroid;
+import model.concrete.Projectile;
+import model.concrete.Ship;
 
-public class MyPointsRepository implements  PointsRepository{
+public class MyPointsRepository implements PointsRepository {
     @Override
     public int getPoints(Ship ship) {
         return 200;

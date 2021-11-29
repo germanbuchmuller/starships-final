@@ -2,7 +2,6 @@ package engine;
 
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
-import misc.MyPlayersRepository;
 import misc.PlayersRepository;
 import org.jetbrains.annotations.NotNull;
 import view.ui.PlayerStatsView;

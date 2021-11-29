@@ -11,8 +11,9 @@ public abstract class AbstractEntity implements Entity{
     private final String imageFileName;
     private boolean isDestroyed;
     private boolean accelerating;
+    private double maxSpeed;
 
-    public AbstractEntity(int maxHealth, double x, double y, double angle, double width, double height, String imageFileName) {
+    public AbstractEntity(int maxHealth, double maxSpeed, double x, double y, double angle, double width, double height, String imageFileName) {
         this.health = maxHealth;
         this.maxHealth = maxHealth;
         this.movementDirection = Vector2.vectorFromModule(0,0);
@@ -22,6 +23,7 @@ public abstract class AbstractEntity implements Entity{
         this.width=width;
         this.height=height;
         this.imageFileName=imageFileName;
+        this.maxSpeed=maxSpeed;
         isDestroyed=false;
         accelerating=false;
     }
@@ -66,6 +68,11 @@ public abstract class AbstractEntity implements Entity{
     @Override
     public void setMovementDirection(Vector2 movementDirection) {
         this.movementDirection = movementDirection;
+    }
+
+    @Override
+    public double getMaxSpeed() {
+        return maxSpeed;
     }
 
     @Override

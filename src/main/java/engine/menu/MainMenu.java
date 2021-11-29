@@ -1,7 +1,7 @@
 package engine.menu;
 
 import edu.austral.dissis.starships.file.ImageLoader;
-import engine.GameEngine;
+import engine.GameCore;
 import javafx.scene.Parent;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -11,12 +11,12 @@ import java.io.IOException;
 
 public class MainMenu {
     private final ImageLoader imageLoader;
-    private final GameEngine gameEngine;
+    private final GameCore gameCore;
     private final double sf=0.75;
 
-    public MainMenu(GameEngine gameEngine) {
+    public MainMenu(GameCore gameCore) {
         imageLoader=new ImageLoader();
-        this.gameEngine=gameEngine;
+        this.gameCore = gameCore;
     }
 
     public Parent load() throws IOException {
@@ -37,8 +37,8 @@ public class MainMenu {
         newGameBtn.setOnMouseReleased(event -> newGameBtn.setImage(newGameImage2));
         newGameBtn.setOnMouseClicked(event -> {
             try {
-                gameEngine.startNewGameFromConfigFile();
-                gameEngine.getRootSetter().setRoot(gameEngine.launchGame());
+                gameCore.startNewGameFromConfigFile();
+                gameCore.getRootSetter().setRoot(gameCore.launchGame());
                 //gameEngine.getRootSetter().setRoot(gameEngine.loadNewGameMenu());
             } catch (IOException e) {
                 e.printStackTrace();
@@ -60,7 +60,7 @@ public class MainMenu {
 
             try {
                 //gameEngine.loadSavedGame();
-                gameEngine.getRootSetter().setRoot(gameEngine.launchGame());
+                gameCore.getRootSetter().setRoot(gameCore.launchGame());
             } catch (IOException e) {
                 e.printStackTrace();
             }

@@ -1,5 +1,9 @@
-package model;
+package model.concrete;
 
+import model.AbstractEntity;
+import model.EntityType;
+import model.PlayerRelated;
+import model.SelfMovable;
 import org.jetbrains.annotations.NotNull;
 import controller.visitor.EntityVisitor;
 
@@ -7,19 +11,14 @@ public class Projectile extends AbstractEntity implements PlayerRelated, SelfMov
     private final int damage;
     private int playerId;
 
-    public Projectile(int damage, int health, double x, double y, double angle, double width, double height, String imageFileName, int playerId) {
-        super(health,x,y,angle,width,height,imageFileName);
+    public Projectile(int damage, int health, double maxSpeed, double x, double y, double angle, double width, double height, String imageFileName, int playerId) {
+        super(health, maxSpeed,x,y,angle,width,height,imageFileName);
         this.damage=damage;
         this.playerId=playerId;
     }
 
     public int getDamage() {
         return damage;
-    }
-
-    @Override
-    public EntityType getType() {
-        return EntityType.PROJECTILE;
     }
 
     @Override

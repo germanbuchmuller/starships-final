@@ -3,10 +3,10 @@ package controller.visitor;
 import edu.austral.dissis.starships.file.ImageLoader;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
-import model.Asteroid;
+import model.concrete.Asteroid;
 import model.Entity;
-import model.Projectile;
-import model.Ship;
+import model.concrete.Projectile;
+import model.concrete.Ship;
 import view.EntityView;
 
 import java.io.IOException;

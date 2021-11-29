@@ -1,8 +1,8 @@
 package controller.visitor;
 
-import model.Asteroid;
-import model.Projectile;
-import model.Ship;
+import model.concrete.Asteroid;
+import model.concrete.Projectile;
+import model.concrete.Ship;
 
 public interface EntityVisitor {
     void visit(Ship ship);

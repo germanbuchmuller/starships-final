@@ -2,7 +2,7 @@ package engine;
 
 import controller.visitor.EntityVisitor;
 import javafx.scene.layout.Pane;
-import model.Asteroid;
+import model.concrete.Asteroid;
 import model.Entity;
 import model.EntityType;
 import org.jetbrains.annotations.NotNull;
@@ -25,9 +25,12 @@ public class GameEntityAutoSpawner {
     }
 
     public void addEntity(Entity entity){
+        /*
         if (entity.getType()== EntityType.ASTEROID){
             asteroids.add((Asteroid)entity);
         }
+
+         */
     }
 
     public void addVisitor(@NotNull EntityVisitor visitor){

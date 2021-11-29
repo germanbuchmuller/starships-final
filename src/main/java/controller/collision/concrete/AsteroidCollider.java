@@ -1,17 +1,19 @@
-package controller.colliders;
+package controller.collision.concrete;
 
-import edu.austral.dissis.starships.collision.Collider;
+import controller.collision.EntityCollider;
+import controller.visitor.GameState;
 import javafx.scene.shape.Circle;
-import model.*;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import model.concrete.Asteroid;
 import org.jetbrains.annotations.NotNull;
 
 public class AsteroidCollider implements EntityCollider<Asteroid> {
     private final Asteroid asteroid;
+    private final GameState gameState;
 
-    public AsteroidCollider(@NotNull Asteroid asteroid) {
+    public AsteroidCollider(@NotNull Asteroid asteroid,@NotNull GameState gameState) {
         this.asteroid=asteroid;
+        this.gameState=gameState;
     }
 
     @Override
