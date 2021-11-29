@@ -2,6 +2,9 @@ package engine;
 
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
+import misc.MyPlayersRepository;
+import misc.PlayersRepository;
+import org.jetbrains.annotations.NotNull;
 import view.ui.PlayerStatsView;
 
 import java.util.ArrayList;
@@ -15,7 +18,7 @@ public class PlayersStatsRenderEngine {
     private boolean initialized;
     private final int fontSize = 40;
 
-    public PlayersStatsRenderEngine(PlayersRepository playersRepository, Pane pane) {
+    public PlayersStatsRenderEngine(@NotNull PlayersRepository playersRepository, Pane pane) {
         this.pane=pane;
         this.playersRepository = playersRepository;
         viewsToRemove=new ArrayList<>();

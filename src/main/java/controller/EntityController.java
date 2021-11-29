@@ -27,7 +27,7 @@ public class EntityController {
     }
     public void slowDown(Entity entity, double secondsSinsceLastFrame){
         if (!entity.isAccelerating()){
-            Vector2 oppositeVector = Vector2.vectorFromModule(0.5*secondsSinsceLastFrame,entity.getMovementDirection().getAngle()+Math.toRadians(180));
+            Vector2 oppositeVector = Vector2.vectorFromModule(entity.getMovementDirection().getModule()*0.015,entity.getMovementDirection().getAngle()+Math.toRadians(180));
             entity.setMovementDirection(entity.getMovementDirection().add(oppositeVector));
             updatePosition(entity);
         }

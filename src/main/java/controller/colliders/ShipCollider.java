@@ -6,7 +6,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import org.jetbrains.annotations.NotNull;
 
-public class ShipCollider implements EntityCollider{
+public class ShipCollider implements EntityCollider<Ship>{
     private final Ship ship;
 
     public ShipCollider(@NotNull Ship ship) {
@@ -14,22 +14,26 @@ public class ShipCollider implements EntityCollider{
     }
 
     @Override
-    public void handleCollisionWith(@NotNull Projectile projectile) {
-
+    public void handleCollisionWith(@NotNull ProjectileCollider projectileCollider) {
+        projectileCollider.handleCollisionWith(this);
     }
 
     @Override
-    public void handleCollisionWith(@NotNull Asteroid asteroid) {
-
+    public void handleCollisionWith(@NotNull AsteroidCollider asteroidCollider) {
+        asteroidCollider.handleCollisionWith(this);
     }
 
     @Override
-    public void handleCollisionWith(@NotNull Ship ship) {
-
+    public void handleCollisionWith(@NotNull ShipCollider shipCollider) {
+        Ship ship = shipCollider.getEntity();
+        Vector2 ship1Vector = ship.getMovementDirection();
+        Vector2 ship2Vector = this.ship.getMovementDirection();
+        this.ship.setMovementDirection(this.ship.getMovementDirection().multiply(-0.5).add(ship1Vector.multiply(0.8)));
+        ship.setMovementDirection(ship.getMovementDirection().multiply(-0.5).add(ship2Vector.multiply(0.8)));
     }
 
     @Override
-    public Entity getEntity() {
+    public Ship getEntity() {
         return ship;
     }
 
@@ -42,7 +46,7 @@ public class ShipCollider implements EntityCollider{
 
     @Override
     public void handleCollisionWith(@NotNull EntityCollider entityCollider) {
-        entityCollider.handleCollisionWith(ship);
+        entityCollider.handleCollisionWith(this);
     }
 
 

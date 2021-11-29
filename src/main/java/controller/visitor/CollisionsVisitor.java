@@ -1,11 +1,9 @@
 package controller.visitor;
 
-import controller.colliders.AsteroidCollider;
-import controller.colliders.EntityCollider;
-import controller.colliders.ProjectileCollider;
-import controller.colliders.ShipCollider;
-import engine.PlayersRepository;
-import edu.austral.dissis.starships.collision.CollisionEngine;
+import controller.colliders.*;
+import misc.MyPlayersRepository;
+import misc.PlayersRepository;
+import misc.PointsRepository;
 import model.*;
 import org.jetbrains.annotations.NotNull;
 
@@ -16,14 +14,16 @@ import java.util.List;
 public final class CollisionsVisitor implements EntityVisitor, Serializable {
     private final List<EntityCollider> colliders;
     private final List<EntityCollider> collidersToRemove;
-    private final CollisionEngine collisionEngine;
+    private final EntityCollisionEngine collisionEngine;
     private final PlayersRepository playersRepository;
+    private final PointsRepository pointsRepository;
 
-    public CollisionsVisitor(@NotNull PlayersRepository playersRepository) {
+    public CollisionsVisitor(@NotNull PlayersRepository playersRepository, @NotNull PointsRepository pointsRepository) {
         colliders=new ArrayList<>();
         collidersToRemove=new ArrayList<>();
-        collisionEngine=new CollisionEngine();
+        collisionEngine=new EntityCollisionEngine();
         this.playersRepository = playersRepository;
+        this.pointsRepository = pointsRepository;
     }
 
     @Override
@@ -38,7 +38,7 @@ public final class CollisionsVisitor implements EntityVisitor, Serializable {
 
     @Override
     public void visit(Projectile projectile) {
-        colliders.add(new ProjectileCollider(projectile, playersRepository));
+        colliders.add(new ProjectileCollider(projectile, playersRepository,pointsRepository));
     }
 
     public void checkColisions(){

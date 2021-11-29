@@ -81,6 +81,8 @@ public abstract class AbstractEntity implements Entity{
     @Override
     public void destroy() {
         isDestroyed=true;
+        setMovementDirection(Vector2.vector(0,0));
+        setAccelerating(false);
         System.out.println(this + " destroyed");
     }
 
@@ -100,7 +102,6 @@ public abstract class AbstractEntity implements Entity{
         health-=amount;
         if (health<0){
             health=0;
-            destroy();
         }
     }
 
@@ -108,6 +109,11 @@ public abstract class AbstractEntity implements Entity{
     public void heal(int amount) {
         health+=amount;
         if (health>maxHealth) health=maxHealth;
+    }
+
+    @Override
+    public boolean isAlive() {
+        return health>0;
     }
 
     @Override

@@ -7,7 +7,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import org.jetbrains.annotations.NotNull;
 
-public class AsteroidCollider implements EntityCollider {
+public class AsteroidCollider implements EntityCollider<Asteroid> {
     private final Asteroid asteroid;
 
     public AsteroidCollider(@NotNull Asteroid asteroid) {
@@ -23,26 +23,27 @@ public class AsteroidCollider implements EntityCollider {
 
     @Override
     public void handleCollisionWith(@NotNull EntityCollider entityCollider) {
-        entityCollider.handleCollisionWith(asteroid);
+        entityCollider.handleCollisionWith(this);
     }
 
-    @Override
-    public void handleCollisionWith(@NotNull Projectile projectile) {
-
-    }
 
     @Override
-    public void handleCollisionWith(@NotNull Asteroid asteroid) {
+    public void handleCollisionWith(@NotNull ProjectileCollider projectileCollider) {
 
     }
 
     @Override
-    public void handleCollisionWith(@NotNull Ship ship) {
+    public void handleCollisionWith(@NotNull AsteroidCollider asteroidCollider) {
 
     }
 
     @Override
-    public Entity getEntity() {
+    public void handleCollisionWith(@NotNull ShipCollider shipCollider) {
+
+    }
+
+    @Override
+    public Asteroid getEntity() {
         return asteroid;
     }
 }

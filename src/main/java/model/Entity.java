@@ -13,12 +13,13 @@ public interface Entity{
     double getWidth();
     double getHeight();
     Vector2 getMovementDirection();
-    void setMovementDirection(Vector2 speed);
+    void setMovementDirection(Vector2 direction);
     int getHealth();
     void harm(int amount);
     void heal(int amount);
     void destroy();
     boolean isDestroyed();
+    boolean isAlive();
     void revive();
     String getImageFileName();
     void setAccelerating(boolean accelerating);

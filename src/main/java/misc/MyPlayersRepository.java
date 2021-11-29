@@ -1,4 +1,4 @@
-package engine;
+package misc;
 
 import misc.Player;
 
@@ -7,12 +7,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PlayersRepository {
+public class MyPlayersRepository implements PlayersRepository {
     private final List<Player> playersList;
     private final Map<Integer, Player> playersIDMap;
     private int lastPlayerID;
 
-    public PlayersRepository() {
+    public MyPlayersRepository() {
         playersIDMap=new HashMap<>();
         playersList=new ArrayList<>();
         lastPlayerID=0;

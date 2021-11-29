@@ -7,9 +7,9 @@ import model.Projectile;
 import model.Ship;
 import org.jetbrains.annotations.NotNull;
 
-public interface EntityCollider extends Collider<EntityCollider> {
-    void handleCollisionWith(@NotNull Projectile projectile);
-    void handleCollisionWith(@NotNull Asteroid asteroid);
-    void handleCollisionWith(@NotNull Ship ship);
-    Entity getEntity();
+public interface EntityCollider<T extends Entity> extends Collider<EntityCollider<T>> {
+    void handleCollisionWith(@NotNull ProjectileCollider projectileCollider);
+    void handleCollisionWith(@NotNull AsteroidCollider asteroidCollider);
+    void handleCollisionWith(@NotNull ShipCollider shipCollider);
+    T getEntity();
 }

@@ -18,13 +18,10 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.Pane;
-import misc.BulletType;
+import misc.*;
 import model.Entity;
 import org.jetbrains.annotations.NotNull;
-import misc.Player;
 import misc.utils.Random;
-import serialize.SerializedEntity;
-import serialize.SerializedPlayer;
 
 import java.io.*;
 import java.util.*;
@@ -38,6 +35,7 @@ public class GameEngine {
     private RenderVisitor renderVisitor;
     private GameEntityAutoSpawner gameEntityAutoSpawner;
     private PlayersRepository playersRepository;
+    private PointsRepository pointsRepository;
     private PlayersStatsRenderEngine playersStatsRenderEngine;
     private final ImageLoader imageLoader;
     private Map<KeyCode, Player> keyBindings;
@@ -81,8 +79,9 @@ public class GameEngine {
         gamePane= new Pane();
         movementVisitor=new MovementVisitor(gamePane);
         renderVisitor=new RenderVisitor(gamePane);
-        playersRepository =new PlayersRepository();
-        collisionsVisitor=new CollisionsVisitor(playersRepository);
+        playersRepository =new MyPlayersRepository();
+        pointsRepository=new MyPointsRepository();
+        collisionsVisitor=new CollisionsVisitor(playersRepository, pointsRepository);
         keyBindings=new HashMap<>();
         gamePaused=false;
         gameEntityAutoSpawner=new GameEntityAutoSpawner(gamePane);
@@ -234,12 +233,9 @@ public class GameEngine {
     private void checkDeadPlayers(){
         int gameOverPlayers = 0;
         for (Player player : playersRepository.getPlayers()) {
-            if (player.getShip().isDestroyed()){
+            if (!player.getShip().isAlive()){
                 if (player.revive()){
                     player.getShip().revive(Random.get(20,(int)gamePane.getLayoutBounds().getMaxX()-50),Random.get(20,(int)gamePane.getLayoutBounds().getMaxY()-50));
-                    player.addVisitor(movementVisitor);
-                    player.addVisitor(collisionsVisitor);
-                    player.addVisitor(renderVisitor);
                 }else{
                     gameOverPlayers++;
                 }
