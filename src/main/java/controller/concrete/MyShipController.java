@@ -26,12 +26,12 @@ public class MyShipController  implements ShipController {
 
     @Override
     public void rotateLeft(Ship ship,double secondsSinceLastFrame) {
-        ship.setPosition(ship.getX(), ship.getY(), ship.getAngle()-ship.getAcceleration()*80*secondsSinceLastFrame);
+        ship.setPosition(ship.getX(), ship.getY(), ship.getAngle()-ship.getAcceleration()*50*secondsSinceLastFrame);
     }
 
     @Override
     public void rotateRight(Ship ship,double secondsSinceLastFrame) {
-        ship.setPosition(ship.getX(), ship.getY(), ship.getAngle()+ship.getAcceleration()*80*secondsSinceLastFrame);
+        ship.setPosition(ship.getX(), ship.getY(), ship.getAngle()+ship.getAcceleration()*50*secondsSinceLastFrame);
     }
 
     @Override

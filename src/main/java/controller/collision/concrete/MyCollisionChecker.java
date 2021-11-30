@@ -13,7 +13,7 @@ public class MyCollisionChecker implements CollisionChecker {
     public boolean isColliding(EntityCollider collider, List<EntityCollider> colliders) {
         boolean collides = false;
         for (EntityCollider entityCollider : colliders) {
-            if (testIntersection(collider.getShape(),entityCollider.getShape())){
+            if (collider.getEntity()!=entityCollider.getEntity()&&testIntersection(collider.getShape(),entityCollider.getShape())){
                 collides=true;
                 break;
             }

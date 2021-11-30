@@ -17,15 +17,6 @@ public class Player {
     private Ship ship;
     private Map<KeyCode, Movement> keyBindings;
 
-    public Player(String name, int id, int lives, int points,String shipTexture, Map<KeyCode, Movement> keyBindings) {
-        this.name = name;
-        this.id = id;
-        this.points = points;
-        this.lives=lives;
-        this.ship=new Ship(MyGameConfig.SHIP_HEALTH, 4,3, Random.get(200,1200),Random.get(200,650),0, MyGameConfig.SHIP_WIDTH, MyGameConfig.SHIP_HEIGHT,shipTexture,id);
-        this.keyBindings = keyBindings;
-    }
-
     public Player(String name, int lives, int points,Ship ship, Map<KeyCode, Movement> keyBindings) {
         this.name = name;
         this.id = ship.getPlayerId();

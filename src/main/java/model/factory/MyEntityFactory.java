@@ -5,6 +5,9 @@ import controller.collision.EntityCollider;
 import controller.collision.concrete.AsteroidCollider;
 import controller.collision.concrete.ShipCollider;
 import engine.GameConfig;
+import engine.concrete.MyGameConfig;
+import misc.BulletType;
+import misc.Weapon;
 import misc.utils.Random;
 import model.concrete.Asteroid;
 import model.concrete.Projectile;
@@ -13,7 +16,6 @@ import view.GameWindow;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 public class MyEntityFactory implements EntityFactory {
     private final GameConfig gameConfig;
@@ -29,21 +31,32 @@ public class MyEntityFactory implements EntityFactory {
     }
 
     @Override
-    public Ship getShip(double x, double y, String imageFileName, int playerId) {
-        return new Ship(gameConfig.getShipMaxHealth(),gameConfig.getShipMaxSpeed(),gameConfig.getShipAcceleration(),x,y,0,gameConfig.getShipWidth(),gameConfig.getShipHeight(),imageFileName,playerId);
+    public Ship getShip(Weapon weapon, double x, double y, String imageFileName, int playerId) {
+        return new Ship(gameConfig.getShipMaxHealth(),gameConfig.getShipMaxSpeed(),gameConfig.getShipAcceleration(),weapon,x,y,0,gameConfig.getShipWidth(),gameConfig.getShipHeight(),imageFileName,playerId);
     }
 
     @Override
-    public Ship getShip(String imageFileName, int playerId) {
+    public Ship getShip(Weapon weapon,String imageFileName, int playerId) {
+        Ship ship = new Ship(gameConfig.getShipMaxHealth(),gameConfig.getShipMaxSpeed(),gameConfig.getShipAcceleration(), weapon,0,0,0,gameConfig.getShipWidth(),gameConfig.getShipHeight(),imageFileName,playerId);
+        setShipSpawnPosition(ship);
+        return ship;
+    }
+
+    @Override
+    public void reviveShip(Ship ship) {
+        setShipSpawnPosition(ship);
+        ship.revive();
+    }
+
+    private void setShipSpawnPosition(Ship ship){
         double x = randomShipX();
         double y = randomShipY();
-        Ship ship = new Ship(gameConfig.getShipMaxHealth(),gameConfig.getShipMaxSpeed(),gameConfig.getShipAcceleration(),x,y,0,gameConfig.getShipWidth(),gameConfig.getShipHeight(),imageFileName,playerId);
+        ship.setPosition(x,y,ship.getAngle());
         ShipCollider shipCollider = new ShipCollider(ship,null);
         while (newEntityCollidesWithColliders(shipCollider)){
             ship.setPosition(randomShipX(),randomShipY(),0);
             System.out.println("Created entity was colliding. Assigning new position...");
         }
-        return ship;
     }
 
     @Override
@@ -62,8 +75,13 @@ public class MyEntityFactory implements EntityFactory {
     }
 
     @Override
-    public Projectile getProjectile() {
-        return null;
+    public Projectile getProjectile(double x, double y, double angle, BulletType bulletType, int playerId) {
+        int damage = gameConfig.getBulletDamages().get(bulletType);
+        double speed = gameConfig.getBulletSpeeds().get(bulletType);
+        double width = gameConfig.getBulletWidth().get(bulletType);
+        double height = gameConfig.getBulletHeight().get(bulletType);
+        String texture = gameConfig.getBulletTextures().get(bulletType);
+        return new Projectile(damage,1, speed,5, x, y, angle, width, height, texture, playerId);
     }
 
     private boolean newEntityCollidesWithColliders(EntityCollider entityCollider){
@@ -84,23 +102,23 @@ public class MyEntityFactory implements EntityFactory {
         if (bound==0){
             pos[0]=-size*2;
             pos[1]=Random.get(100,(int)(gameWindow.getHeight()-100));
-            //pos[2]=Random.get(20,160);
-            pos[2]=90;
+            pos[2]=Random.get(60,120);
+            //pos[2]=90;
         }else if (bound==1){
             pos[0]=(int)(gameWindow.getWidth()+size);
             pos[1]=Random.get(100,(int)(gameWindow.getHeight()-100));
-            //pos[2]=Random.get(-160,-20);
-            pos[2]=-90;
+            pos[2]=Random.get(-120,-60);
+            //pos[2]=-90;
         }else if (bound==2){
             pos[0]=Random.get(100,(int)(gameWindow.getWidth()-100));
             pos[1]=-size*2;
-            //pos[2]=Random.get(100,250);
-            pos[2]=180;
+            pos[2]=Random.get(150,210);
+            //pos[2]=180;
         }else{
             pos[0]=Random.get(100,(int)(gameWindow.getWidth()-100));
             pos[1]=(int)(gameWindow.getHeight()+size);;
-            //pos[2]=Random.get(-250,-100);
-            pos[2]=0;
+            pos[2]=Random.get(-30,30);
+            //pos[2]=0;
         }
         return pos;
     }

@@ -24,11 +24,12 @@ import javafx.scene.layout.Pane;
 import misc.*;
 import misc.concrete.MyPlayersRepository;
 import misc.concrete.MyPointsRepository;
+import misc.concrete.MyWeapon;
 import model.Entity;
+import model.concrete.Ship;
 import model.factory.EntityFactory;
 import model.factory.MyEntityFactory;
 import org.jetbrains.annotations.NotNull;
-import misc.utils.Random;
 import view.EntityImageRepository;
 import view.GameWindow;
 import view.RenderEngine;
@@ -89,7 +90,7 @@ public class GameCore {
     }
 
     public void startNewGameFromConfigFile(){
-        initializeNewGame();
+        //initializeNewGame();
         for (int i = 0; i < MyGameConfig.playerBindingsList.size(); i++) {
             addNewPlayer("Player"+(i+1), MyGameConfig.playersSkin.get(i), MyGameConfig.playersBulletType.get(i), MyGameConfig.playerBindingsList.get(i));
         }
@@ -102,13 +103,15 @@ public class GameCore {
         gameConfig=new MyGameConfig("gameconfig.txt");
 
         entityImageRepository=new MyEntityImageRepository(imageLoader);
-        renderEngine=new MyRenderEngine(gameState,gameWindow,entityImageRepository);
-        movementEngine=new MyMovementEngine(gameState);
         playersRepository =new MyPlayersRepository();
         pointsRepository=new MyPointsRepository();
+
+        renderEngine=new MyRenderEngine(gameState,gameWindow,entityImageRepository);
+        movementEngine=new MyMovementEngine(gameState);
         collisionsEngine=new MyCollisionsEngine(gameState,playersRepository,pointsRepository);
+
         entityFactory=new MyEntityFactory(gameConfig,collisionsEngine.getColliders(),new MyCollisionChecker(),gameWindow);
-        entitySpawnEngine=new MyEntitySpawnEngine(gameState,gameConfig, gameWindow,collisionsEngine.getColliders(),new MyCollisionChecker());
+        entitySpawnEngine=new MyEntitySpawnEngine(gameState,gameConfig,entityFactory);
 
         keyBindings=new HashMap<>();
         playersStatsRenderEngine=new PlayersStatsRenderEngine(playersRepository, gamePane);
@@ -118,6 +121,7 @@ public class GameCore {
     }
 
     public Parent launchGame() throws IOException {
+        initializeNewGame();
         Image backImage=imageLoader.loadFromResources("background.png", gamePane.getMaxWidth(), gamePane.getMaxHeight());
         BackgroundImage background=new BackgroundImage(backImage,null, null, null, null);
         Background background1=new Background(background);
@@ -137,8 +141,11 @@ public class GameCore {
     }
 
     public void addNewPlayer(String name, String shipSkin, BulletType bulletType, Map<KeyCode, Movement> keyBindings ){
-        Player player=new Player(name, playersRepository.getNewPlayerId(), MyGameConfig.PLAYER_LIVES,0,shipSkin,keyBindings);
-        player.getShip().setBulletType(bulletType);
+        int playerId=playersRepository.getNewPlayerId();
+        Weapon weapon=new MyWeapon(entityFactory,playerId);
+        Ship ship = entityFactory.getShip(weapon,shipSkin,playerId);
+        ship.setBulletType(bulletType);
+        Player player=new Player(name,gameConfig.getPlayerLives(),0,ship,keyBindings);
         loadPlayerToGame(player);
     }
 
@@ -257,9 +264,11 @@ public class GameCore {
         for (Player player : playersRepository.getPlayers()) {
             if (!player.getShip().isAlive()){
                 if (player.revive()){
-                    player.getShip().revive(Random.get(20,(int)gamePane.getLayoutBounds().getMaxX()-50),Random.get(20,(int)gamePane.getLayoutBounds().getMaxY()-50));
+                    entityFactory.reviveShip(player.getShip());
+                    //player.getShip().revive(Random.get(20,(int)gamePane.getLayoutBounds().getMaxX()-50),Random.get(20,(int)gamePane.getLayoutBounds().getMaxY()-50));
                 }else{
                     gameOverPlayers++;
+                    gameState.reject(player.getShip());
                 }
             }
         }

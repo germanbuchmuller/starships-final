@@ -6,6 +6,7 @@ import controller.visitor.GameState;
 import edu.austral.dissis.starships.collision.Collider;
 import engine.EntitySpawnEngine;
 import engine.GameConfig;
+import misc.utils.Random;
 import model.concrete.Asteroid;
 import model.concrete.Projectile;
 import model.concrete.Ship;
@@ -22,10 +23,10 @@ public class MyEntitySpawnEngine implements EntitySpawnEngine {
     private final GameConfig gameConfig;
     private final EntityFactory entityFactory;
 
-    public MyEntitySpawnEngine(@NotNull GameState gameState, @NotNull GameConfig gameConfig, @NotNull GameWindow gameWindow, @NotNull Collection<EntityCollider> colliders, @NotNull CollisionChecker collisionChecker) {
+    public MyEntitySpawnEngine(@NotNull GameState gameState, @NotNull GameConfig gameConfig, @NotNull EntityFactory entityFactory) {
         this.gameState = gameState;
         this.gameConfig=gameConfig;
-        this.entityFactory=new MyEntityFactory(gameConfig,colliders,collisionChecker,gameWindow);
+        this.entityFactory=entityFactory;
     }
 
     @Override
@@ -37,6 +38,8 @@ public class MyEntitySpawnEngine implements EntitySpawnEngine {
         int asteroidsInGame = gameState.getAsteroids().size();
         if (asteroidsInGame<gameConfig.getMinAsteroidsInGame()){
             spawnAsteroid();
+        }else if (asteroidsInGame<gameConfig.getMaxAsteroidsInGame()){
+            if (Random.get(0,1000)<15)spawnAsteroid();
         }
     }
 
@@ -45,33 +48,23 @@ public class MyEntitySpawnEngine implements EntitySpawnEngine {
     }
 
     @Override
-    public void added(Ship ship) {
-
-    }
+    public void added(Ship ship) {}
 
     @Override
-    public void added(Asteroid asteroid) {
-
-    }
+    public void added(Asteroid asteroid) {}
 
     @Override
-    public void added(Projectile projectile) {
-
-    }
+    public void added(Projectile projectile) {}
 
     @Override
-    public void removed(Ship ship) {
-
-    }
+    public void removed(Ship ship) {}
 
     @Override
     public void removed(Asteroid asteroid) {
-
+        spawnAsteroid();
     }
 
     @Override
-    public void removed(Projectile projectile) {
-
-    }
+    public void removed(Projectile projectile) {}
 
 }

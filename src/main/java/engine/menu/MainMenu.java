@@ -37,8 +37,9 @@ public class MainMenu {
         newGameBtn.setOnMouseReleased(event -> newGameBtn.setImage(newGameImage2));
         newGameBtn.setOnMouseClicked(event -> {
             try {
-                gameCore.startNewGameFromConfigFile();
+
                 gameCore.getRootSetter().setRoot(gameCore.launchGame());
+                gameCore.startNewGameFromConfigFile();
                 //gameEngine.getRootSetter().setRoot(gameEngine.loadNewGameMenu());
             } catch (IOException e) {
                 e.printStackTrace();
