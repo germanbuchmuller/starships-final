@@ -1,5 +1,7 @@
 package controller;
 
-public interface ProjectileController extends EntityController {
-    void moveForward(double secondsSinceLastFrame);
+import model.concrete.Projectile;
+
+public interface ProjectileController extends EntityController<Projectile> {
+    void moveForward(Projectile projectile, double secondsSinceLastFrame);
 }

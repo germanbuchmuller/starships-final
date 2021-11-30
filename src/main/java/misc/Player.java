@@ -2,7 +2,7 @@ package misc;
 
 import controller.Movement;
 import controller.visitor.EntityVisitor;
-import engine.GameConfig;
+import engine.concrete.MyGameConfig;
 import javafx.scene.input.KeyCode;
 import model.concrete.Ship;
 import misc.utils.Random;
@@ -22,7 +22,7 @@ public class Player {
         this.id = id;
         this.points = points;
         this.lives=lives;
-        this.ship=new Ship(GameConfig.SHIP_HEALTH, 3.5, Random.get(200,1200),Random.get(200,650),0,GameConfig.SHIP_WIDTH,GameConfig.SHIP_HEIGHT,shipTexture,id);
+        this.ship=new Ship(MyGameConfig.SHIP_HEALTH, 4,3, Random.get(200,1200),Random.get(200,650),0, MyGameConfig.SHIP_WIDTH, MyGameConfig.SHIP_HEIGHT,shipTexture,id);
         this.keyBindings = keyBindings;
     }
 

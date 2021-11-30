@@ -1,8 +1,8 @@
 package engine;
 
 import controller.Movement;
-import controller.MovementEngine;
 import controller.collision.CollisionsEngine;
+import controller.collision.concrete.MyCollisionChecker;
 import controller.collision.concrete.MyCollisionsEngine;
 import controller.concrete.MyMovementEngine;
 import controller.visitor.*;
@@ -11,8 +11,9 @@ import edu.austral.dissis.starships.game.GameContext;
 import edu.austral.dissis.starships.game.GameTimer;
 import edu.austral.dissis.starships.game.KeyTracker;
 import edu.austral.dissis.starships.game.RootSetter;
+import engine.concrete.MyEntitySpawnEngine;
+import engine.concrete.MyGameConfig;
 import engine.menu.MainMenu;
-import engine.menu.NewGameMenu;
 import javafx.scene.Parent;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -24,6 +25,8 @@ import misc.*;
 import misc.concrete.MyPlayersRepository;
 import misc.concrete.MyPointsRepository;
 import model.Entity;
+import model.factory.EntityFactory;
+import model.factory.MyEntityFactory;
 import org.jetbrains.annotations.NotNull;
 import misc.utils.Random;
 import view.EntityImageRepository;
@@ -42,6 +45,7 @@ public class GameCore {
     private final GameContext gameContext;
     private GameState gameState;
     private GameWindow gameWindow;
+    private GameConfig gameConfig;
     private RenderEngine renderEngine;
     private MyMovementEngine movementEngine;
     private CollisionsEngine collisionsEngine;
@@ -50,6 +54,9 @@ public class GameCore {
     private PlayersRepository playersRepository;
     private PointsRepository pointsRepository;
     private EntityImageRepository entityImageRepository;
+
+    private EntityFactory entityFactory;
+    private EntitySpawnEngine entitySpawnEngine;
 
     private PlayersStatsRenderEngine playersStatsRenderEngine;
     private final ImageLoader imageLoader;
@@ -70,7 +77,7 @@ public class GameCore {
         this.rootSetter=rootSetter;
         this.gameContext=gameContext;
         imageLoader=new ImageLoader();
-        GameConfig.loadConfig("gameconfig.txt");
+        MyGameConfig.loadConfig("gameconfig.txt");
     }
 
     public Parent start() throws IOException {
@@ -81,14 +88,10 @@ public class GameCore {
         return new MainMenu(this).load();
     }
 
-    public Parent loadNewGameMenu() throws IOException {
-        return new NewGameMenu(this).load();
-    }
-
     public void startNewGameFromConfigFile(){
         initializeNewGame();
-        for (int i = 0; i < GameConfig.playerBindingsList.size(); i++) {
-            addNewPlayer("Player"+(i+1),GameConfig.playersSkin.get(i),GameConfig.playersBulletType.get(i),GameConfig.playerBindingsList.get(i));
+        for (int i = 0; i < MyGameConfig.playerBindingsList.size(); i++) {
+            addNewPlayer("Player"+(i+1), MyGameConfig.playersSkin.get(i), MyGameConfig.playersBulletType.get(i), MyGameConfig.playerBindingsList.get(i));
         }
     }
 
@@ -96,14 +99,18 @@ public class GameCore {
         gameState=new MyGameState();
         gameWindow=new MyGameWindow();
         gamePane=gameWindow.init();
+        gameConfig=new MyGameConfig("gameconfig.txt");
+
         entityImageRepository=new MyEntityImageRepository(imageLoader);
         renderEngine=new MyRenderEngine(gameState,gameWindow,entityImageRepository);
         movementEngine=new MyMovementEngine(gameState);
         playersRepository =new MyPlayersRepository();
         pointsRepository=new MyPointsRepository();
         collisionsEngine=new MyCollisionsEngine(gameState,playersRepository,pointsRepository);
+        entityFactory=new MyEntityFactory(gameConfig,collisionsEngine.getColliders(),new MyCollisionChecker(),gameWindow);
+        entitySpawnEngine=new MyEntitySpawnEngine(gameState,gameConfig, gameWindow,collisionsEngine.getColliders(),new MyCollisionChecker());
+
         keyBindings=new HashMap<>();
-        gamePaused=false;
         playersStatsRenderEngine=new PlayersStatsRenderEngine(playersRepository, gamePane);
         keyTracker=gameContext.getKeyTracker();
         gamePaused=false;
@@ -130,7 +137,7 @@ public class GameCore {
     }
 
     public void addNewPlayer(String name, String shipSkin, BulletType bulletType, Map<KeyCode, Movement> keyBindings ){
-        Player player=new Player(name, playersRepository.getNewPlayerId(),GameConfig.PLAYER_LIVES,0,shipSkin,keyBindings);
+        Player player=new Player(name, playersRepository.getNewPlayerId(), MyGameConfig.PLAYER_LIVES,0,shipSkin,keyBindings);
         player.getShip().setBulletType(bulletType);
         loadPlayerToGame(player);
     }
@@ -238,7 +245,7 @@ public class GameCore {
             collisionsEngine.update();
             renderEngine.update();
             if (System.currentTimeMillis()-gameStartedTime>2000){
-                //gameEntityAutoSpawner.update();
+                entitySpawnEngine.update();
             }
             playersStatsRenderEngine.update();
             checkDeadPlayers();

@@ -46,7 +46,10 @@ public class MyEntityImageRepository implements EntityImageRepository {
 
     private Image getImageFromEntity(Entity entity){
         try{
-            return imageLoader.loadFromResources(entity.getImageFileName(),entity.getWidth(),entity.getHeight());
+            String imageFileName=entity.getImageFileName();
+            int width = Integer.parseInt(imageFileName.substring(imageFileName.indexOf("_")+1,imageFileName.indexOf("$")));
+            int height = Integer.parseInt(imageFileName.substring(imageFileName.indexOf("$")+1,imageFileName.indexOf(".")));
+            return imageLoader.loadFromResources(entity.getImageFileName(),width,height);
         }catch (IOException e){
             e.printStackTrace();
             try{

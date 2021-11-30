@@ -2,9 +2,7 @@ package controller.collision.concrete;
 
 import controller.collision.CollisionsEngine;
 import controller.collision.EntityCollider;
-import controller.collision.EntityCollisionEngine;
 import controller.visitor.GameState;
-import engine.GameEngine;
 import misc.PlayersRepository;
 import misc.PointsRepository;
 import model.Entity;
@@ -13,10 +11,7 @@ import model.concrete.Projectile;
 import model.concrete.Ship;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class MyCollisionsEngine implements CollisionsEngine {
     private final Map<Entity, EntityCollider> collidersMap;
@@ -35,37 +30,42 @@ public class MyCollisionsEngine implements CollisionsEngine {
     }
 
     @Override
-    public void add(Ship ship) {
+    public void added(Ship ship) {
         collidersMap.put(ship,new ShipCollider(ship,gameState));
     }
 
     @Override
-    public void add(Asteroid asteroid) {
+    public void added(Asteroid asteroid) {
         collidersMap.put(asteroid,new AsteroidCollider(asteroid,gameState));
     }
 
     @Override
-    public void add(Projectile projectile) {
+    public void added(Projectile projectile) {
         collidersMap.put(projectile,new ProjectileCollider(projectile,playersRepository,pointsRepository, gameState));
     }
 
     @Override
-    public void remove(Ship ship) {
+    public void removed(Ship ship) {
         collidersMap.remove(ship);
     }
 
     @Override
-    public void remove(Asteroid asteroid) {
+    public void removed(Asteroid asteroid) {
         collidersMap.remove(asteroid);
     }
 
     @Override
-    public void remove(Projectile projectile) {
+    public void removed(Projectile projectile) {
         collidersMap.remove(projectile);
     }
 
     @Override
     public void update() {
-        collisionEngine.checkCollisions(new ArrayList<>(collidersMap.values()));
+        collisionEngine.checkCollisions(new ArrayList<>(getColliders()));
+    }
+
+    @Override
+    public Collection<EntityCollider> getColliders() {
+        return collidersMap.values();
     }
 }

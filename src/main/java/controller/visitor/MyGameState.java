@@ -51,6 +51,7 @@ public class MyGameState implements GameState{
         asteroids.add(asteroid);
         selfMovables.add(asteroid);
         addToEngines(asteroid);
+        System.out.println("asteroid created");
     }
 
     @Override
@@ -87,7 +88,7 @@ public class MyGameState implements GameState{
     }
 
     @Override
-    public void remove(Ship ship) {
+    public void reject(Ship ship) {
         ship.destroy();
         entities.remove(ship);
         ships.remove(ship);
@@ -95,7 +96,7 @@ public class MyGameState implements GameState{
     }
 
     @Override
-    public void remove(Asteroid asteroid) {
+    public void reject(Asteroid asteroid) {
         asteroid.destroy();
         entities.remove(asteroid);
         asteroids.remove(asteroid);
@@ -104,7 +105,7 @@ public class MyGameState implements GameState{
     }
 
     @Override
-    public void remove(Projectile projectile) {
+    public void reject(Projectile projectile) {
         projectile.destroy();
         entities.remove(projectile);
         projectiles.remove(projectile);
@@ -142,37 +143,37 @@ public class MyGameState implements GameState{
 
     private void removeFromEngines(Ship ship){
         for (GameEngine gameEngine : gameEngines) {
-            gameEngine.remove(ship);
+            gameEngine.removed(ship);
         }
     }
 
     private void removeFromEngines(Asteroid asteroid){
         for (GameEngine gameEngine : gameEngines) {
-            gameEngine.remove(asteroid);
+            gameEngine.removed(asteroid);
         }
     }
 
     private void removeFromEngines(Projectile projectile){
         for (GameEngine gameEngine : gameEngines) {
-            gameEngine.remove(projectile);
+            gameEngine.removed(projectile);
         }
     }
 
     private void addToEngines(Ship ship){
         for (GameEngine gameEngine : gameEngines) {
-            gameEngine.add(ship);
+            gameEngine.added(ship);
         }
     }
 
     private void addToEngines(Asteroid asteroid){
         for (GameEngine gameEngine : gameEngines) {
-            gameEngine.add(asteroid);
+            gameEngine.added(asteroid);
         }
     }
 
     private void addToEngines(Projectile projectile){
         for (GameEngine gameEngine : gameEngines) {
-            gameEngine.add(projectile);
+            gameEngine.added(projectile);
         }
     }
 }

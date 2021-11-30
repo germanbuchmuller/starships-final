@@ -1,5 +1,6 @@
-package controller.collision;
+package controller.collision.concrete;
 
+import controller.collision.EntityCollider;
 import javafx.scene.shape.Shape;
 import org.jetbrains.annotations.NotNull;
 

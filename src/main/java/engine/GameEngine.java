@@ -6,10 +6,10 @@ import model.concrete.Projectile;
 import model.concrete.Ship;
 
 public interface GameEngine {
-    void add(Ship ship);
-    void add(Asteroid asteroid);
-    void add(Projectile projectile);
-    void remove(Ship ship);
-    void remove(Asteroid asteroid);
-    void remove(Projectile projectile);
+    void added(Ship ship);
+    void added(Asteroid asteroid);
+    void added(Projectile projectile);
+    void removed(Ship ship);
+    void removed(Asteroid asteroid);
+    void removed(Projectile projectile);
 }

@@ -41,8 +41,8 @@ public class ProjectileCollider implements EntityCollider<Projectile> {
     public void handleCollisionWith(@NotNull ProjectileCollider projectileCollider) {
         Projectile projectile = projectileCollider.getEntity();
         if (projectile.getPlayerId()!=this.projectile.getPlayerId()){
-            gameState.remove(projectile);
-            gameState.remove(this.projectile);
+            gameState.reject(projectile);
+            gameState.reject(this.projectile);
         }
     }
 
@@ -50,7 +50,7 @@ public class ProjectileCollider implements EntityCollider<Projectile> {
     public void handleCollisionWith(@NotNull AsteroidCollider asteroidCollider) {
         Asteroid asteroid=asteroidCollider.getEntity();
         harm(asteroid);
-        gameState.remove(this.projectile);
+        gameState.reject(this.projectile);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class ProjectileCollider implements EntityCollider<Projectile> {
         Ship ship = shipCollider.getEntity();
         if (ship.getPlayerId()!=projectile.getPlayerId()){
             harm(ship);
-            gameState.remove(this.projectile);
+            gameState.reject(this.projectile);
         }
     }
 
@@ -74,7 +74,7 @@ public class ProjectileCollider implements EntityCollider<Projectile> {
         harmEntity(asteroid);
         if (asteroid.isDestroyed()){
             playersRepository.addPointsToPlayer(projectile.getPlayerId(),pointsRepository.getPoints(asteroid));
-            gameState.remove(asteroid);
+            gameState.reject(asteroid);
         }
     }
 

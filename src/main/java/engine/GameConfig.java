@@ -1,148 +1,30 @@
 package engine;
 
 import controller.Movement;
-import edu.austral.dissis.starships.file.FileLoader;
 import javafx.scene.input.KeyCode;
 import misc.BulletType;
-import org.jetbrains.annotations.NotNull;
 
-import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GameConfig {
-    public static int PLAYER_LIVES;
-    public static int MIN_ASTEROIDS_IN_GAME;
-    public static int MAX_ASTEROIDS_IN_GAME;
-    public static int ASTEROID_SPEED;
-
-    public static int SHIP_HEALTH;
-    public static int SHIP_SPEED;
-    public static int SHIP_REWARD_POINTS;
-    public static double SHIP_WIDTH;
-    public static double SHIP_HEIGHT ;
-
-    public static List<Map<KeyCode, Movement>> playerBindingsList = new ArrayList<>();
-    public static List<String> playersSkin = new ArrayList<>();
-    public static List<BulletType> playersBulletType = new ArrayList<>();
-
-    public static Map<BulletType, Integer> BULLET_DAMAGES = new HashMap<>();
-    public static Map<BulletType, Integer> BULLET_SPEED = new HashMap<>();
-    public static Map<BulletType, Integer> BULLET_POINTS = new HashMap<>();
-    public static Map<BulletType, Integer> BULLET_WIDTH = new HashMap<>();
-    public static Map<BulletType, Integer> BULLET_HEIGHT = new HashMap<>();
-    public static Map<BulletType, String> BULLET_TEXTURE = new HashMap<>();
-    public static Map<BulletType, Integer> BULLET_MIN_TIME = new HashMap<>();
-
-
-    public static List<String> SHIP_TEXTURE = new ArrayList<>();
-
-    public static void loadConfig(@NotNull String configFileName) throws IOException {
-
-        FileLoader fileLoader = new FileLoader();
-        BufferedReader br = new BufferedReader(new InputStreamReader(fileLoader.loadFromResources(configFileName)));
-        String line;
-        while ((line = br.readLine()) != null) {
-            if (!line.equals("-")){
-                String atributeName = line.substring(0,line.indexOf(":"));
-                String atributeValue = line.substring(line.indexOf(":")+1);
-                switch (atributeName){
-                    case "PLAYER_LIVES":
-                        PLAYER_LIVES=Integer.parseInt(atributeValue);
-                        break;
-                    case "MIN_ASTEROIDS_IN_GAME":
-                        MIN_ASTEROIDS_IN_GAME=Integer.parseInt(atributeValue);
-                        break;
-                    case "MAX_ASTEROIDS_IN_GAME":
-                        MAX_ASTEROIDS_IN_GAME=Integer.parseInt(atributeValue);
-                        break;
-                    case "ASTEROID_SPEED":
-                        ASTEROID_SPEED=Integer.parseInt(atributeValue);
-                        break;
-                    case "SHIP_HEALTH":
-                        SHIP_HEALTH=Integer.parseInt(atributeValue);
-                        break;
-                    case "SHIP_SPEED":
-                        SHIP_SPEED=Integer.parseInt(atributeValue);
-                        break;
-                    case "SHIP_REWARD_POINTS":
-                        SHIP_REWARD_POINTS=Integer.parseInt(atributeValue);
-                        break;
-                    case "SHIP_WIDTH":
-                        SHIP_WIDTH=Double.parseDouble(atributeValue);
-                        break;
-                    case "SHIP_HEIGHT":
-                        SHIP_HEIGHT=Double.parseDouble(atributeValue);
-                        break;
-                    case "SHIP_TEXTURE":
-                        SHIP_TEXTURE.add(atributeValue);
-                        break;
-                    case "BULLET_DAMAGES":
-                        BULLET_DAMAGES.put(BulletType.valueOf(atributeValue.substring(0,atributeValue.indexOf(","))),Integer.parseInt(atributeValue.substring(atributeValue.indexOf(",")+1)));
-                        break;
-                    case "BULLET_SPEED":
-                        BULLET_SPEED.put(BulletType.valueOf(atributeValue.substring(0,atributeValue.indexOf(","))),Integer.parseInt(atributeValue.substring(atributeValue.indexOf(",")+1)));
-                        break;
-                    case "BULLET_POINTS":
-                        BULLET_POINTS.put(BulletType.valueOf(atributeValue.substring(0,atributeValue.indexOf(","))),Integer.parseInt(atributeValue.substring(atributeValue.indexOf(",")+1)));
-                        break;
-                    case "BULLET_WIDTH":
-                        BULLET_WIDTH.put(BulletType.valueOf(atributeValue.substring(0,atributeValue.indexOf(","))),Integer.parseInt(atributeValue.substring(atributeValue.indexOf(",")+1)));
-                        break;
-                    case "BULLET_HEIGHT":
-                        BULLET_HEIGHT.put(BulletType.valueOf(atributeValue.substring(0,atributeValue.indexOf(","))),Integer.parseInt(atributeValue.substring(atributeValue.indexOf(",")+1)));
-                        break;
-                    case "BULLET_TEXTURE":
-                        BULLET_TEXTURE.put(BulletType.valueOf(atributeValue.substring(0,atributeValue.indexOf(","))),atributeValue.substring(atributeValue.indexOf(",")+1));
-                        break;
-                    case "BULLET_MIN_TIME":
-                        BULLET_MIN_TIME.put(BulletType.valueOf(atributeValue.substring(0,atributeValue.indexOf(","))),Integer.parseInt(atributeValue.substring(atributeValue.indexOf(",")+1)));
-                        break;
-                    default:
-                        if (atributeName.contains("PLAYER")){
-                            int playerID = Integer.parseInt(atributeName.substring(6,atributeName.indexOf("_")));
-                            if (atributeName.contains("SHIP_TEXTURE")) {
-                                System.out.println(playerID+" "+atributeValue);
-                                playersSkin.add(playerID,atributeValue);
-                            }else if (atributeName.contains("BULLET_TYPE")){
-                                System.out.println(playerID+" "+atributeValue);
-                                playersBulletType.add(playerID,BulletType.valueOf(atributeValue));
-                            }else{
-                                if (playerBindingsList.size()>playerID){
-                                    Map<KeyCode, Movement> bindings = playerBindingsList.get(playerID);
-                                    Movement movement = Movement.valueOf(atributeName.substring(atributeName.indexOf("_")+1));
-                                    KeyCode keyCode = KeyCode.getKeyCode(atributeValue);
-                                    System.out.println(keyCode+" "+movement);
-                                    bindings.put(keyCode,movement);
-                                    playerBindingsList.set(playerID,bindings);
-                                }else{
-                                    Map<KeyCode, Movement> bindings = new HashMap<>();
-                                    Movement movement = Movement.valueOf(atributeName.substring(atributeName.indexOf("_")+1));
-                                    KeyCode keyCode = KeyCode.getKeyCode(atributeValue);
-                                    System.out.println(keyCode+" "+movement);
-                                    bindings.put(keyCode,movement);
-                                    playerBindingsList.add(bindings);
-                                }
-                            }
-                        }
-                }
-            }
-        }
-
-        System.out.println(playerBindingsList.size());
-        System.out.println(playerBindingsList.get(0).get(KeyCode.W));
-        System.out.println(playerBindingsList.get(1).get(KeyCode.W));
-        /*
-        System.out.println(SHIP_HEALTH);
-        System.out.println(BULLET_DAMAGES.get(BulletType.SMALL));
-        System.out.println(BULLET_SPEED.get(BulletType.SMALL));
-        System.out.println(BULLET_POINTS.get(BulletType.SMALL));
-        System.out.println(BULLET_WIDTH.get(BulletType.SMALL));
-        System.out.println(BULLET_HEIGHT.get(BulletType.SMALL));
-        System.out.println(BULLET_TEXTURE.get(BulletType.SMALL));
-        System.out.println(BULLET_MIN_TIME.get(BulletType.SMALL));
-        */
-    }
+public interface GameConfig {
+    int getPlayerLives();
+    int getMinAsteroidsInGame();
+    int getMaxAsteroidsInGame();
+    String getAsteroidsTexture();
+    int getShipMaxHealth();
+    double getShipMaxSpeed();
+    double getShipAcceleration();
+    double getShipWidth();
+    double getShipHeight();
+    List<Map<KeyCode, Movement>> getPlayersBindingsList();
+    List<String> getPlayerSkinList();
+    List<BulletType> getPlayerBulletTypeList();
+    Map<BulletType, Integer> getBulletDamages();
+    Map<BulletType, Double> getBulletSpeeds();
+    Map<BulletType, Integer> getBulletPoints();
+    Map<BulletType, Double> getBulletWidth();
+    Map<BulletType, Double> getBulletHeight();
+    Map<BulletType, String> getBulletTextures();
+    Map<BulletType, Integer> getBulletCoolDown();
 }

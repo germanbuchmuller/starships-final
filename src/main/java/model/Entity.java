@@ -14,6 +14,7 @@ public interface Entity{
     Vector2 getMovementDirection();
     void setMovementDirection(Vector2 direction);
     double getMaxSpeed();
+    double getAcceleration();
     int getHealth();
     void harm(int amount);
     void heal(int amount);

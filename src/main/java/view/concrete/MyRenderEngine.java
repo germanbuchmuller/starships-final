@@ -1,7 +1,6 @@
 package view.concrete;
 
 import controller.visitor.GameState;
-import edu.austral.dissis.starships.vector.Vector2;
 import model.Entity;
 import model.concrete.Asteroid;
 import model.concrete.Projectile;
@@ -42,13 +41,12 @@ public class MyRenderEngine implements RenderEngine {
         for (Asteroid asteroid : gameState.getAsteroids()) {
             if (isOutOfGameWindow(asteroid)){
                 asteroidsToRemove.add(asteroid);
-                gameState.remove(asteroid);
             }else{
                 updateView(asteroid);
             }
         }
         for (Asteroid asteroid : asteroidsToRemove) {
-            gameState.remove(asteroid);
+            gameState.reject(asteroid);
         }
     }
 
@@ -62,7 +60,7 @@ public class MyRenderEngine implements RenderEngine {
             }
         }
         for (Projectile projectile : projectilesToRemove) {
-            gameState.remove(projectile);
+            gameState.reject(projectile);
         }
     }
 
@@ -78,7 +76,7 @@ public class MyRenderEngine implements RenderEngine {
     }
 
     private boolean isOutOfGameWindow(Entity entity){
-        double entitySize = entity.getWidth()+entity.getHeight();
+        double entitySize = (entity.getWidth()+entity.getHeight())*3;
         return (entity.getX()+entitySize<0) || (entity.getY()+entitySize<0) ||
                 (entity.getX()-entitySize>gameWindow.getWidth()) ||
                 (entity.getY()-entitySize>gameWindow.getHeight());
@@ -104,8 +102,10 @@ public class MyRenderEngine implements RenderEngine {
     }
 
     private void removeEntity(Entity entity){
-        gameWindow.removeView(entityViewMap.get(entity));
-        entityViewMap.remove(entity);
+        if (entityViewMap.containsKey(entity)){
+            gameWindow.removeView(entityViewMap.get(entity));
+            entityViewMap.remove(entity);
+        }
     }
 
     private void addEntity(Entity entity){
@@ -118,33 +118,32 @@ public class MyRenderEngine implements RenderEngine {
     }
 
     @Override
-    public void add(Ship ship) {
+    public void added(Ship ship) {
         addEntity(ship);
-        System.out.println(ship+" X:"+ship.getX()+" Y:" +ship.getY());
     }
 
     @Override
-    public void add(Asteroid asteroid) {
+    public void added(Asteroid asteroid) {
         addEntity(asteroid);
     }
 
     @Override
-    public void add(Projectile projectile) {
+    public void added(Projectile projectile) {
         addEntity(projectile);
     }
 
     @Override
-    public void remove(Ship ship) {
+    public void removed(Ship ship) {
         removeEntity(ship);
     }
 
     @Override
-    public void remove(Asteroid asteroid) {
+    public void removed(Asteroid asteroid) {
         removeEntity(asteroid);
     }
 
     @Override
-    public void remove(Projectile projectile) {
+    public void removed(Projectile projectile) {
         removeEntity(projectile);
     }
 }

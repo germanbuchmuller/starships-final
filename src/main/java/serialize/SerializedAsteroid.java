@@ -22,6 +22,6 @@ public class SerializedAsteroid implements SerializedEntity {
 
     @Override
     public Asteroid toEntity() {
-        return new Asteroid(damage,health,3,x,y,angle,width,height,imageFileName);
+        return new Asteroid(damage,health,3,4,x,y,angle,width,height,imageFileName);
     }
 }

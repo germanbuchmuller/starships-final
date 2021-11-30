@@ -1,5 +1,7 @@
 package controller;
 
-public interface EntityController {
-    void move(double secondsSinceLastFrame);
+import model.Entity;
+
+public interface EntityController<T extends Entity>{
+    void move(T entity, double secondsSinceLastFrame);
 }

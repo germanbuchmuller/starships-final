@@ -1,13 +1,12 @@
 package controller;
 
-import controller.EntityController;
+import model.concrete.Ship;
 
-public interface ShipController extends EntityController {
-    void setShipAcceleration(double acceleration);
-    void moveForward(double secondsSinceLastFrame);
-    void moveBackwards(double secondsSinceLastFrame);
-    void rotateRight(double secondsSinceLastFrame);
-    void rotateLeft(double secondsSinceLastFrame);
-    void slowDown(double secondsSinceLastFrame);
-    void shoot(double secondsSinceLastFrame);
+public interface ShipController extends EntityController<Ship> {
+    void moveForward(Ship ship, double secondsSinceLastFrame);
+    void moveBackwards(Ship ship,double secondsSinceLastFrame);
+    void rotateRight(Ship ship,double secondsSinceLastFrame);
+    void rotateLeft(Ship ship,double secondsSinceLastFrame);
+    void slowDown(Ship ship,double secondsSinceLastFrame);
+    void shoot(Ship ship);
 }

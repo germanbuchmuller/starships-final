@@ -23,6 +23,6 @@ public class SerializedProjectile implements SerializedEntity {
 
     @Override
     public Projectile toEntity() {
-        return new Projectile(damage,health,5,x,y,angle,width,height,imageFileName,playerID);
+        return new Projectile(damage,health,5,5,x,y,angle,width,height,imageFileName,playerID);
     }
 }

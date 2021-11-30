@@ -13,8 +13,8 @@ public class Ship extends AbstractEntity implements PlayerRelated {
     private final Weapon weapon;
     private long lastRevive;
 
-    public Ship(int health, double maxSpeed, double x, double y, double angle, double width, double height,String imageFileName, int playerId) {
-       super(health, maxSpeed,x,y,angle,width,height, imageFileName);
+    public Ship(int health, double maxSpeed, double acceleration, double x, double y, double angle, double width, double height,String imageFileName, int playerId) {
+       super(health, maxSpeed,acceleration,x,y,angle,width,height, imageFileName);
        this.playerId=playerId;
        weapon=new Weapon(playerId);
     }

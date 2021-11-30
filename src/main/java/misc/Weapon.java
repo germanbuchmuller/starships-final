@@ -1,7 +1,7 @@
 package misc;
 
 import controller.visitor.EntityVisitor;
-import engine.GameConfig;
+import engine.concrete.MyGameConfig;
 import model.concrete.Projectile;
 
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ public class Weapon {
     }
 
     public void shoot(double x, double y, double angle){
-        int minTime=GameConfig.BULLET_MIN_TIME.get(bulletType);
+        int minTime= MyGameConfig.BULLET_MIN_TIME.get(bulletType);
         if (System.currentTimeMillis()-lastShotTime>=minTime){
             Projectile projectile= getProjectile(x,y,angle);
             for (EntityVisitor visitor : visitors) {
@@ -40,12 +40,12 @@ public class Weapon {
     }
 
     private Projectile getProjectile(double x, double y, double angle){
-        int damage = GameConfig.BULLET_DAMAGES.get(bulletType);
-        int speed = GameConfig.BULLET_SPEED.get(bulletType);
-        double width = GameConfig.BULLET_WIDTH.get(bulletType);
-        double height = GameConfig.BULLET_HEIGHT.get(bulletType);
-        String texture = GameConfig.BULLET_TEXTURE.get(bulletType);
-        return new Projectile(damage,1, 5, x, y, angle, width, height, texture, playerId);
+        int damage = MyGameConfig.BULLET_DAMAGES.get(bulletType);
+        double speed = MyGameConfig.BULLET_SPEED.get(bulletType);
+        double width = MyGameConfig.BULLET_WIDTH.get(bulletType);
+        double height = MyGameConfig.BULLET_HEIGHT.get(bulletType);
+        String texture = MyGameConfig.BULLET_TEXTURE.get(bulletType);
+        return new Projectile(damage,1, speed,5, x, y, angle, width, height, texture, playerId);
     }
 
     public BulletType getBulletType() {

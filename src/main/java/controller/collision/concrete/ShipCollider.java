@@ -3,8 +3,12 @@ package controller.collision.concrete;
 import controller.collision.EntityCollider;
 import controller.visitor.GameState;
 import edu.austral.dissis.starships.vector.Vector2;
+import engine.GameCore;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import model.concrete.Asteroid;
 import model.concrete.Ship;
 import org.jetbrains.annotations.NotNull;
 
@@ -12,7 +16,7 @@ public class ShipCollider implements EntityCollider<Ship> {
     private final Ship ship;
     private final GameState gameState;
 
-    public ShipCollider(@NotNull Ship ship,@NotNull GameState gameState) {
+    public ShipCollider(@NotNull Ship ship,GameState gameState) {
         this.ship=ship;
         this.gameState=gameState;
     }
@@ -43,7 +47,7 @@ public class ShipCollider implements EntityCollider<Ship> {
 
     @Override
     public @NotNull Shape getShape() {
-        Shape shipShape = new Rectangle(ship.getX(),ship.getY(),ship.getWidth(),ship.getHeight());
+        Shape shipShape = new Circle(ship.getX()+ship.getWidth()*0.5,ship.getY()+ship.getWidth()*0.5,ship.getWidth()*0.5);
         shipShape.setRotate(ship.getAngle());
         return shipShape;
     }
@@ -52,6 +56,5 @@ public class ShipCollider implements EntityCollider<Ship> {
     public void handleCollisionWith(@NotNull EntityCollider entityCollider) {
         entityCollider.handleCollisionWith(this);
     }
-
 
 }

@@ -14,7 +14,7 @@ public interface GameState extends GameEngineVisitor {
     List<Asteroid> getAsteroids();
     List<Projectile> getProjectiles();
     List<SelfMovable> getSelfMovables();
-    void remove(Ship ship);
-    void remove(Asteroid asteroid);
-    void remove(Projectile projectile);
+    void reject(Ship ship);
+    void reject(Asteroid asteroid);
+    void reject(Projectile projectile);
 }

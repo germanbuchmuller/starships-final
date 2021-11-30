@@ -1,33 +1,38 @@
 package controller.concrete;
 
 import controller.*;
+import controller.command.ShipCommandProvider;
+import controller.command.concrete.MyShipShipCommandProvider;
 import controller.visitor.GameState;
 import javafx.scene.input.KeyCode;
-import model.Entity;
 import model.concrete.Asteroid;
 import model.concrete.Projectile;
 import model.concrete.Ship;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
-import java.util.Map;
 
 public class MyMovementEngine implements MovementEngine {
     private final GameState gameState;
-    private final Map<Entity, EntityController> entityControllers;
+    private final EntityControllerProvider entityControllers;
+    private final ShipCommandProvider shipCommandProvider;
 
     public MyMovementEngine(@NotNull GameState gameState) {
         this.gameState=gameState;
         gameState.visit(this);
-        entityControllers=new HashMap<>();
+        entityControllers=new MyEntityControllerProvider();
+        shipCommandProvider =new MyShipShipCommandProvider();
     }
 
     @Override
     public void update(double secondsSinceLastFrame) {
-        for (Entity entity : gameState.getEntities()) {
-            if (entityControllers.containsKey(entity)){
-                entityControllers.get(entity).move(secondsSinceLastFrame);
-            }
+        for (Projectile projectile : gameState.getProjectiles()) {
+            entityControllers.get(projectile).move(projectile,secondsSinceLastFrame);
+        }
+        for (Ship ship : gameState.getShips()) {
+            entityControllers.get(ship).move(ship,secondsSinceLastFrame);
+        }
+        for (Asteroid asteroid : gameState.getAsteroids()) {
+            entityControllers.get(asteroid).move(asteroid,secondsSinceLastFrame);
         }
     }
 
@@ -37,59 +42,24 @@ public class MyMovementEngine implements MovementEngine {
     }
 
     public void updateUserMovableEntity(Ship ship, Movement movement, double secondsSinceLastFrame){
-        ShipController shipController = (ShipController) entityControllers.get(ship);
-        switch (movement){
-            case FORWARD:
-                shipController.moveForward(secondsSinceLastFrame);
-                break;
-            case BACKWARDS:
-                shipController.moveBackwards(secondsSinceLastFrame);
-                break;
-            case LEFT:
-                //shipController.moveLeft(entity,secondsSinceLastFrame);
-                break;
-            case RIGHT:
-                //shipController.moveRight(entity,secondsSinceLastFrame);
-                break;
-            case ROTATE_LEFT:
-                shipController.rotateLeft(secondsSinceLastFrame);
-                break;
-            case ROTATE_RIGHT:
-                shipController.rotateRight(secondsSinceLastFrame);
-                break;
-            case SHOOT:
-                shipController.shoot(secondsSinceLastFrame);
-                break;
-        }
+        shipCommandProvider.getCommand(movement).execute(ship,entityControllers.get(ship),secondsSinceLastFrame);
     }
 
     @Override
-    public void add(Ship ship) {
-        entityControllers.put(ship,new MyShipController(ship));
-    }
+    public void added(Ship ship) {}
 
     @Override
-    public void add(Asteroid asteroid) {
-
-    }
+    public void added(Asteroid asteroid) {}
 
     @Override
-    public void add(Projectile projectile) {
-        entityControllers.put(projectile,new MyProjectileController(projectile));
-    }
+    public void added(Projectile projectile) {}
 
     @Override
-    public void remove(Ship ship) {
-        entityControllers.remove(ship);
-    }
+    public void removed(Ship ship) {}
 
     @Override
-    public void remove(Asteroid asteroid) {
-        entityControllers.remove(asteroid);
-    }
+    public void removed(Asteroid asteroid) {}
 
     @Override
-    public void remove(Projectile projectile) {
-        entityControllers.remove(projectile);
-    }
+    public void removed(Projectile projectile) {}
 }

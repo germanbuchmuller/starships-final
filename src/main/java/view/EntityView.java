@@ -11,6 +11,8 @@ public class EntityView {
     public EntityView(Entity entity, Image image) {
         this.entity = entity;
         imageView=new ImageView(image);
+        imageView.setFitWidth(entity.getWidth());
+        imageView.setFitHeight(entity.getHeight());
         update();
     }
 

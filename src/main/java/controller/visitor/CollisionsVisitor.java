@@ -1,9 +1,7 @@
 package controller.visitor;
 
 import controller.collision.*;
-import controller.collision.concrete.AsteroidCollider;
-import controller.collision.concrete.ProjectileCollider;
-import controller.collision.concrete.ShipCollider;
+import controller.collision.concrete.EntityCollisionEngine;
 import misc.PlayersRepository;
 import misc.PointsRepository;
 import model.concrete.Asteroid;

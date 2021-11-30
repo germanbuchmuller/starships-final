@@ -1,10 +1,10 @@
 package engine;
 
 import controller.visitor.EntityVisitor;
+import engine.concrete.MyGameConfig;
 import javafx.scene.layout.Pane;
 import model.concrete.Asteroid;
 import model.Entity;
-import model.EntityType;
 import org.jetbrains.annotations.NotNull;
 import misc.utils.Random;
 
@@ -38,9 +38,9 @@ public class GameEntityAutoSpawner {
     }
 
     public void update(){
-        if (asteroids.size()<GameConfig.MIN_ASTEROIDS_IN_GAME){
+        if (asteroids.size()< MyGameConfig.MIN_ASTEROIDS_IN_GAME){
             //spawnAsteroid();
-        }else if (asteroids.size()<GameConfig.MAX_ASTEROIDS_IN_GAME){
+        }else if (asteroids.size()< MyGameConfig.MAX_ASTEROIDS_IN_GAME){
             if (Random.get(0,500)<15){
                 //spawnAsteroid();
             }
