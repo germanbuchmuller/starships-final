@@ -1,4 +1,4 @@
-package serialize;
+package serialize.concrete;
 
 import edu.austral.dissis.starships.vector.Vector2;
 import model.concrete.Projectile;

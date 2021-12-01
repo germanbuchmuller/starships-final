@@ -7,6 +7,7 @@ import misc.BulletType;
 import misc.Weapon;
 import model.concrete.Projectile;
 import model.factory.EntityFactory;
+import model.factory.ProjectileFactory;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -16,17 +17,17 @@ import java.util.Map;
 public class MyWeapon implements Weapon {
     private final Map<BulletType, Integer> coolDowns;
     private final List<EntityVisitor> visitors;
-    private final EntityFactory entityFactory;
+    private final ProjectileFactory projectilFactory;
     private final int playerId;
     private BulletType bulletType;
     private long lastShotTime;
 
 
-    public MyWeapon(@NotNull Map<BulletType, Integer> coolDowns, @NotNull EntityFactory entityFactory, int playerId) {
+    public MyWeapon(@NotNull Map<BulletType, Integer> coolDowns, @NotNull ProjectileFactory projectilFactory, int playerId) {
         visitors=new ArrayList<>();
         bulletType=BulletType.SMALL;
         lastShotTime=System.currentTimeMillis();
-        this.entityFactory=entityFactory;
+        this.projectilFactory=projectilFactory;
         this.playerId=playerId;
         this.coolDowns=coolDowns;
     }
@@ -42,7 +43,10 @@ public class MyWeapon implements Weapon {
     public void shoot(double x, double y, double angle){
         int minTime = coolDowns.get(bulletType);
         if (System.currentTimeMillis()-lastShotTime>=minTime){
-            Projectile projectile= entityFactory.getProjectile(x,y,angle,bulletType,playerId);
+            projectilFactory.setPosition(x,y,angle);
+            projectilFactory.setBulletType(bulletType);
+            projectilFactory.setPlayerId(playerId);
+            Projectile projectile= projectilFactory.getEntity();
             for (EntityVisitor visitor : visitors) {
                 projectile.accept(visitor);
             }

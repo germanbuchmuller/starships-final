@@ -7,17 +7,14 @@ import engine.GameSaver;
 import misc.Player;
 import misc.Weapon;
 import misc.concrete.MyWeapon;
-import misc.utils.MyRandomGenerator;
-import model.Entity;
 import model.concrete.Asteroid;
 import model.concrete.Projectile;
-import model.factory.EntityFactory;
-import model.factory.MyEntityFactory;
+import model.factory.ProjectileFactory;
 import org.jetbrains.annotations.NotNull;
-import serialize.SerializedAsteroid;
+import serialize.concrete.SerializedAsteroid;
 import serialize.SerializedEntity;
-import serialize.SerializedPlayer;
-import serialize.SerializedProjectile;
+import serialize.concrete.SerializedPlayer;
+import serialize.concrete.SerializedProjectile;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -26,11 +23,11 @@ import java.util.List;
 public class MyGameSaver implements GameSaver {
     private GameState gameState;
     private final GameConfig gameConfig;
-    private final EntityFactory entityFactory;
+    private final ProjectileFactory projectileFactory;
 
-    public MyGameSaver(GameConfig gameConfig) {
+    public MyGameSaver(GameConfig gameConfig, ProjectileFactory projectileFactory) {
         this.gameConfig = gameConfig;
-        this.entityFactory = new MyEntityFactory(gameConfig,null,null,null, new MyRandomGenerator());
+        this.projectileFactory=projectileFactory;
     }
 
     @Override
@@ -139,7 +136,7 @@ public class MyGameSaver implements GameSaver {
 
     private Player createPlayer(SerializedPlayer serializedPlayer){
         Player player=serializedPlayer.toPlayer();
-        Weapon weapon = new MyWeapon(gameConfig.getBulletCoolDown(),entityFactory,player.getId());
+        Weapon weapon = new MyWeapon(gameConfig.getBulletCoolDown(),projectileFactory,player.getId());
         weapon.setBulletType(serializedPlayer.getBulletType());
         player.getShip().setWeapon(weapon);
         return player;

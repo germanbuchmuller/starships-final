@@ -1,11 +1,9 @@
 package model.concrete;
 
 import model.AbstractEntity;
-import model.EntityType;
 import model.SelfMovable;
 import org.jetbrains.annotations.NotNull;
 import controller.visitor.EntityVisitor;
-import serialize.SerializedAsteroid;
 
 public class Asteroid extends AbstractEntity implements SelfMovable {
     private final int damage;

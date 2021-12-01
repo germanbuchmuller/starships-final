@@ -1,33 +1,27 @@
 package engine.concrete;
 
-import controller.collision.CollisionChecker;
-import controller.collision.EntityCollider;
 import controller.visitor.GameState;
-import edu.austral.dissis.starships.collision.Collider;
 import engine.EntitySpawnEngine;
 import engine.GameConfig;
 import misc.utils.Random;
 import model.concrete.Asteroid;
 import model.concrete.Projectile;
 import model.concrete.Ship;
-import model.factory.EntityFactory;
-import model.factory.MyEntityFactory;
+import model.factory.AsteroidFactory;
 import org.jetbrains.annotations.NotNull;
-import view.GameWindow;
-
-import java.util.Collection;
-import java.util.List;
 
 public class MyEntitySpawnEngine implements EntitySpawnEngine {
     private final GameState gameState;
     private final GameConfig gameConfig;
-    private final EntityFactory entityFactory;
+    private final AsteroidFactory asteroidFactory;
     private final Random random;
 
-    public MyEntitySpawnEngine(@NotNull GameState gameState, @NotNull GameConfig gameConfig, @NotNull EntityFactory entityFactory, @NotNull Random random) {
+    public MyEntitySpawnEngine(@NotNull GameState gameState, @NotNull GameConfig gameConfig, @NotNull AsteroidFactory entityFactory, @NotNull Random random) {
         this.gameState = gameState;
         this.gameConfig=gameConfig;
-        this.entityFactory=entityFactory;
+        this.asteroidFactory=entityFactory;
+        asteroidFactory.setRandomSpawn(true);
+        asteroidFactory.setImageFileName(gameConfig.getAsteroidsTexture());
         this.random=random;
     }
 
@@ -46,7 +40,7 @@ public class MyEntitySpawnEngine implements EntitySpawnEngine {
     }
 
     private void spawnAsteroid() {
-        gameState.visit(entityFactory.getAsteroid());
+        gameState.visit(asteroidFactory.getEntity());
     }
 
     @Override

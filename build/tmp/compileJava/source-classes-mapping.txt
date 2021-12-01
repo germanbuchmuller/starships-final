@@ -1,3 +1,5 @@
+model/factory/MyProjectileFactory.java
+ model.factory.MyProjectileFactory
 controller/collision/CollisionChecker.java
  controller.collision.CollisionChecker
 model/Entity.java
@@ -18,12 +20,14 @@ controller/command/concrete/AccelerateShipCommand.java
  controller.command.concrete.AccelerateShipCommand
 controller/concrete/MyAsteroidController.java
  controller.concrete.MyAsteroidController
+model/factory/ProjectileFactory.java
+ model.factory.ProjectileFactory
 misc/concrete/MyPointsRepository.java
  misc.concrete.MyPointsRepository
 controller/command/Command.java
  controller.command.Command
-engine/concrete/MyGameSaver.java
- engine.concrete.MyGameSaver
+controller/concrete/MyMovementEngine.java
+ controller.concrete.MyMovementEngine
 controller/collision/concrete/AsteroidCollider.java
  controller.collision.concrete.AsteroidCollider
 serialize/SerializedPlayer.java
@@ -36,9 +40,8 @@ Game.java
  Game
 misc/Weapon.java
  misc.Weapon
-engine/GameCore.java
- engine.GameCore
- engine.GameCore$MainTimer
+controller/command/concrete/BreakShipCommand.java
+ controller.command.concrete.BreakShipCommand
 controller/ProjectileController.java
  controller.ProjectileController
 misc/Player.java
@@ -55,6 +58,8 @@ controller/ShipController.java
  controller.ShipController
 engine/PlayersStatsRenderEngine.java
  engine.PlayersStatsRenderEngine
+model/factory/MyShipFactory.java
+ model.factory.MyShipFactory
 model/concrete/Projectile.java
  model.concrete.Projectile
 view/concrete/MyEntityImageRepository.java
@@ -68,12 +73,14 @@ controller/command/ShipCommandProvider.java
  controller.command.ShipCommandProvider
 controller/visitor/GameState.java
  controller.visitor.GameState
+model/factory/AsteroidFactory.java
+ model.factory.AsteroidFactory
 controller/collision/EntityCollider.java
  controller.collision.EntityCollider
 view/RenderEngine.java
  view.RenderEngine
-engine/concrete/MyEntitySpawnEngine.java
- engine.concrete.MyEntitySpawnEngine
+engine/EntitySpawnEngine.java
+ engine.EntitySpawnEngine
 engine/menu/MainMenu.java
  engine.menu.MainMenu
 controller/EntityController.java
@@ -82,6 +89,8 @@ model/concrete/Asteroid.java
  model.concrete.Asteroid
 controller/EntityControllerProvider.java
  controller.EntityControllerProvider
+model/factory/ShipFactory.java
+ model.factory.ShipFactory
 misc/concrete/MyPlayersRepository.java
  misc.concrete.MyPlayersRepository
 engine/GameSaver.java
@@ -100,8 +109,8 @@ controller/command/concrete/ShootShipCommand.java
  controller.command.concrete.ShootShipCommand
 serialize/SerializedShip.java
  serialize.SerializedShip
-model/factory/MyEntityFactory.java
- model.factory.MyEntityFactory
+controller/visitor/EntityVisitor.java
+ controller.visitor.EntityVisitor
 controller/command/concrete/RotateRightShipCommand.java
  controller.command.concrete.RotateRightShipCommand
 misc/PointsRepository.java
@@ -110,6 +119,8 @@ App.java
  App
 serialize/SerializableEntity.java
  serialize.SerializableEntity
+model/factory/MyAsteroidFactory.java
+ model.factory.MyAsteroidFactory
 view/GameWindow.java
  view.GameWindow
 controller/collision/concrete/ProjectileCollider.java
@@ -157,11 +168,12 @@ serialize/SerializedAsteroid.java
  serialize.SerializedAsteroid
 engine/GameConfig.java
  engine.GameConfig
-controller/command/concrete/BreakShipCommand.java
- controller.command.concrete.BreakShipCommand
-engine/EntitySpawnEngine.java
- engine.EntitySpawnEngine
-controller/concrete/MyMovementEngine.java
- controller.concrete.MyMovementEngine
-controller/visitor/EntityVisitor.java
- controller.visitor.EntityVisitor
+model/factory/AbstractEntityFactory.java
+ model.factory.AbstractEntityFactory
+engine/concrete/MyGameSaver.java
+ engine.concrete.MyGameSaver
+engine/concrete/MyEntitySpawnEngine.java
+ engine.concrete.MyEntitySpawnEngine
+engine/GameCore.java
+ engine.GameCore
+ engine.GameCore$MainTimer

@@ -1,6 +1,7 @@
 package engine;
 
 import controller.Movement;
+import controller.collision.CollisionChecker;
 import controller.collision.CollisionsEngine;
 import controller.collision.concrete.MyCollisionChecker;
 import controller.collision.concrete.MyCollisionsEngine;
@@ -27,10 +28,11 @@ import misc.concrete.MyPlayersRepository;
 import misc.concrete.MyPointsRepository;
 import misc.concrete.MyWeapon;
 import misc.utils.MyRandomGenerator;
-import model.Entity;
 import model.concrete.Ship;
-import model.factory.EntityFactory;
-import model.factory.MyEntityFactory;
+import model.factory.*;
+import model.factory.concrete.MyAsteroidFactory;
+import model.factory.concrete.MyProjectileFactory;
+import model.factory.concrete.MyShipFactory;
 import org.jetbrains.annotations.NotNull;
 import view.EntityImageRepository;
 import view.GameWindow;
@@ -59,7 +61,8 @@ public class GameCore {
     private PointsRepository pointsRepository;
     private EntityImageRepository entityImageRepository;
 
-    private EntityFactory entityFactory;
+    private ShipFactory shipFactory;
+
     private EntitySpawnEngine entitySpawnEngine;
 
     private PlayersStatsRenderEngine playersStatsRenderEngine;
@@ -82,7 +85,7 @@ public class GameCore {
         this.gameContext=gameContext;
         imageLoader=new ImageLoader();
         gameConfig=new MyGameConfig("gameconfig.txt");
-        gameSaver=new MyGameSaver(gameConfig);
+        gameSaver=new MyGameSaver(gameConfig, new MyProjectileFactory(gameConfig));
     }
 
     public Parent start() throws IOException {
@@ -131,9 +134,9 @@ public class GameCore {
         renderEngine=new MyRenderEngine(gameState,gameWindow,entityImageRepository);
         movementEngine=new MyMovementEngine(gameState);
         collisionsEngine=new MyCollisionsEngine(gameState,playersRepository,pointsRepository);
-
-        entityFactory=new MyEntityFactory(gameConfig,collisionsEngine.getColliders(),new MyCollisionChecker(),gameWindow, new MyRandomGenerator());
-        entitySpawnEngine=new MyEntitySpawnEngine(gameState,gameConfig,entityFactory, new MyRandomGenerator());
+        CollisionChecker collisionChecker=new MyCollisionChecker(collisionsEngine.getColliders());
+        shipFactory=new MyShipFactory(gameWindow,collisionChecker,new MyRandomGenerator());
+        entitySpawnEngine=new MyEntitySpawnEngine(gameState,gameConfig,new MyAsteroidFactory(collisionChecker,gameWindow, new MyRandomGenerator()), new MyRandomGenerator());
 
         keyBindings=new HashMap<>();
         playersStatsRenderEngine=new PlayersStatsRenderEngine(playersRepository, gamePane);
@@ -163,8 +166,18 @@ public class GameCore {
 
     public void addNewPlayer(String name, String shipSkin, BulletType bulletType, Map<KeyCode, Movement> keyBindings ){
         int playerId=playersRepository.getNewPlayerId();
-        Weapon weapon=new MyWeapon(gameConfig.getBulletCoolDown(),entityFactory,playerId);
-        Ship ship = entityFactory.getShip(weapon,shipSkin,playerId);
+        Weapon weapon=new MyWeapon(gameConfig.getBulletCoolDown(),new MyProjectileFactory(gameConfig),playerId);
+        shipFactory.setWeapon(weapon);
+        shipFactory.setImageFileName(shipSkin);
+        shipFactory.setPlayerId(playerId);
+        shipFactory.setHealth(gameConfig.getShipMaxHealth());
+        shipFactory.setMaxHealth(gameConfig.getShipMaxHealth());
+        shipFactory.setAcceleration(gameConfig.getShipAcceleration());
+        shipFactory.setMaxSpeed(gameConfig.getShipMaxSpeed());
+        shipFactory.setWidth(gameConfig.getShipWidth());
+        shipFactory.setHeight(gameConfig.getShipHeight());
+        shipFactory.setRandomSpawn(true);
+        Ship ship = shipFactory.getEntity();
         ship.setBulletType(bulletType);
         Player player=new Player(name,gameConfig.getPlayerLives(),0,ship,keyBindings);
         loadPlayerToGameFromConfigFile(player);
@@ -227,7 +240,7 @@ public class GameCore {
         for (Player player : playersRepository.getPlayers()) {
             if (!player.getShip().isAlive()){
                 if (player.revive()){
-                    entityFactory.reviveShip(player.getShip());
+                    shipFactory.reviveShip(player.getShip());
                 }else{
                     gameOverPlayers++;
                     gameState.reject(player.getShip());

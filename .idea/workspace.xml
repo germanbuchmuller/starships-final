@@ -4,13 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c1b68a49-1028-472c-9f57-e8e759dd70e8" name="Changes" comment="SaveGame done">
-      <change afterPath="$PROJECT_DIR$/asteroids.savegame" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/entities.savegame" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/players.savegame" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/projectiles.savegame" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/controller/command/concrete/ChangeShipBulletTypeCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/misc/utils/MyRandomGenerator.java" afterDir="false" />
+    <list default="true" id="c1b68a49-1028-472c-9f57-e8e759dd70e8" name="Changes" comment="Players can change bullet type on runtime">
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/factory/AsteroidFactory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/factory/ProjectileFactory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/factory/ShipFactory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/factory/concrete/AbstractEntityFactory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/factory/concrete/MyAsteroidFactory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/factory/concrete/MyProjectileFactory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/factory/concrete/MyShipFactory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.8/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.8/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.8/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.8/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.8/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.8/fileHashes/fileHashes.bin" afterDir="false" />
@@ -19,37 +20,24 @@
       <change beforePath="$PROJECT_DIR$/.gradle/6.8/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.8/javaCompile/javaCompile.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/controller/Movement.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/controller/Movement.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/engine/PlayersStatsRenderEngine.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/engine/PlayersStatsRenderEngine.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/misc/utils/Random.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/misc/utils/Random.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/model/AbstractEntity.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/model/AbstractEntity.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/model/Entity.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/model/Entity.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/serialize/SerializedShip.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/serialize/SerializedShip.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/view/ui/PlayerStatsView.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/view/ui/PlayerStatsView.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/gameconfig.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/gameconfig.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/asteroids.savegame" beforeDir="false" afterPath="$PROJECT_DIR$/asteroids.savegame" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/source-classes-mapping.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/source-classes-mapping.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/Movement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/Movement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/ShipController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ShipController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/command/concrete/MyShipShipCommandProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/command/concrete/MyShipShipCommandProvider.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/command/concrete/ShipNoCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/command/concrete/ShipNoCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/concrete/MyShipController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/concrete/MyShipController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/players.savegame" beforeDir="false" afterPath="$PROJECT_DIR$/players.savegame" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projectiles.savegame" beforeDir="false" afterPath="$PROJECT_DIR$/projectiles.savegame" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/collision/CollisionChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/collision/CollisionChecker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/collision/concrete/MyCollisionChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/collision/concrete/MyCollisionChecker.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/engine/GameCore.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/GameCore.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/PlayersStatsRenderEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/PlayersStatsRenderEngine.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/engine/concrete/MyEntitySpawnEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/concrete/MyEntitySpawnEngine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/concrete/MyGameConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/concrete/MyGameConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/engine/concrete/MyGameSaver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/concrete/MyGameSaver.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/misc/concrete/MyWeapon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/misc/concrete/MyWeapon.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/misc/utils/Random.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/misc/utils/Random.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/AbstractEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/AbstractEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Entity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/concrete/Asteroid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/concrete/Asteroid.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/concrete/Projectile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/concrete/Projectile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/concrete/Ship.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/concrete/Ship.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/factory/MyEntityFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/factory/MyEntityFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/serialize/AbstractSerializedEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/serialize/AbstractSerializedEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/serialize/SerializedShip.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/serialize/SerializedShip.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/ui/PlayerStatsView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/ui/PlayerStatsView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/gameconfig.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/gameconfig.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/factory/EntityFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/factory/EntityFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/factory/MyEntityFactory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/serialize/AbstractSerializedEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/serialize/concrete/AbstractSerializedEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/serialize/SerializedAsteroid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/serialize/concrete/SerializedAsteroid.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/serialize/SerializedPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/serialize/concrete/SerializedPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/serialize/SerializedProjectile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/serialize/concrete/SerializedProjectile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/serialize/SerializedShip.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/serialize/concrete/SerializedShip.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -127,7 +115,7 @@
       <workItem from="1637686942935" duration="392000" />
       <workItem from="1637843290941" duration="16895000" />
       <workItem from="1638187623335" duration="71886000" />
-      <workItem from="1638357716084" duration="3559000" />
+      <workItem from="1638357716084" duration="7900000" />
     </task>
     <task id="LOCAL-00001" summary="Minor changes">
       <created>1637844218877</created>
@@ -185,7 +173,14 @@
       <option name="project" value="LOCAL" />
       <updated>1638325932044</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Players can change bullet type on runtime">
+      <created>1638361981224</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1638361981224</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -211,6 +206,7 @@
     <MESSAGE value="Asteroids collide and make damage" />
     <MESSAGE value="Minor changes" />
     <MESSAGE value="SaveGame done" />
-    <option name="LAST_COMMIT_MESSAGE" value="SaveGame done" />
+    <MESSAGE value="Players can change bullet type on runtime" />
+    <option name="LAST_COMMIT_MESSAGE" value="Players can change bullet type on runtime" />
   </component>
 </project>

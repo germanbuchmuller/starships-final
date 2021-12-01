@@ -5,12 +5,18 @@ import controller.collision.EntityCollider;
 import javafx.scene.shape.Shape;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
 import java.util.List;
 
 public class MyCollisionChecker implements CollisionChecker {
+    private Collection<EntityCollider> colliders;
+
+    public MyCollisionChecker(Collection<EntityCollider> colliders) {
+        this.colliders = colliders;
+    }
 
     @Override
-    public boolean isColliding(EntityCollider collider, List<EntityCollider> colliders) {
+    public boolean isColliding(EntityCollider collider) {
         boolean collides = false;
         for (EntityCollider entityCollider : colliders) {
             if (collider.getEntity()!=entityCollider.getEntity()&&testIntersection(collider.getShape(),entityCollider.getShape())){
@@ -19,6 +25,11 @@ public class MyCollisionChecker implements CollisionChecker {
             }
         }
         return collides;
+    }
+
+    @Override
+    public void setColliders(Collection<EntityCollider> colliders) {
+        this.colliders=colliders;
     }
 
     @NotNull

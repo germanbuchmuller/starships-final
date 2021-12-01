@@ -1,4 +1,4 @@
-package serialize;
+package serialize.concrete;
 
 import controller.Movement;
 import javafx.scene.input.KeyCode;

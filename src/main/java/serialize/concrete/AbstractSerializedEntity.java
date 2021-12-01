@@ -1,6 +1,7 @@
-package serialize;
+package serialize.concrete;
 
 import model.Entity;
+import serialize.SerializedEntity;
 
 public abstract class AbstractSerializedEntity implements SerializedEntity {
     final int health, maxHealth;
