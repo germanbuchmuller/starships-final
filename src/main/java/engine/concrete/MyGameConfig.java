@@ -131,9 +131,6 @@ public class MyGameConfig implements GameConfig {
                 }
             }
         }
-        System.out.println(playerBindingsList.size());
-        System.out.println(playerBindingsList.get(0).get(KeyCode.W));
-        System.out.println(playerBindingsList.get(1).get(KeyCode.W));
     }
 
     @Override

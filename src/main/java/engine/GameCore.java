@@ -26,6 +26,7 @@ import misc.*;
 import misc.concrete.MyPlayersRepository;
 import misc.concrete.MyPointsRepository;
 import misc.concrete.MyWeapon;
+import misc.utils.MyRandomGenerator;
 import model.Entity;
 import model.concrete.Ship;
 import model.factory.EntityFactory;
@@ -131,8 +132,8 @@ public class GameCore {
         movementEngine=new MyMovementEngine(gameState);
         collisionsEngine=new MyCollisionsEngine(gameState,playersRepository,pointsRepository);
 
-        entityFactory=new MyEntityFactory(gameConfig,collisionsEngine.getColliders(),new MyCollisionChecker(),gameWindow);
-        entitySpawnEngine=new MyEntitySpawnEngine(gameState,gameConfig,entityFactory);
+        entityFactory=new MyEntityFactory(gameConfig,collisionsEngine.getColliders(),new MyCollisionChecker(),gameWindow, new MyRandomGenerator());
+        entitySpawnEngine=new MyEntitySpawnEngine(gameState,gameConfig,entityFactory, new MyRandomGenerator());
 
         keyBindings=new HashMap<>();
         playersStatsRenderEngine=new PlayersStatsRenderEngine(playersRepository, gamePane);

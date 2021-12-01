@@ -16,6 +16,7 @@ public interface Entity{
     double getMaxSpeed();
     double getAcceleration();
     int getHealth();
+    int getMaxHealth();
     void harm(int amount);
     void heal(int amount);
     boolean isAlive();

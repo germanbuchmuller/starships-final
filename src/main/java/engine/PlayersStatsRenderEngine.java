@@ -34,11 +34,12 @@ public class PlayersStatsRenderEngine {
         pane.getChildren().removeAll(viewsToRemove);
         viewsToRemove.clear();
         for (int i = 0; i < playersRepository.getPlayers().size(); i++) {
-            PlayerStatsView playerView = new PlayerStatsView(playersRepository.getPlayers().get(i),50,100+(i*3* fontSize*1.15), fontSize);
+            PlayerStatsView playerView = new PlayerStatsView(playersRepository.getPlayers().get(i),50,100+(i*4* fontSize*1.15), fontSize);
             playerViews.add(playerView);
             pane.getChildren().add(playerView.getPlayerNameText());
             pane.getChildren().add(playerView.getPlayerPointsText());
             pane.getChildren().add(playerView.getPlayerLivesText());
+            pane.getChildren().add(playerView.getPlayerHealthText());
         }
         initialized=true;
     }

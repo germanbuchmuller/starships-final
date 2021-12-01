@@ -16,7 +16,7 @@ public class SerializedShip extends AbstractSerializedEntity{
 
     @Override
     public Ship toEntity() {
-        Ship ship = new Ship(health,maxSpeed,acceleration,null,x,y,angle,width,height,imageFileName,playerID);
+        Ship ship = new Ship(maxHealth,health,maxSpeed,acceleration,null,x,y,angle,width,height,imageFileName,playerID);
         ship.setMovementDirection(Vector2.vector(vectorX,vectorY));
         return ship;
     }

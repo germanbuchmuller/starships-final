@@ -21,6 +21,7 @@ public class MyWeapon implements Weapon {
     private BulletType bulletType;
     private long lastShotTime;
 
+
     public MyWeapon(@NotNull Map<BulletType, Integer> coolDowns, @NotNull EntityFactory entityFactory, int playerId) {
         visitors=new ArrayList<>();
         bulletType=BulletType.SMALL;

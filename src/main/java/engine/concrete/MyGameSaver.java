@@ -7,6 +7,7 @@ import engine.GameSaver;
 import misc.Player;
 import misc.Weapon;
 import misc.concrete.MyWeapon;
+import misc.utils.MyRandomGenerator;
 import model.Entity;
 import model.concrete.Asteroid;
 import model.concrete.Projectile;
@@ -29,7 +30,7 @@ public class MyGameSaver implements GameSaver {
 
     public MyGameSaver(GameConfig gameConfig) {
         this.gameConfig = gameConfig;
-        this.entityFactory = new MyEntityFactory(gameConfig,null,null,null);
+        this.entityFactory = new MyEntityFactory(gameConfig,null,null,null, new MyRandomGenerator());
     }
 
     @Override

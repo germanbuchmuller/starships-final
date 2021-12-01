@@ -22,12 +22,14 @@ public class MyEntityFactory implements EntityFactory {
     private final Collection<EntityCollider> colliders;
     private final CollisionChecker collisionChecker;
     private final GameWindow gameWindow;
+    private final Random random;
 
-    public MyEntityFactory(GameConfig gameConfig, Collection<EntityCollider> colliders, CollisionChecker collisionChecker, GameWindow gameWindow) {
+    public MyEntityFactory(GameConfig gameConfig, Collection<EntityCollider> colliders, CollisionChecker collisionChecker, GameWindow gameWindow, Random random) {
         this.gameConfig = gameConfig;
         this.colliders = colliders;
         this.collisionChecker = collisionChecker;
         this.gameWindow = gameWindow;
+        this.random=random;
     }
 
     @Override
@@ -61,7 +63,7 @@ public class MyEntityFactory implements EntityFactory {
 
     @Override
     public Asteroid getAsteroid() {
-        final int size = Random.get(50,400);
+        final int size = random.get(50,400);
         int[] pos = randomAsteroidPos(size);
         Asteroid asteroid = new Asteroid((int)(size*0.5),size,500/size,2,pos[0],pos[1],pos[2],size,size,gameConfig.getAsteroidsTexture());
         AsteroidCollider asteroidCollider = new AsteroidCollider(asteroid,null);
@@ -88,35 +90,35 @@ public class MyEntityFactory implements EntityFactory {
     }
 
     private int randomShipX(){
-        return Random.get((int)gameConfig.getShipWidth(),(int)(gameWindow.getWidth()-gameConfig.getShipWidth()));
+        return random.get((int)gameConfig.getShipWidth(),(int)(gameWindow.getWidth()-gameConfig.getShipWidth()));
     }
 
     private int randomShipY(){
-        return Random.get((int)gameConfig.getShipHeight(),(int)(gameWindow.getHeight()-gameConfig.getShipHeight()));
+        return random.get((int)gameConfig.getShipHeight(),(int)(gameWindow.getHeight()-gameConfig.getShipHeight()));
     }
 
     private int[] randomAsteroidPos(int size){
         int[] pos = new int[3];
-        int bound = Random.get(0,4);
+        int bound = random.get(0,4);
         if (bound==0){
             pos[0]=-size*2;
-            pos[1]=Random.get(100,(int)(gameWindow.getHeight()-100));
-            pos[2]=Random.get(60,120);
+            pos[1]=random.get(100,(int)(gameWindow.getHeight()-100));
+            pos[2]=random.get(60,120);
             //pos[2]=90;
         }else if (bound==1){
             pos[0]=(int)(gameWindow.getWidth()+size);
-            pos[1]=Random.get(100,(int)(gameWindow.getHeight()-100));
-            pos[2]=Random.get(-120,-60);
+            pos[1]=random.get(100,(int)(gameWindow.getHeight()-100));
+            pos[2]=random.get(-120,-60);
             //pos[2]=-90;
         }else if (bound==2){
-            pos[0]=Random.get(100,(int)(gameWindow.getWidth()-100));
+            pos[0]=random.get(100,(int)(gameWindow.getWidth()-100));
             pos[1]=-size*2;
-            pos[2]=Random.get(150,210);
+            pos[2]=random.get(150,210);
             //pos[2]=180;
         }else{
-            pos[0]=Random.get(100,(int)(gameWindow.getWidth()-100));
+            pos[0]=random.get(100,(int)(gameWindow.getWidth()-100));
             pos[1]=(int)(gameWindow.getHeight()+size);;
-            pos[2]=Random.get(-30,30);
+            pos[2]=random.get(-30,30);
             //pos[2]=0;
         }
         return pos;

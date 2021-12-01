@@ -11,11 +11,20 @@ public class Ship extends AbstractEntity implements PlayerRelated {
     private int playerId;
     private Weapon weapon;
     private long lastRevive;
+    private long lastBulletTypeChanged;
 
-    public Ship(int health, double maxSpeed, double acceleration, Weapon weapon, double x, double y, double angle, double width, double height,String imageFileName, int playerId) {
-       super(health, maxSpeed,acceleration,x,y,angle,width,height, imageFileName);
+    public Ship(int maxHealth, double maxSpeed, double acceleration, Weapon weapon, double x, double y, double angle, double width, double height,String imageFileName, int playerId) {
+       super(maxHealth, maxHealth, maxSpeed,acceleration,x,y,angle,width,height, imageFileName);
        this.playerId=playerId;
        this.weapon=weapon;
+       lastBulletTypeChanged=System.currentTimeMillis();
+    }
+
+    public Ship(int maxHealth, int health, double maxSpeed, double acceleration, Weapon weapon, double x, double y, double angle, double width, double height,String imageFileName, int playerId) {
+        super(maxHealth, health, maxSpeed,acceleration,x,y,angle,width,height, imageFileName);
+        this.playerId=playerId;
+        this.weapon=weapon;
+        lastBulletTypeChanged=System.currentTimeMillis();
     }
 
     public void shoot(){
@@ -25,6 +34,15 @@ public class Ship extends AbstractEntity implements PlayerRelated {
     public void setBulletType(@NotNull BulletType bulletType){
         weapon.setBulletType(bulletType);
     }
+
+    public void changeBulletType(@NotNull BulletType bulletType){
+        if (System.currentTimeMillis()-lastBulletTypeChanged>300){
+            weapon.setBulletType(bulletType);
+            lastBulletTypeChanged=System.currentTimeMillis();
+            System.out.println(bulletType);
+        }
+    }
+
 
     public void setWeapon(@NotNull Weapon weapon){
         this.weapon=weapon;

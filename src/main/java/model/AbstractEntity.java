@@ -14,8 +14,8 @@ public abstract class AbstractEntity implements Entity{
     private double maxSpeed;
     private double acceleration;
 
-    public AbstractEntity(int maxHealth, double maxSpeed, double acceleration, double x, double y, double angle, double width, double height, String imageFileName) {
-        this.health = maxHealth;
+    public AbstractEntity(int maxHealth, int health, double maxSpeed, double acceleration, double x, double y, double angle, double width, double height, String imageFileName) {
+        this.health = health;
         this.maxHealth = maxHealth;
         this.movementDirection = Vector2.vectorFromModule(0,0);
         this.x = x;
@@ -85,6 +85,11 @@ public abstract class AbstractEntity implements Entity{
     @Override
     public int getHealth() {
         return health;
+    }
+
+    @Override
+    public int getMaxHealth() {
+        return maxHealth;
     }
 
     @Override

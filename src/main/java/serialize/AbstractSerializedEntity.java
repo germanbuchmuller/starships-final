@@ -3,12 +3,13 @@ package serialize;
 import model.Entity;
 
 public abstract class AbstractSerializedEntity implements SerializedEntity {
-    final int health;
+    final int health, maxHealth;
     final double maxSpeed, acceleration, x, y, angle, vectorX, vectorY, width, height;
     final String imageFileName;
 
     public AbstractSerializedEntity(Entity entity) {
         this.health=entity.getHealth();
+        this.maxHealth=entity.getMaxHealth();
         this.maxSpeed=entity.getMaxSpeed();
         this.acceleration=entity.getAcceleration();
         this.x=entity.getX();

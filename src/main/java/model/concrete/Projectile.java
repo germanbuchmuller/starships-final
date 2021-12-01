@@ -12,7 +12,7 @@ public class Projectile extends AbstractEntity implements PlayerRelated, SelfMov
     private int playerId;
 
     public Projectile(int damage, int health, double maxSpeed, double acceleration, double x, double y, double angle, double width, double height, String imageFileName, int playerId) {
-        super(health, maxSpeed,acceleration,x,y,angle,width,height,imageFileName);
+        super(health, health, maxSpeed,acceleration,x,y,angle,width,height,imageFileName);
         this.damage=damage;
         this.playerId=playerId;
     }

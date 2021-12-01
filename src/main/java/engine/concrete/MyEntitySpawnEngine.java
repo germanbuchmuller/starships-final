@@ -22,11 +22,13 @@ public class MyEntitySpawnEngine implements EntitySpawnEngine {
     private final GameState gameState;
     private final GameConfig gameConfig;
     private final EntityFactory entityFactory;
+    private final Random random;
 
-    public MyEntitySpawnEngine(@NotNull GameState gameState, @NotNull GameConfig gameConfig, @NotNull EntityFactory entityFactory) {
+    public MyEntitySpawnEngine(@NotNull GameState gameState, @NotNull GameConfig gameConfig, @NotNull EntityFactory entityFactory, @NotNull Random random) {
         this.gameState = gameState;
         this.gameConfig=gameConfig;
         this.entityFactory=entityFactory;
+        this.random=random;
     }
 
     @Override
@@ -39,7 +41,7 @@ public class MyEntitySpawnEngine implements EntitySpawnEngine {
         if (asteroidsInGame<gameConfig.getMinAsteroidsInGame()){
             spawnAsteroid();
         }else if (asteroidsInGame<gameConfig.getMaxAsteroidsInGame()){
-            if (Random.get(0,1000)<15)spawnAsteroid();
+            if (random.get(0,1000)<15)spawnAsteroid();
         }
     }
 

@@ -1,11 +1,9 @@
 package controller.concrete;
 
-import controller.EntityController;
 import controller.ShipController;
 import edu.austral.dissis.starships.vector.Vector2;
-import model.Entity;
+import misc.BulletType;
 import model.concrete.Ship;
-import org.jetbrains.annotations.NotNull;
 
 public class MyShipController  implements ShipController {
 
@@ -47,6 +45,24 @@ public class MyShipController  implements ShipController {
     @Override
     public void shoot(Ship ship) {
         ship.shoot();
+    }
+
+    @Override
+    public void changeBulletType(Ship ship) {
+        switch (ship.getBulletType()){
+            case SMALL:
+                ship.changeBulletType(BulletType.MEDIUM);
+                break;
+            case MEDIUM:
+                ship.changeBulletType(BulletType.LARGE);
+                break;
+            case LARGE:
+                ship.changeBulletType(BulletType.ATOMIC);
+                break;
+            default:
+                ship.changeBulletType(BulletType.SMALL);
+                break;
+        }
     }
 
     private void moveWithDirection(Ship ship,double amount, double direction){

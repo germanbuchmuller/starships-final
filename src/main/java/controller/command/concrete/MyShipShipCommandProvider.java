@@ -21,6 +21,8 @@ public class MyShipShipCommandProvider implements ShipCommandProvider {
                 return new RotateRightShipCommand();
             case SHOOT:
                 return new ShootShipCommand();
+            case CHANGE_WEAPON:
+                return new ChangeShipBulletTypeCommand();
             default:
                 return new ShipNoCommand();
         }

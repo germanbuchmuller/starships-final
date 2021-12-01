@@ -9,4 +9,5 @@ public interface ShipController extends EntityController<Ship> {
     void rotateLeft(Ship ship,double secondsSinceLastFrame);
     void slowDown(Ship ship,double secondsSinceLastFrame);
     void shoot(Ship ship);
+    void changeBulletType(Ship ship);
 }
