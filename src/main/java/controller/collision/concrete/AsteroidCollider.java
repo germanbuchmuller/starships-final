@@ -69,10 +69,10 @@ public class AsteroidCollider implements EntityCollider<Asteroid> {
     private void harm(Asteroid entity){
         entity.harm(asteroid.getDamage());
         asteroid.harm(entity.getDamage());
-        if (entity.isDestroyed()){
+        if (!entity.isAlive()){
             gameState.reject(entity);
         }
-        if (asteroid.isDestroyed()){
+        if (!asteroid.isAlive()){
             gameState.reject(asteroid);
         }
     }

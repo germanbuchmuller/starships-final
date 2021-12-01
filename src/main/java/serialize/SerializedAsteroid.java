@@ -1,27 +1,20 @@
 package serialize;
 
+import edu.austral.dissis.starships.vector.Vector2;
 import model.concrete.Asteroid;
 
-public class SerializedAsteroid implements SerializedEntity {
-    private final int health,maxSpeed,rewardPoints,damage;
-    private final double x, y, angle, width, height;
-    private final String imageFileName;
+public class SerializedAsteroid extends AbstractSerializedEntity {
+    private final int damage;
 
-    public SerializedAsteroid(int health, int maxSpeed, int rewardPoints, int damage, double x, double y, double angle, double width, double height, String imageFileName) {
-        this.health = health;
-        this.maxSpeed = maxSpeed;
-        this.rewardPoints = rewardPoints;
-        this.damage = damage;
-        this.x = x;
-        this.y = y;
-        this.angle = angle;
-        this.width = width;
-        this.height = height;
-        this.imageFileName = imageFileName;
+    public SerializedAsteroid(Asteroid asteroid) {
+        super(asteroid);
+        this.damage=asteroid.getDamage();
     }
 
     @Override
     public Asteroid toEntity() {
-        return new Asteroid(damage,health,3,4,x,y,angle,width,height,imageFileName);
+        Asteroid asteroid =new Asteroid(damage,health,maxSpeed,acceleration,x,y,angle,width,height,imageFileName);
+        asteroid.setMovementDirection(Vector2.vector(vectorX,vectorY));
+        return asteroid;
     }
 }

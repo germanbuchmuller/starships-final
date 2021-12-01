@@ -14,31 +14,28 @@ import java.util.List;
 import java.util.Map;
 
 public class MyGameConfig implements GameConfig {
-    public static int PLAYER_LIVES;
-    public static int MIN_ASTEROIDS_IN_GAME;
-    public static int MAX_ASTEROIDS_IN_GAME;
-    public static int ASTEROID_SPEED;
+    private int PLAYER_LIVES;
+    private int MIN_ASTEROIDS_IN_GAME;
+    private int MAX_ASTEROIDS_IN_GAME;
 
-    public static int SHIP_HEALTH;
-    public static int SHIP_SPEED;
-    public static int SHIP_REWARD_POINTS;
-    public static double SHIP_WIDTH;
-    public static double SHIP_HEIGHT ;
+    private int SHIP_HEALTH;
+    private int SHIP_SPEED;
+    private double SHIP_WIDTH;
+    private double SHIP_HEIGHT ;
 
-    public static List<Map<KeyCode, Movement>> playerBindingsList = new ArrayList<>();
-    public static List<String> playersSkin = new ArrayList<>();
-    public static List<BulletType> playersBulletType = new ArrayList<>();
+    private final List<Map<KeyCode, Movement>> playerBindingsList = new ArrayList<>();
+    private final List<String> playersSkin = new ArrayList<>();
+    private final List<BulletType> playersBulletType = new ArrayList<>();
 
-    public static Map<BulletType, Integer> BULLET_DAMAGES = new HashMap<>();
-    public static Map<BulletType, Double> BULLET_SPEED = new HashMap<>();
-    public static Map<BulletType, Integer> BULLET_POINTS = new HashMap<>();
-    public static Map<BulletType, Double> BULLET_WIDTH = new HashMap<>();
-    public static Map<BulletType, Double> BULLET_HEIGHT = new HashMap<>();
-    public static Map<BulletType, String> BULLET_TEXTURE = new HashMap<>();
-    public static Map<BulletType, Integer> BULLET_MIN_TIME = new HashMap<>();
+    private final Map<BulletType, Integer> BULLET_DAMAGES = new HashMap<>();
+    private final Map<BulletType, Double> BULLET_SPEED = new HashMap<>();
+    private final Map<BulletType, Integer> BULLET_POINTS = new HashMap<>();
+    private final Map<BulletType, Double> BULLET_WIDTH = new HashMap<>();
+    private final Map<BulletType, Double> BULLET_HEIGHT = new HashMap<>();
+    private final Map<BulletType, String> BULLET_TEXTURE = new HashMap<>();
+    private final Map<BulletType, Integer> BULLET_MIN_TIME = new HashMap<>();
 
-
-    public static List<String> SHIP_TEXTURE = new ArrayList<>();
+    private final List<String> SHIP_TEXTURE = new ArrayList<>();
 
     public MyGameConfig(@NotNull String configFileName) {
         try{
@@ -50,7 +47,7 @@ public class MyGameConfig implements GameConfig {
 
     }
 
-    public static void loadConfig(@NotNull String configFileName) throws IOException {
+    private void loadConfig(@NotNull String configFileName) throws IOException {
 
         FileLoader fileLoader = new FileLoader();
         BufferedReader br = new BufferedReader(new InputStreamReader(fileLoader.loadFromResources(configFileName)));
@@ -69,17 +66,11 @@ public class MyGameConfig implements GameConfig {
                     case "MAX_ASTEROIDS_IN_GAME":
                         MAX_ASTEROIDS_IN_GAME=Integer.parseInt(atributeValue);
                         break;
-                    case "ASTEROID_SPEED":
-                        ASTEROID_SPEED=Integer.parseInt(atributeValue);
-                        break;
                     case "SHIP_HEALTH":
                         SHIP_HEALTH=Integer.parseInt(atributeValue);
                         break;
                     case "SHIP_SPEED":
                         SHIP_SPEED=Integer.parseInt(atributeValue);
-                        break;
-                    case "SHIP_REWARD_POINTS":
-                        SHIP_REWARD_POINTS=Integer.parseInt(atributeValue);
                         break;
                     case "SHIP_WIDTH":
                         SHIP_WIDTH=Double.parseDouble(atributeValue);
@@ -132,7 +123,6 @@ public class MyGameConfig implements GameConfig {
                                     Map<KeyCode, Movement> bindings = new HashMap<>();
                                     Movement movement = Movement.valueOf(atributeName.substring(atributeName.indexOf("_")+1));
                                     KeyCode keyCode = KeyCode.getKeyCode(atributeValue);
-                                    System.out.println(keyCode+" "+movement);
                                     bindings.put(keyCode,movement);
                                     playerBindingsList.add(bindings);
                                 }
@@ -141,20 +131,9 @@ public class MyGameConfig implements GameConfig {
                 }
             }
         }
-
         System.out.println(playerBindingsList.size());
         System.out.println(playerBindingsList.get(0).get(KeyCode.W));
         System.out.println(playerBindingsList.get(1).get(KeyCode.W));
-        /*
-        System.out.println(SHIP_HEALTH);
-        System.out.println(BULLET_DAMAGES.get(BulletType.SMALL));
-        System.out.println(BULLET_SPEED.get(BulletType.SMALL));
-        System.out.println(BULLET_POINTS.get(BulletType.SMALL));
-        System.out.println(BULLET_WIDTH.get(BulletType.SMALL));
-        System.out.println(BULLET_HEIGHT.get(BulletType.SMALL));
-        System.out.println(BULLET_TEXTURE.get(BulletType.SMALL));
-        System.out.println(BULLET_MIN_TIME.get(BulletType.SMALL));
-        */
     }
 
     @Override

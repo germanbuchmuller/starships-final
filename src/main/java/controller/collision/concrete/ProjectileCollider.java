@@ -72,7 +72,7 @@ public class ProjectileCollider implements EntityCollider<Projectile> {
 
     private void harm(Asteroid asteroid){
         harmEntity(asteroid);
-        if (asteroid.isDestroyed()){
+        if (!asteroid.isAlive()){
             playersRepository.addPointsToPlayer(projectile.getPlayerId(),pointsRepository.getPoints(asteroid));
             gameState.reject(asteroid);
         }

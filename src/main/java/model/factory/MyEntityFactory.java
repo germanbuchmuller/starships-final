@@ -70,7 +70,6 @@ public class MyEntityFactory implements EntityFactory {
             asteroid.setPosition(pos[0],pos[1],pos[2]);
             System.out.println("Created entity was colliding. Assigning new position...");
         }
-        System.out.println(asteroid.getX()+" "+asteroid.getY()+" "+asteroid.getAngle());
         return asteroid;
     }
 

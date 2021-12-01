@@ -23,9 +23,4 @@ public class Asteroid extends AbstractEntity implements SelfMovable {
         visitor.visit(this);
     }
 
-    @Override
-    public void harm(int amount) {
-        super.harm(amount);
-        if (getHealth()==0) destroy();
-    }
 }

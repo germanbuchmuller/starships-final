@@ -36,13 +36,6 @@ public class Ship extends AbstractEntity implements PlayerRelated {
     }
 
     @Override
-    public void destroy() {
-        if (System.currentTimeMillis()-lastRevive>3000){
-            super.destroy();
-        }
-    }
-
-    @Override
     public void accept(@NotNull EntityVisitor visitor){
         visitor.visit(this);
         weapon.accept(visitor);

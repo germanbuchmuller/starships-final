@@ -18,8 +18,6 @@ public interface Entity{
     int getHealth();
     void harm(int amount);
     void heal(int amount);
-    void destroy();
-    boolean isDestroyed();
     boolean isAlive();
     void revive();
     String getImageFileName();

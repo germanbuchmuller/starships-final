@@ -3,6 +3,7 @@ package controller.visitor;
 import controller.MovementEngine;
 import controller.collision.CollisionsEngine;
 import engine.GameEngine;
+import misc.Player;
 import model.*;
 import model.concrete.Asteroid;
 import model.concrete.Projectile;
@@ -19,13 +20,15 @@ public class MyGameState implements GameState{
     private final List<Projectile> projectiles;
     private final List<Ship> ships;
     private final List<GameEngine> gameEngines;
+    private final List<Player> players;
 
-    public MyGameState(List<Entity> entities, List<SelfMovable> selfMovables, List<Asteroid> asteroids, List<Projectile> projectiles, List<Ship> ships) {
+    public MyGameState(List<Entity> entities, List<SelfMovable> selfMovables, List<Asteroid> asteroids, List<Projectile> projectiles, List<Ship> ships, List<Player> players) {
         this.entities = entities;
         this.selfMovables = selfMovables;
         this.asteroids = asteroids;
         this.projectiles = projectiles;
         this.ships = ships;
+        this.players=players;
         this.gameEngines=new ArrayList<>();
     }
 
@@ -35,6 +38,7 @@ public class MyGameState implements GameState{
         asteroids=new ArrayList<>();
         projectiles=new ArrayList<>();
         ships=new ArrayList<>();
+        players=new ArrayList<>();
         this.gameEngines=new ArrayList<>();
     }
 
@@ -51,7 +55,6 @@ public class MyGameState implements GameState{
         asteroids.add(asteroid);
         selfMovables.add(asteroid);
         addToEngines(asteroid);
-        System.out.println("asteroid created");
     }
 
     @Override
@@ -88,8 +91,19 @@ public class MyGameState implements GameState{
     }
 
     @Override
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    @Override
+    public void addPlayer(Player player) {
+        if (!players.contains(player)){
+            players.add(player);
+        }
+    }
+
+    @Override
     public void reject(Ship ship) {
-        ship.destroy();
         entities.remove(ship);
         ships.remove(ship);
         removeFromEngines(ship);
@@ -97,7 +111,7 @@ public class MyGameState implements GameState{
 
     @Override
     public void reject(Asteroid asteroid) {
-        asteroid.destroy();
+        System.out.println(asteroid+" destroyed");
         entities.remove(asteroid);
         asteroids.remove(asteroid);
         selfMovables.remove(asteroid);
@@ -106,7 +120,7 @@ public class MyGameState implements GameState{
 
     @Override
     public void reject(Projectile projectile) {
-        projectile.destroy();
+        System.out.println(projectile+" destroyed");
         entities.remove(projectile);
         projectiles.remove(projectile);
         selfMovables.remove(projectile);

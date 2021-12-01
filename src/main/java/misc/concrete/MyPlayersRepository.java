@@ -1,7 +1,10 @@
 package misc.concrete;
 
+import controller.visitor.GameState;
+import engine.GameSaver;
 import misc.Player;
 import misc.PlayersRepository;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,19 +12,25 @@ import java.util.List;
 import java.util.Map;
 
 public class MyPlayersRepository implements PlayersRepository {
-    private final List<Player> playersList;
+    private final GameState gameState;
     private final Map<Integer, Player> playersIDMap;
     private int lastPlayerID;
 
-    public MyPlayersRepository() {
+    public MyPlayersRepository(@NotNull GameState gameState) {
         playersIDMap=new HashMap<>();
-        playersList=new ArrayList<>();
+        this.gameState=gameState;
         lastPlayerID=0;
     }
 
     public void addPlayer(Player player){
-        if (!playersList.contains(player)){
-            playersList.add(player);
+        gameState.getPlayers().add(player);
+        playersIDMap.put(player.getId(),player);
+        lastPlayerID=player.getId();
+    }
+
+    @Override
+    public void addPlayers(List<Player> players) {
+        for (Player player : players) {
             playersIDMap.put(player.getId(),player);
             lastPlayerID=player.getId();
         }
@@ -32,10 +41,12 @@ public class MyPlayersRepository implements PlayersRepository {
     }
 
     public void addPointsToPlayer(int playerID, int points){
-        if (playersIDMap.containsKey(playerID)) playersIDMap.get(playerID).addPoints(points);
+        if (playersIDMap.containsKey(playerID)){
+            playersIDMap.get(playerID).addPoints(points);
+        }
     }
 
     public List<Player> getPlayers() {
-        return playersList;
+        return gameState.getPlayers();
     }
 }

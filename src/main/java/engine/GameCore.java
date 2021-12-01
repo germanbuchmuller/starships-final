@@ -13,6 +13,7 @@ import edu.austral.dissis.starships.game.KeyTracker;
 import edu.austral.dissis.starships.game.RootSetter;
 import engine.concrete.MyEntitySpawnEngine;
 import engine.concrete.MyGameConfig;
+import engine.concrete.MyGameSaver;
 import engine.menu.MainMenu;
 import javafx.scene.Parent;
 import javafx.scene.image.Image;
@@ -46,12 +47,13 @@ public class GameCore {
     private final GameContext gameContext;
     private GameState gameState;
     private GameWindow gameWindow;
-    private GameConfig gameConfig;
+    private final GameConfig gameConfig;
+    private final GameSaver gameSaver;
+
     private RenderEngine renderEngine;
     private MyMovementEngine movementEngine;
     private CollisionsEngine collisionsEngine;
 
-    //private GameEntityAutoSpawner gameEntityAutoSpawner;
     private PlayersRepository playersRepository;
     private PointsRepository pointsRepository;
     private EntityImageRepository entityImageRepository;
@@ -78,7 +80,8 @@ public class GameCore {
         this.rootSetter=rootSetter;
         this.gameContext=gameContext;
         imageLoader=new ImageLoader();
-        MyGameConfig.loadConfig("gameconfig.txt");
+        gameConfig=new MyGameConfig("gameconfig.txt");
+        gameSaver=new MyGameSaver(gameConfig);
     }
 
     public Parent start() throws IOException {
@@ -90,20 +93,38 @@ public class GameCore {
     }
 
     public void startNewGameFromConfigFile(){
-        //initializeNewGame();
-        for (int i = 0; i < MyGameConfig.playerBindingsList.size(); i++) {
-            addNewPlayer("Player"+(i+1), MyGameConfig.playersSkin.get(i), MyGameConfig.playersBulletType.get(i), MyGameConfig.playerBindingsList.get(i));
+        for (int i = 0; i < gameConfig.getPlayersBindingsList().size(); i++) {
+            addNewPlayer("Player "+(i+1), gameConfig.getPlayerSkinList().get(i), gameConfig.getPlayerBulletTypeList().get(i), gameConfig.getPlayersBindingsList().get(i));
         }
+    }
+
+    public void startGameFromSaveGame(){
+        for (Player player : gameState.getPlayers()) {
+            loadPlayerToGame(player);
+        }
+        playersRepository.addPlayers(gameState.getPlayers());
     }
 
     public void initializeNewGame(){
         gameState=new MyGameState();
+        initializeGame();
+    }
+
+    public void initializeSavedGame(){
+        try{
+            gameState=gameSaver.initialize();
+            initializeGame();
+            gameSaver.loadGame();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private void initializeGame(){
         gameWindow=new MyGameWindow();
         gamePane=gameWindow.init();
-        gameConfig=new MyGameConfig("gameconfig.txt");
-
         entityImageRepository=new MyEntityImageRepository(imageLoader);
-        playersRepository =new MyPlayersRepository();
+        playersRepository =new MyPlayersRepository(gameState);
         pointsRepository=new MyPointsRepository();
 
         renderEngine=new MyRenderEngine(gameState,gameWindow,entityImageRepository);
@@ -121,7 +142,6 @@ public class GameCore {
     }
 
     public Parent launchGame() throws IOException {
-        initializeNewGame();
         Image backImage=imageLoader.loadFromResources("background.png", gamePane.getMaxWidth(), gamePane.getMaxHeight());
         BackgroundImage background=new BackgroundImage(backImage,null, null, null, null);
         Background background1=new Background(background);
@@ -142,84 +162,27 @@ public class GameCore {
 
     public void addNewPlayer(String name, String shipSkin, BulletType bulletType, Map<KeyCode, Movement> keyBindings ){
         int playerId=playersRepository.getNewPlayerId();
-        Weapon weapon=new MyWeapon(entityFactory,playerId);
+        Weapon weapon=new MyWeapon(gameConfig.getBulletCoolDown(),entityFactory,playerId);
         Ship ship = entityFactory.getShip(weapon,shipSkin,playerId);
         ship.setBulletType(bulletType);
         Player player=new Player(name,gameConfig.getPlayerLives(),0,ship,keyBindings);
+        loadPlayerToGameFromConfigFile(player);
+    }
+
+    private void loadPlayerToGameFromConfigFile(Player player){
         loadPlayerToGame(player);
+        playersRepository.addPlayer(player);
     }
 
     private void loadPlayerToGame(Player player){
         for (KeyCode keyCode : player.getKeyBindings().keySet()) {
             this.keyBindings.put(keyCode,player);
         }
-        if (player.getLives()==0)player.getShip().destroy();
+        if (player.getLives()==0)player.getShip().harm(99999);
         player.addVisitor(gameState);
-        playersRepository.addPlayer(player);
     }
 
-    private void loadEntityToGame(Entity entity){
-        //entity.accept(collisionsVisitor);
-        entity.accept(gameState);
-        //entity.accept(movementVisitor);
-        //entity.accept(renderVisitor);
-        //gameEntityAutoSpawner.addEntity(entity);
-    }
-/*
-    public void saveGame() {
-
-        try {
-            FileOutputStream playersFOS = new FileOutputStream("players.savegame");
-            ObjectOutputStream playersOOS = new ObjectOutputStream(playersFOS);
-            for (Player player : playersRepository.getPlayers()) {
-                playersOOS.writeObject(player.toSerializablePlayer());
-            }
-            playersOOS.close();
-
-            FileOutputStream entitiesFOS = new FileOutputStream("entities.savegame");
-            ObjectOutputStream entitiesOOS = new ObjectOutputStream(entitiesFOS);
-            for (Entity selfMovableEntity : movementVisitor.getSelfMovableEntities()) {
-                entitiesOOS.writeObject(selfMovableEntity.toSerializedEntity());
-            }
-            entitiesOOS.close();
-            System.out.println("Game saved with success");
-        }catch (IOException e){
-            e.printStackTrace();
-        }
-    }
-
-    public void loadSavedGame(){
-        initializeNewGame();
-        try{
-            FileInputStream playersFIS = new FileInputStream("players.savegame");
-            ObjectInputStream playersOIS = new ObjectInputStream(playersFIS);
-
-            SerializedPlayer serializedPlayer;
-            while ((serializedPlayer = (SerializedPlayer)playersOIS.readObject())!=null){
-                Player player=serializedPlayer.toPlayer();
-                loadPlayerToGame(player);
-            }
-            playersOIS.close();
-            System.out.println("ola");
-        }catch (Exception ignored){
-            try{
-                loadNewGameMenu();
-            }catch (Exception ignored2){}
-        }
-        try{
-            FileInputStream entityFIS = new FileInputStream("entities.savegame");
-            ObjectInputStream entitiesOIS = new ObjectInputStream(entityFIS);
-            SerializedEntity serializedEntity;
-            while ((serializedEntity =(SerializedEntity) entitiesOIS.readObject())!=null){
-                Entity entity = serializedEntity.toEntity();
-                loadEntityToGame(entity);
-                System.out.println(entity);
-            }
-            entitiesOIS.close();
-        }catch (Exception ignore){}
-    }
-*/
-    public void nextFrame(double secondsSinceLastFrame) throws IOException {
+    public void nextFrame(double secondsSinceLastFrame) throws Exception {
         for (KeyCode keyCode : keyTracker.getKeySet()) {
             if (!gameOver){
                 if (keyCode==KeyCode.P && System.currentTimeMillis()-lastActionTime>300){
@@ -233,14 +196,13 @@ public class GameCore {
                     }
                 }else if(gamePaused && keyCode==KeyCode.S && System.currentTimeMillis()-lastActionTime>300 && !gameSaved){
                     lastActionTime=System.currentTimeMillis();
-                    //saveGame();
+                    gameSaver.saveGame(gameState);
                     gameSaved=true;
                 }
                 if (!gamePaused){
                     if (keyBindings.containsKey(keyCode)){
                         Player player = keyBindings.get(keyCode);
-                        Map<KeyCode,Movement> playerBindings = player.getKeyBindings();
-                        movementEngine.updateUserMovableEntity(player.getShip(),playerBindings.get(keyCode),secondsSinceLastFrame);
+                        movementEngine.updateUserMovableEntity(player.getShip(),player.getKeyBindings().get(keyCode),secondsSinceLastFrame);
                     }
                 }
             }else if (System.currentTimeMillis()-lastActionTime>1000){
@@ -265,7 +227,6 @@ public class GameCore {
             if (!player.getShip().isAlive()){
                 if (player.revive()){
                     entityFactory.reviveShip(player.getShip());
-                    //player.getShip().revive(Random.get(20,(int)gamePane.getLayoutBounds().getMaxX()-50),Random.get(20,(int)gamePane.getLayoutBounds().getMaxY()-50));
                 }else{
                     gameOverPlayers++;
                     gameState.reject(player.getShip());
@@ -294,7 +255,7 @@ public class GameCore {
         public void nextFrame(double secondsSinceLastFrame) {
             try {
                 gameCore.nextFrame(secondsSinceLastFrame);
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }

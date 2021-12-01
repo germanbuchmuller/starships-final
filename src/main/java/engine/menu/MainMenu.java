@@ -37,7 +37,7 @@ public class MainMenu {
         newGameBtn.setOnMouseReleased(event -> newGameBtn.setImage(newGameImage2));
         newGameBtn.setOnMouseClicked(event -> {
             try {
-
+                gameCore.initializeNewGame();
                 gameCore.getRootSetter().setRoot(gameCore.launchGame());
                 gameCore.startNewGameFromConfigFile();
                 //gameEngine.getRootSetter().setRoot(gameEngine.loadNewGameMenu());
@@ -61,7 +61,9 @@ public class MainMenu {
 
             try {
                 //gameEngine.loadSavedGame();
+                gameCore.initializeSavedGame();
                 gameCore.getRootSetter().setRoot(gameCore.launchGame());
+                gameCore.startGameFromSaveGame();
             } catch (IOException e) {
                 e.printStackTrace();
             }

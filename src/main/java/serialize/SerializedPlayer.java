@@ -11,24 +11,24 @@ import java.util.Map;
 
 public class SerializedPlayer implements Serializable {
     private final String name;
-    private final int id, points, lives;
-    private final SerializedShip serializableShip;
+    private final int  points, lives;
+    private final SerializedShip serializedShip;
     private final Map<KeyCode, Movement> keyBindings;
-    private final BulletType bulletType;
 
-    public SerializedPlayer(String name, int id, int points, int lives, SerializedShip serializableShip, BulletType bulletType, Map<KeyCode, Movement> keyBindings) {
-        this.name = name;
-        this.id = id;
-        this.points = points;
-        this.lives = lives;
-        this.serializableShip = serializableShip;
-        this.keyBindings = keyBindings;
-        this.bulletType = bulletType;
+    public SerializedPlayer(Player player){
+        this.name=player.getName();
+        this.points=player.getPoints();
+        this.lives=player.getLives();
+        this.keyBindings=player.getKeyBindings();
+        this.serializedShip=new SerializedShip(player.getShip());
     }
 
     public Player toPlayer(){
-        Ship ship=serializableShip.toEntity();
-        ship.setBulletType(bulletType);
+        Ship ship=serializedShip.toEntity();
         return new Player(name,lives,points,ship,keyBindings);
+    }
+
+    public BulletType getBulletType(){
+        return serializedShip.getBulletType();
     }
 }

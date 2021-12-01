@@ -1,28 +1,20 @@
 package serialize;
 
+import edu.austral.dissis.starships.vector.Vector2;
 import model.concrete.Projectile;
 
-public class SerializedProjectile implements SerializedEntity {
-    private final int damage, health, maxSpeed, rewardPoints, playerID;
-    private final double x, y, angle, width, height;
-    private final String imageFileName;
+public class SerializedProjectile extends AbstractSerializedEntity {
+    private final int damage,playerID;
 
-    public SerializedProjectile(int damage, int health, int maxSpeed, int rewardPoints, int playerID, double x, double y, double angle, double width, double height, String imageFileName) {
-        this.damage = damage;
-        this.health = health;
-        this.maxSpeed = maxSpeed;
-        this.rewardPoints = rewardPoints;
-        this.playerID = playerID;
-        this.x = x;
-        this.y = y;
-        this.angle = angle;
-        this.width = width;
-        this.height = height;
-        this.imageFileName = imageFileName;
+    public SerializedProjectile(Projectile projectile) {
+        super(projectile);
+        this.damage=projectile.getDamage();
+        this.playerID=projectile.getPlayerId();
     }
 
-    @Override
     public Projectile toEntity() {
-        return new Projectile(damage,health,5,5,x,y,angle,width,height,imageFileName,playerID);
+        Projectile projectile= new Projectile(damage,health,maxSpeed,acceleration,x,y,angle,width,height,imageFileName,playerID);
+        projectile.setMovementDirection(Vector2.vector(vectorX,vectorY));
+        return projectile;
     }
 }

@@ -1,6 +1,7 @@
 package misc.concrete;
 
 import controller.visitor.EntityVisitor;
+import engine.GameConfig;
 import engine.concrete.MyGameConfig;
 import misc.BulletType;
 import misc.Weapon;
@@ -10,20 +11,23 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class MyWeapon implements Weapon {
+    private final Map<BulletType, Integer> coolDowns;
     private final List<EntityVisitor> visitors;
     private final EntityFactory entityFactory;
     private final int playerId;
     private BulletType bulletType;
     private long lastShotTime;
 
-    public MyWeapon(@NotNull EntityFactory entityFactory, int playerId) {
+    public MyWeapon(@NotNull Map<BulletType, Integer> coolDowns, @NotNull EntityFactory entityFactory, int playerId) {
         visitors=new ArrayList<>();
         bulletType=BulletType.SMALL;
         lastShotTime=System.currentTimeMillis();
         this.entityFactory=entityFactory;
         this.playerId=playerId;
+        this.coolDowns=coolDowns;
     }
 
     public void setBulletType(BulletType bulletType) {
@@ -35,7 +39,7 @@ public class MyWeapon implements Weapon {
     }
 
     public void shoot(double x, double y, double angle){
-        int minTime= MyGameConfig.BULLET_MIN_TIME.get(bulletType);
+        int minTime = coolDowns.get(bulletType);
         if (System.currentTimeMillis()-lastShotTime>=minTime){
             Projectile projectile= entityFactory.getProjectile(x,y,angle,bulletType,playerId);
             for (EntityVisitor visitor : visitors) {

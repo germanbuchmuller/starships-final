@@ -1,5 +1,6 @@
 package controller.visitor;
 
+import misc.Player;
 import model.*;
 import model.concrete.Asteroid;
 import model.concrete.Projectile;
@@ -14,6 +15,8 @@ public interface GameState extends GameEngineVisitor {
     List<Asteroid> getAsteroids();
     List<Projectile> getProjectiles();
     List<SelfMovable> getSelfMovables();
+    List<Player> getPlayers();
+    void addPlayer(Player player);
     void reject(Ship ship);
     void reject(Asteroid asteroid);
     void reject(Projectile projectile);
