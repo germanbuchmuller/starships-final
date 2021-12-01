@@ -2,7 +2,7 @@ package controller.visitor;
 
 import controller.MovementEngine;
 import controller.collision.CollisionsEngine;
-import engine.GameEngine;
+import core.GameEngine;
 import view.RenderEngine;
 
 public interface GameEngineVisitor extends EntityVisitor {

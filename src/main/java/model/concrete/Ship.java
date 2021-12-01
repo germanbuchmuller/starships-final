@@ -2,7 +2,6 @@ package model.concrete;
 
 import misc.BulletType;
 import misc.Weapon;
-import model.AbstractEntity;
 import model.PlayerRelated;
 import org.jetbrains.annotations.NotNull;
 import controller.visitor.EntityVisitor;
@@ -51,6 +50,13 @@ public class Ship extends AbstractEntity implements PlayerRelated {
     public void revive(){
         super.revive();
         lastRevive=System.currentTimeMillis();
+    }
+
+    @Override
+    public void harm(int amount) {
+        if (System.currentTimeMillis()-lastRevive>3000){
+            super.harm(amount);
+        }
     }
 
     @Override

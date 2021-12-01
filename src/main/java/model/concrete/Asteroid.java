@@ -1,11 +1,9 @@
 package model.concrete;
 
-import model.AbstractEntity;
-import model.SelfMovable;
 import org.jetbrains.annotations.NotNull;
 import controller.visitor.EntityVisitor;
 
-public class Asteroid extends AbstractEntity implements SelfMovable {
+public class Asteroid extends AbstractEntity {
     private final int damage;
     public Asteroid(int damage, int health, double maxSpeed, double acceleration, double x, double y, double angle, double width, double height,String imageFileName) {
         super(health, health, maxSpeed, acceleration,x,y,angle,width,height,imageFileName);

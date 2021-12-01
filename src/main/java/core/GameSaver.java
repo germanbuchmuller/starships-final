@@ -1,10 +1,8 @@
-package engine;
+package core;
 
 import controller.visitor.GameState;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 
 public interface GameSaver {
     GameState initialize();

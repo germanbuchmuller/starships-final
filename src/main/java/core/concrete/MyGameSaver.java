@@ -1,9 +1,9 @@
-package engine.concrete;
+package core.concrete;
 
 import controller.visitor.GameState;
-import controller.visitor.MyGameState;
-import engine.GameConfig;
-import engine.GameSaver;
+import controller.visitor.concrete.MyGameState;
+import core.GameConfig;
+import core.GameSaver;
 import misc.Player;
 import misc.Weapon;
 import misc.concrete.MyWeapon;
@@ -122,7 +122,7 @@ public class MyGameSaver implements GameSaver {
 
     }
 
-    private List<Player> getPlayers(ObjectInputStream playersOIS) throws IOException, ClassNotFoundException {
+    private List<Player> getPlayers(ObjectInputStream playersOIS) throws IOException {
         SerializedPlayer serializedPlayer;
         List<Player> players = new ArrayList<>();
         try{
@@ -142,7 +142,7 @@ public class MyGameSaver implements GameSaver {
         return player;
     }
 
-    private List<Asteroid> getAsteroids(ObjectInputStream asteroidsOIS) throws IOException, ClassNotFoundException {
+    private List<Asteroid> getAsteroids(ObjectInputStream asteroidsOIS) throws IOException {
         SerializedAsteroid serializedAsteroid;
         List<Asteroid> asteroids=new ArrayList<>();
         try {
@@ -154,7 +154,7 @@ public class MyGameSaver implements GameSaver {
         return asteroids;
     }
 
-    private List<Projectile> getProjectiles(ObjectInputStream projectilesOIS) throws IOException, ClassNotFoundException {
+    private List<Projectile> getProjectiles(ObjectInputStream projectilesOIS) throws IOException {
         SerializedProjectile serializedAsteroid;
         List<Projectile> asteroids=new ArrayList<>();
         try {

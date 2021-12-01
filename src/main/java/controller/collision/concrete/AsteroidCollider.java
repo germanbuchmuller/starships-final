@@ -3,17 +3,11 @@ package controller.collision.concrete;
 import controller.collision.EntityCollider;
 import controller.visitor.GameState;
 import edu.austral.dissis.starships.vector.Vector2;
-import engine.GameCore;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import model.concrete.Asteroid;
 import model.concrete.Ship;
 import org.jetbrains.annotations.NotNull;
-
-import java.awt.*;
 
 public class AsteroidCollider implements EntityCollider<Asteroid> {
     private final Asteroid asteroid;
@@ -79,8 +73,5 @@ public class AsteroidCollider implements EntityCollider<Asteroid> {
 
     private void harm(Ship ship){
         ship.harm(asteroid.getDamage());
-        if (!ship.isAlive()){
-            //gameState.remove(ship);
-        }
     }
 }

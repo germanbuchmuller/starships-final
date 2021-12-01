@@ -6,10 +6,7 @@ import model.concrete.Asteroid;
 import model.concrete.Projectile;
 import model.concrete.Ship;
 import org.jetbrains.annotations.NotNull;
-import view.EntityImageRepository;
-import view.EntityView;
-import view.GameWindow;
-import view.RenderEngine;
+import view.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -108,28 +105,37 @@ public class MyRenderEngine implements RenderEngine {
         }
     }
 
-    private void addEntity(Entity entity){
-        addNewView(new EntityView(entity,entityImageRepository.getImage(entity)));
+    private void addEntityOnTop(Entity entity){
+        addNewViewOnTop(new MyEntityView(entity,entityImageRepository.getImage(entity)));
     }
 
-    private void addNewView(EntityView entityView){
-        gameWindow.addView(entityView);
+    private void addEntityOnBack(Entity entity){
+        addNewViewOnBack(new MyEntityView(entity,entityImageRepository.getImage(entity)));
+    }
+
+    private void addNewViewOnTop(EntityView entityView){
+        gameWindow.addViewOnTop(entityView);
+        entityViewMap.put(entityView.getEntity(),entityView);
+    }
+
+    private void addNewViewOnBack(EntityView entityView){
+        gameWindow.addViewOnBack(entityView);
         entityViewMap.put(entityView.getEntity(),entityView);
     }
 
     @Override
     public void added(Ship ship) {
-        addEntity(ship);
+        addEntityOnBack(ship);
     }
 
     @Override
     public void added(Asteroid asteroid) {
-        addEntity(asteroid);
+        addEntityOnTop(asteroid);
     }
 
     @Override
     public void added(Projectile projectile) {
-        addEntity(projectile);
+        addEntityOnBack(projectile);
     }
 
     @Override

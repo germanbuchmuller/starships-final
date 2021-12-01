@@ -1,13 +1,10 @@
 package model.concrete;
 
-import model.AbstractEntity;
-import model.EntityType;
 import model.PlayerRelated;
-import model.SelfMovable;
 import org.jetbrains.annotations.NotNull;
 import controller.visitor.EntityVisitor;
 
-public class Projectile extends AbstractEntity implements PlayerRelated, SelfMovable {
+public class Projectile extends AbstractEntity implements PlayerRelated {
     private final int damage;
     private int playerId;
 

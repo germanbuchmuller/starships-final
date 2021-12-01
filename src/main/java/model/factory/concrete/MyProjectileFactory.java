@@ -1,6 +1,6 @@
 package model.factory.concrete;
 
-import engine.GameConfig;
+import core.GameConfig;
 import misc.BulletType;
 import model.concrete.Projectile;
 import model.factory.ProjectileFactory;

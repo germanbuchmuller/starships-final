@@ -1,8 +1,8 @@
-package engine.concrete;
+package core.concrete;
 
 import controller.Movement;
 import edu.austral.dissis.starships.file.FileLoader;
-import engine.GameConfig;
+import core.GameConfig;
 import javafx.scene.input.KeyCode;
 import misc.BulletType;
 import org.jetbrains.annotations.NotNull;

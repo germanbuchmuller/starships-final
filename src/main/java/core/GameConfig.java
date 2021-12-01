@@ -1,4 +1,4 @@
-package engine;
+package core;
 
 import controller.Movement;
 import javafx.scene.input.KeyCode;

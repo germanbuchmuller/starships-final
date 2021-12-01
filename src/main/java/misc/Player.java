@@ -2,10 +2,8 @@ package misc;
 
 import controller.Movement;
 import controller.visitor.EntityVisitor;
-import engine.concrete.MyGameConfig;
 import javafx.scene.input.KeyCode;
 import model.concrete.Ship;
-import misc.utils.Random;
 
 import java.util.Map;
 

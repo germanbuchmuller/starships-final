@@ -1,6 +1,6 @@
 package view;
 
-import engine.GameEngine;
+import core.GameEngine;
 
 public interface RenderEngine extends GameEngine {
     void update();

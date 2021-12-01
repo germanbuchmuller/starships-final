@@ -1,7 +1,7 @@
-package engine.menu;
+package core.menu;
 
 import edu.austral.dissis.starships.file.ImageLoader;
-import engine.GameCore;
+import core.GameMain;
 import javafx.scene.Parent;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -9,14 +9,15 @@ import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 
-public class MainMenu {
+public class MainMenu implements GameMenu{
     private final ImageLoader imageLoader;
-    private final GameCore gameCore;
     private final double sf=0.75;
+    private final MenuEvent startNewGameEvent,loadGameEvent;
 
-    public MainMenu(GameCore gameCore) {
+    public MainMenu(MenuEvent startNewGameEvent, MenuEvent loadGameEvent) {
         imageLoader=new ImageLoader();
-        this.gameCore = gameCore;
+        this.startNewGameEvent=startNewGameEvent;
+        this.loadGameEvent=loadGameEvent;
     }
 
     public Parent load() throws IOException {
@@ -31,20 +32,7 @@ public class MainMenu {
         ImageView newGameBtn = new ImageView(newGameImage1);
         newGameBtn.setLayoutX(660*sf);
         newGameBtn.setLayoutY(530*sf);
-        newGameBtn.setOnMouseEntered(event -> newGameBtn.setImage(newGameImage2));
-        newGameBtn.setOnMouseExited(event -> newGameBtn.setImage(newGameImage1));
-        newGameBtn.setOnMousePressed(event -> newGameBtn.setImage(newGameImage3));
-        newGameBtn.setOnMouseReleased(event -> newGameBtn.setImage(newGameImage2));
-        newGameBtn.setOnMouseClicked(event -> {
-            try {
-                gameCore.initializeNewGame();
-                gameCore.getRootSetter().setRoot(gameCore.launchGame());
-                gameCore.startNewGameFromConfigFile();
-                //gameEngine.getRootSetter().setRoot(gameEngine.loadNewGameMenu());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
+        setButtonTextures(newGameImage1, newGameImage2, newGameImage3, newGameBtn, startNewGameEvent);
 
 
         Image loadGameImage1 = imageLoader.loadFromResources("loadGameBtn1.png", 620*sf, 157*sf);
@@ -53,21 +41,7 @@ public class MainMenu {
         ImageView loadGameBtn = new ImageView(loadGameImage1);
         loadGameBtn.setLayoutX(660*sf);
         loadGameBtn.setLayoutY(700*sf);
-        loadGameBtn.setOnMouseEntered(event -> loadGameBtn.setImage(loadGameImage2));
-        loadGameBtn.setOnMouseExited(event -> loadGameBtn.setImage(loadGameImage1));
-        loadGameBtn.setOnMousePressed(event -> loadGameBtn.setImage(loadGameImage3));
-        loadGameBtn.setOnMouseReleased(event -> loadGameBtn.setImage(loadGameImage2));
-        loadGameBtn.setOnMouseClicked(event -> {
-
-            try {
-                //gameEngine.loadSavedGame();
-                gameCore.initializeSavedGame();
-                gameCore.getRootSetter().setRoot(gameCore.launchGame());
-                gameCore.startGameFromSaveGame();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
+        setButtonTextures(loadGameImage1, loadGameImage2, loadGameImage3, loadGameBtn, loadGameEvent);
 
         Image quitGameImage1 = imageLoader.loadFromResources("quitGameBtn1.png", 620*sf, 157*sf);
         Image quitGameImage2 = imageLoader.loadFromResources("quitGameBtn2.png", 620*sf, 157*sf);
@@ -86,5 +60,13 @@ public class MainMenu {
         pane.getChildren().add(loadGameBtn);
         pane.getChildren().add(quitGameBtn);
         return pane;
+    }
+
+    private void setButtonTextures(Image newGameImage1, Image newGameImage2, Image newGameImage3, ImageView newGameBtn, MenuEvent startNewGameEvent) {
+        newGameBtn.setOnMouseEntered(event -> newGameBtn.setImage(newGameImage2));
+        newGameBtn.setOnMouseExited(event -> newGameBtn.setImage(newGameImage1));
+        newGameBtn.setOnMousePressed(event -> newGameBtn.setImage(newGameImage3));
+        newGameBtn.setOnMouseReleased(event -> newGameBtn.setImage(newGameImage2));
+        newGameBtn.setOnMouseClicked(event ->  startNewGameEvent.execute());
     }
 }

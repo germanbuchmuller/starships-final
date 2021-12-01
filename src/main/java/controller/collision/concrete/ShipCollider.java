@@ -3,12 +3,8 @@ package controller.collision.concrete;
 import controller.collision.EntityCollider;
 import controller.visitor.GameState;
 import edu.austral.dissis.starships.vector.Vector2;
-import engine.GameCore;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
-import model.concrete.Asteroid;
 import model.concrete.Ship;
 import org.jetbrains.annotations.NotNull;
 

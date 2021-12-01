@@ -51,7 +51,7 @@ public class MyShipFactory extends AbstractEntityFactory<Ship> implements ShipFa
         ShipCollider shipCollider = new ShipCollider(ship,null);
         while (newEntityCollidesWithColliders(shipCollider)){
             ship.setPosition(randomShipX(),randomShipY(),0);
-            System.out.println("Created entity was colliding. Assigning new position...");
+            System.out.println("Spawning ship was colliding. Assigning new position...");
         }
     }
 

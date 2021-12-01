@@ -46,7 +46,7 @@ public class MyAsteroidFactory extends AbstractEntityFactory<Asteroid> implement
         while (newEntityCollidesWithColliders(asteroidCollider)){
             pos = randomAsteroidPos(asteroid.getHealth());
             asteroid.setPosition(pos[0],pos[1],pos[2]);
-            System.out.println("Created entity was colliding. Assigning new position...");
+            System.out.println("Created asteroid was colliding. Assigning new position...");
         }
     }
 
@@ -74,7 +74,7 @@ public class MyAsteroidFactory extends AbstractEntityFactory<Asteroid> implement
             //pos[2]=180;
         }else{
             pos[0]=random.get(100,(int)(gameWindow.getWidth()-100));
-            pos[1]=(int)(gameWindow.getHeight()+size);;
+            pos[1]=(int)(gameWindow.getHeight()+size);
             pos[2]=random.get(-30,30);
             //pos[2]=0;
         }

@@ -1,8 +1,9 @@
-package controller.visitor;
+package controller.visitor.concrete;
 
 import controller.MovementEngine;
 import controller.collision.CollisionsEngine;
-import engine.GameEngine;
+import controller.visitor.GameState;
+import core.GameEngine;
 import misc.Player;
 import model.*;
 import model.concrete.Asteroid;
@@ -13,18 +14,16 @@ import view.RenderEngine;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyGameState implements GameState{
+public class MyGameState implements GameState {
     private final List<Entity> entities;
-    private final List<SelfMovable> selfMovables;
     private final List<Asteroid> asteroids;
     private final List<Projectile> projectiles;
     private final List<Ship> ships;
     private final List<GameEngine> gameEngines;
     private final List<Player> players;
 
-    public MyGameState(List<Entity> entities, List<SelfMovable> selfMovables, List<Asteroid> asteroids, List<Projectile> projectiles, List<Ship> ships, List<Player> players) {
+    public MyGameState(List<Entity> entities, List<Asteroid> asteroids, List<Projectile> projectiles, List<Ship> ships, List<Player> players) {
         this.entities = entities;
-        this.selfMovables = selfMovables;
         this.asteroids = asteroids;
         this.projectiles = projectiles;
         this.ships = ships;
@@ -34,7 +33,6 @@ public class MyGameState implements GameState{
 
     public MyGameState() {
         entities=new ArrayList<>();
-        selfMovables=new ArrayList<>();
         asteroids=new ArrayList<>();
         projectiles=new ArrayList<>();
         ships=new ArrayList<>();
@@ -53,7 +51,6 @@ public class MyGameState implements GameState{
     public void visit(Asteroid asteroid) {
         entities.add(asteroid);
         asteroids.add(asteroid);
-        selfMovables.add(asteroid);
         addToEngines(asteroid);
     }
 
@@ -61,7 +58,6 @@ public class MyGameState implements GameState{
     public void visit(Projectile projectile) {
         entities.add(projectile);
         projectiles.add(projectile);
-        selfMovables.add(projectile);
         addToEngines(projectile);
     }
 
@@ -83,11 +79,6 @@ public class MyGameState implements GameState{
     @Override
     public List<Projectile> getProjectiles() {
         return projectiles;
-    }
-
-    @Override
-    public List<SelfMovable> getSelfMovables() {
-        return selfMovables;
     }
 
     @Override
@@ -114,7 +105,6 @@ public class MyGameState implements GameState{
         System.out.println(asteroid+" destroyed");
         entities.remove(asteroid);
         asteroids.remove(asteroid);
-        selfMovables.remove(asteroid);
         removeFromEngines(asteroid);
     }
 
@@ -123,7 +113,6 @@ public class MyGameState implements GameState{
         System.out.println(projectile+" destroyed");
         entities.remove(projectile);
         projectiles.remove(projectile);
-        selfMovables.remove(projectile);
         removeFromEngines(projectile);
     }
 

@@ -1,8 +1,8 @@
-package engine.concrete;
+package core.concrete;
 
 import controller.visitor.GameState;
-import engine.EntitySpawnEngine;
-import engine.GameConfig;
+import core.EntitySpawnEngine;
+import core.GameConfig;
 import misc.utils.Random;
 import model.concrete.Asteroid;
 import model.concrete.Projectile;

@@ -1,12 +1,9 @@
 package misc.concrete;
 
 import controller.visitor.EntityVisitor;
-import engine.GameConfig;
-import engine.concrete.MyGameConfig;
 import misc.BulletType;
 import misc.Weapon;
 import model.concrete.Projectile;
-import model.factory.EntityFactory;
 import model.factory.ProjectileFactory;
 import org.jetbrains.annotations.NotNull;
 

@@ -1,6 +1,5 @@
-package engine;
+package core;
 
-import model.Entity;
 import model.concrete.Asteroid;
 import model.concrete.Projectile;
 import model.concrete.Ship;

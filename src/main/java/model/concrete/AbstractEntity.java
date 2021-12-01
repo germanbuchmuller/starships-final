@@ -1,15 +1,15 @@
-package model;
+package model.concrete;
 
 import edu.austral.dissis.starships.vector.Vector2;
+import model.Entity;
 
-public abstract class AbstractEntity implements Entity{
+public abstract class AbstractEntity implements Entity {
     private int health;
     private final int maxHealth;
     private Vector2 movementDirection;
     private double x, y, angle;
     private final double width, height;
     private final String imageFileName;
-    private boolean isDestroyed;
     private boolean accelerating;
     private double maxSpeed;
     private double acceleration;
@@ -26,7 +26,6 @@ public abstract class AbstractEntity implements Entity{
         this.imageFileName=imageFileName;
         this.maxSpeed=maxSpeed;
         this.acceleration=acceleration;
-        isDestroyed=false;
         accelerating=false;
     }
 
@@ -99,7 +98,6 @@ public abstract class AbstractEntity implements Entity{
 
     @Override
     public void revive(){
-        this.isDestroyed=false;
         health=maxHealth;
     }
 

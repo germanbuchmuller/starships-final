@@ -4,7 +4,7 @@ import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import view.EntityView;
 import view.GameWindow;
-import view.ui.PlayerStatsView;
+import view.PlayerStatsView;
 
 import java.util.List;
 
@@ -26,15 +26,18 @@ public class MyGameWindow implements GameWindow {
     }
 
     @Override
-    public void addView(EntityView entityView) {
-        addView(entityView.getView());
+    public void addViewOnBack(EntityView entityView) {
+        addViewOnBack(entityView.getView());
+    }
+
+    @Override
+    public void addViewOnTop(EntityView entityView) {
+        addViewOnTop(entityView.getView());
     }
 
     @Override
     public void addView(PlayerStatsView playerStatsView) {
-        addView(playerStatsView.getPlayerLivesText());
-        addView(playerStatsView.getPlayerPointsText());
-        addView(playerStatsView.getPlayerNameText());
+        addViewOnTop(playerStatsView.getView());
     }
 
     @Override
@@ -44,9 +47,7 @@ public class MyGameWindow implements GameWindow {
 
     @Override
     public void removeView(PlayerStatsView playerStatsView) {
-        removeView(playerStatsView.getPlayerLivesText());
-        removeView(playerStatsView.getPlayerPointsText());
-        removeView(playerStatsView.getPlayerNameText());
+        removeView(playerStatsView.getView());
     }
 
     @Override
@@ -56,7 +57,11 @@ public class MyGameWindow implements GameWindow {
         }
     }
 
-    private void addView(Node node){
+    private void addViewOnTop(Node node){
+        pane.getChildren().add(node);
+    }
+
+    private void addViewOnBack(Node node){
         pane.getChildren().add(0,node);
     }
 
